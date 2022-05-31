@@ -1,8 +1,7 @@
-// https://docs.cypress.io/api/introduction/api.html
-
-describe("My First Test", () => {
-  it("visits the app root url", () => {
+describe("MainView test", () => {
+  it("shows project name and placeholder text", () => {
     cy.visit("/")
-    cy.contains("h1", "You did it!")
+    cy.contains("h1", "Syntax Visualiser")
+    cy.contains("h2", "Coming soon... 🚧")
   })
 })
