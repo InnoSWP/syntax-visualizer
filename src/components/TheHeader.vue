@@ -10,11 +10,25 @@ export default defineComponent({
 </script>
 
 <template>
-  <header>
+  <header class="header-root">
     <TheHeaderDocumentControl />
-    <h1>Syntax Visualiser</h1>
+    <h1 class="heading">Syntax Visualiser</h1>
     <TheHeaderGeneralControl />
   </header>
 </template>
 
-<style scoped></style>
+<style lang="scss" scoped>
+$header-height: 60px;
+
+.header-root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: $header-height;
+}
+
+.heading {
+  margin-right: auto;
+  margin-left: auto;
+}
+</style>

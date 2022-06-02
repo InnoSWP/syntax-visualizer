@@ -5,6 +5,6 @@ export default defineComponent({
 })
 </script>
 
-<template></template>
+<template>codemirror editor will be here :)</template>
 
 <style scoped></style>

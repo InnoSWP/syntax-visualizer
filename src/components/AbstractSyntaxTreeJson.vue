@@ -6,6 +6,6 @@ export default defineComponent({
 })
 </script>
 
-<template></template>
+<template>AST JSON will be here :)</template>
 
 <style scoped></style>

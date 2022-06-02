@@ -6,6 +6,6 @@ export default defineComponent({
 })
 </script>
 
-<template></template>
+<template>AST graph will be here :)</template>
 
 <style scoped></style>

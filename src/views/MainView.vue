@@ -11,5 +11,3 @@ export default {
   <TheHeader />
   <TheTabs />
 </template>
-
-<style></style>

@@ -2,10 +2,10 @@
 import { defineComponent } from "vue"
 
 export default defineComponent({
-  name: "ParallelArray",
+  name: "NodeCoordinatesMatrix",
 })
 </script>
 
-<template></template>
+<template>NCM will be here :)</template>
 
 <style scoped></style>
