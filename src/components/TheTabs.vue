@@ -24,13 +24,13 @@ export default defineComponent({
 
 <template>
   <main class="tabs-root">
-    <app-tab title="Code" row="1" col="1">
+    <app-tab title="Code" :row="1" :col="1">
       <code-editor :variant="settings.codeEditorVariant" />
     </app-tab>
-    <app-tab title="AST" row="1" col="2">
+    <app-tab title="AST" :row="1" :col="2">
       <abstract-syntax-tree :variant="settings.astVariant" />
     </app-tab>
-    <app-tab title="NCM" row="1" col="3">
+    <app-tab title="NCM" :row="1" :col="3">
       <node-coordinates-matrix />
     </app-tab>
   </main>
