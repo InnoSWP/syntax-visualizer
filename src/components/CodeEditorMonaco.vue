@@ -1,16 +1,7 @@
-<script lang="ts">
-import { defineComponent } from "vue"
-
-export default defineComponent({
-  name: "CodeEditorMonaco",
-})
-</script>
-
 <script lang="ts" setup>
 import * as monaco from "monaco-editor"
-import { onMounted, ref } from "vue"
+import { onMounted, ref, watch } from "vue"
 
-const editor = ref()
 const props = defineProps({
   value: {
     type: String,
@@ -19,26 +10,46 @@ const props = defineProps({
   },
   language: {
     type: String,
-    required: false,
+    required: true,
   },
 })
 
-const emit = defineEmits(["input"])
+const emit = defineEmits(["update:value"])
+const container = ref()
 
 onMounted(() => {
-  const defaultModel = monaco.editor.createModel(props.value, props.language)
-  defaultModel.onDidChangeContent((e) => emit("input", e.eol))
-  const editorModel = monaco.editor.create(editor.value)
-  editorModel.setModel(defaultModel)
-  editorModel.updateOptions({
-    minimap: { enabled: false },
+  const editor = monaco.editor.create(container.value, {
+    value: props.value,
+    language: props.language,
+    minimap: {
+      enabled: false,
+    },
+    scrollBeyondLastLine: false,
   })
-  editorModel.layout()
+
+  editor.onDidChangeModelContent(() => {
+    emit("update:value", editor.getValue())
+  })
+
+  editor.focus()
+  editor.setPosition({
+    column: 10000000,
+    lineNumber: 10000000,
+  })
+
+  watch(
+    () => props.value,
+    (newVal) => {
+      if (editor.getValue() !== newVal) {
+        editor.setValue(newVal)
+      }
+    }
+  )
 })
 </script>
 
 <template>
-  <div ref="editor" class="editor"></div>
+  <div ref="container" class="editor"></div>
 </template>
 
 <style scoped>
