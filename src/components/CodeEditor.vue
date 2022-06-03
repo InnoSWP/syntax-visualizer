@@ -26,7 +26,10 @@ export default defineComponent({
 
 <template>
   <div class="root">
-    <CodeEditorMonaco v-if="variant === 'monaco-editor'" />
+    <CodeEditorMonaco
+      :language="'javascript'"
+      v-if="variant === 'monaco-editor'"
+    />
     <CodeEditorCodemirror v-else />
   </div>
 </template>
