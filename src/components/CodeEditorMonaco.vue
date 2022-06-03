@@ -8,7 +8,7 @@ export default defineComponent({
 
 <script lang="ts" setup>
 import * as monaco from "monaco-editor"
-import { onMounted, ref, defineEmits } from "vue"
+import { onMounted, ref } from "vue"
 
 const editor = ref()
 const props = defineProps({
