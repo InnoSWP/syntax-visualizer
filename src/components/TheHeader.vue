@@ -12,7 +12,7 @@ export default defineComponent({
 <template>
   <header class="header-root">
     <TheHeaderDocumentControl />
-    <h1 class="heading">Syntax Visualiser</h1>
+    <h1 class="heading">Syntax Visualizer</h1>
     <TheHeaderGeneralControl />
   </header>
 </template>
