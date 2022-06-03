@@ -15,6 +15,19 @@ export default defineComponent({
       // TODO: add loading and error components
     }),
   },
+  data() {
+    return {
+      code: 'console.log("Hello, code editor!");',
+    }
+  },
+  watch: {
+    code(newValue: string, oldValue: string) {
+      console.log({
+        current: newValue,
+        old: oldValue,
+      })
+    },
+  },
   props: {
     variant: {
       type: String as PropType<CodeEditorVariant>,
@@ -26,7 +39,11 @@ export default defineComponent({
 
 <template>
   <div class="root">
-    <CodeEditorMonaco v-if="variant === 'monaco-editor'" />
+    <CodeEditorMonaco
+      v-if="variant === 'monaco-editor'"
+      v-model:value="code"
+      :language="'typescript'"
+    />
     <CodeEditorCodemirror v-else />
   </div>
 </template>
