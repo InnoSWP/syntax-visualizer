@@ -21,7 +21,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="tab-root row-{{ row }} col-{{ col }}">
+  <div :class="['tab-root', 'row-' + row, 'col-' + col]">
     <div class="tab" role="tab">
       <div class="tab-title-wrapper">
         <slot class="tab-title-icon" name="icon" />
