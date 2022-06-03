@@ -19,8 +19,8 @@ export default defineComponent({
 
 <template>
   <div class="root">
-    <abstract-syntax-tree-graph v-if="variant === 'graph'" />
-    <abstract-syntax-tree-json v-else />
+    <AbstractSyntaxTreeGraph v-if="variant === 'graph'" />
+    <AbstractSyntaxTreeJson v-else />
   </div>
 </template>
 
