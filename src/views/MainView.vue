@@ -1,5 +1,5 @@
 <script lang="ts">
-import TheHeader from "@/components/TheHeader.vue"
+import TheHeader from "@/components/header/TheHeader.vue"
 import TheTabs from "@/components/TheTabs.vue"
 
 export default {

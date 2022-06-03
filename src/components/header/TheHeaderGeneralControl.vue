@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent } from "vue"
-import ThemeToggle from "@/components/ThemeToggle.vue"
+import ThemeToggle from "@/components/header/ThemeToggle.vue"
 
 export default defineComponent({
   name: "TheHeaderGeneralControl",
