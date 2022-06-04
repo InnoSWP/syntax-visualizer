@@ -21,16 +21,12 @@ export default defineComponent({
   },
   data() {
     return {
-      code: "",
+      code: 'console.log("Hello, syntax!")',
     }
-  },
-  mounted() {
-    this.code =
-      this.settings.codeEditorDefaultText[this.settings.codeEditorLanguage]
   },
   watch: {
     code(newValue: string) {
-      console.log(newValue)
+      console.log("Code updated: " + newValue)
     },
   },
 })
@@ -42,7 +38,7 @@ export default defineComponent({
       <CodeEditor
         v-model:value="code"
         :variant="settings.codeEditorVariant"
-        :language="settings.codeEditorLanguage"
+        language="typescript"
       />
     </AppTab>
     <AppTab title="AST" :row="1" :col="2">
