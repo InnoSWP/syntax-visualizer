@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineAsyncComponent, defineComponent } from "vue"
 import type { PropType } from "vue"
-import type { CodeEditorVariant } from "@/stores/settings"
+import type { CodeEditorLanguage, CodeEditorVariant } from "@/stores/settings"
 
 export default defineComponent({
   name: "CodeEditor",
@@ -17,21 +17,32 @@ export default defineComponent({
   },
   data() {
     return {
-      code: 'console.log("Hello, code editor!");',
+      code: this.$props.value,
     }
   },
   watch: {
-    code(newValue: string, oldValue: string) {
-      console.log({
-        current: newValue,
-        old: oldValue,
-      })
+    code(newValue: string) {
+      this.$emit("update:value", newValue)
+    },
+    value(newValue: string) {
+      this.code = newValue
     },
   },
+  emits: ["update:value"],
   props: {
+    value: {
+      type: String,
+      required: false,
+      default: "",
+    },
     variant: {
       type: String as PropType<CodeEditorVariant>,
       required: true,
+    },
+    language: {
+      type: String as PropType<CodeEditorLanguage>,
+      required: false,
+      default: "typescript",
     },
   },
 })
@@ -42,7 +53,7 @@ export default defineComponent({
     <CodeEditorMonaco
       v-if="variant === 'monaco-editor'"
       v-model:value="code"
-      :language="'typescript'"
+      :language="language"
     />
     <CodeEditorCodemirror v-else />
   </div>

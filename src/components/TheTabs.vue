@@ -19,13 +19,31 @@ export default defineComponent({
       settings: useSettingsStore(),
     }
   },
+  data() {
+    return {
+      code: "",
+    }
+  },
+  mounted() {
+    this.code =
+      this.settings.codeEditorDefaultText[this.settings.codeEditorLanguage]
+  },
+  watch: {
+    code(newValue: string) {
+      console.log(newValue)
+    },
+  },
 })
 </script>
 
 <template>
   <main class="tabs-root">
     <AppTab title="Code" :row="1" :col="1">
-      <CodeEditor :variant="settings.codeEditorVariant" />
+      <CodeEditor
+        v-model:value="code"
+        :variant="settings.codeEditorVariant"
+        :language="settings.codeEditorLanguage"
+      />
     </AppTab>
     <AppTab title="AST" :row="1" :col="2">
       <AbstractSyntaxTree :variant="settings.astVariant" />
