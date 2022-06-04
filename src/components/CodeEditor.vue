@@ -15,23 +15,30 @@ export default defineComponent({
       // TODO: add loading and error components
     }),
   },
-  data() {
-    return {
-      code: 'console.log("Hello, code editor!");',
-    }
-  },
-  watch: {
-    code(newValue: string, oldValue: string) {
-      console.log({
-        current: newValue,
-        old: oldValue,
-      })
-    },
-  },
   props: {
+    value: {
+      type: String,
+      required: false,
+      default: "",
+    },
+    language: {
+      type: String,
+      required: false,
+      default: "typescript",
+    },
     variant: {
       type: String as PropType<CodeEditorVariant>,
       required: true,
+    },
+  },
+  computed: {
+    valueModel: {
+      get() {
+        return this.value
+      },
+      set(value: string) {
+        this.$emit("update:value", value)
+      },
     },
   },
 })
@@ -41,8 +48,8 @@ export default defineComponent({
   <div class="root">
     <CodeEditorMonaco
       v-if="variant === 'monaco-editor'"
-      v-model:value="code"
-      :language="'typescript'"
+      v-model:value="valueModel"
+      :language="language"
     />
     <CodeEditorCodemirror v-else />
   </div>

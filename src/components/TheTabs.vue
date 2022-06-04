@@ -1,31 +1,27 @@
-<script lang="ts">
-import { defineComponent } from "vue"
+<script setup lang="ts">
 import AppTab from "@/components/AppTab.vue"
 import CodeEditor from "@/components/CodeEditor.vue"
 import AbstractSyntaxTree from "@/components/AbstractSyntaxTree.vue"
 import NodeCoordinatesMatrix from "@/components/NodeCoordinatesMatrix.vue"
 import { useSettingsStore } from "@/stores/settings"
+import { ref, watch } from "vue"
 
-export default defineComponent({
-  name: "TheTabs",
-  components: {
-    AppTab,
-    CodeEditor,
-    AbstractSyntaxTree,
-    NodeCoordinatesMatrix,
-  },
-  setup() {
-    return {
-      settings: useSettingsStore(),
-    }
-  },
+const settings = useSettingsStore()
+const code = ref('console.log("Hello, syntax!")')
+
+watch(code, (newCode: string) => {
+  console.log('Code updated to: "' + newCode + '"')
 })
 </script>
 
 <template>
   <main class="tabs-root">
     <AppTab title="Code" :row="1" :col="1">
-      <CodeEditor :variant="settings.codeEditorVariant" />
+      <CodeEditor
+        v-model:value="code"
+        :variant="settings.codeEditorVariant"
+        language="typescript"
+      />
     </AppTab>
     <AppTab title="AST" :row="1" :col="2">
       <AbstractSyntaxTree :variant="settings.astVariant" />
