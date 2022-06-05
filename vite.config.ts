@@ -13,4 +13,9 @@ export default defineConfig({
     },
   },
   base: process.env.VITE_BASE_URL || "/",
+  // Node polyfill alternative to avoid exceptions in @babel/traverse
+  define: {
+    process: { env: {} },
+    Buffer: {},
+  },
 })
