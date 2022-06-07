@@ -1,15 +1,15 @@
 <h1 align="center"> 🔭 Syntax Visualizer </h1>
 
-
 <p align="center">
 <img src="assets/tree.png" width="200">
 </p>
 
 <p align="center">
-Visualizer for programming languages with
-<strong>abstract syntax tree</strong>
+Programming languages syntax visualizer with
+<strong>Abstract Syntax Tree</strong>
 &
-<strong>node coordinates matrix</strong> 
+<strong>Node Coordinates Matrix</strong> 
+representations
 </p>
 
 - [Motivation](#motivation)
@@ -18,21 +18,21 @@ Visualizer for programming languages with
 
 ## Motivation
 
-> There are many programmers who want to understand the notion of
-> Abstract Syntax Tree and more importantly there also people who
-> study compilers and researchers who are interested in the Node
-> Coordinates Matrix representation of the AST nodes.
-> The goal of our project is to create an online tool for
-> real time generating AST and NCM from the code in order
-> to make the process of exploring these concepts more convenient.
+> There are many programmers who want to understand the concept of an
+> Abstract Syntax Tree, and, more importantly, there also people who study
+> compilers and researchers who are interested in the Node Coordinates Matrix
+> representation of the AST. The goal of this project is to create an online
+> tool for generating AST and NCM from code in real time to make the process
+> of exploring these concepts more convenient.
 
 ## Features
 
-- ⚙️ Highly customizable
+- ✨ Node Coordinates Matrix representation of the AST
 - 👨‍💻️ Support for different programming languages
+- ⚙️ Highly customizable
 - 🌍 Sharing
-- ✨ Parallel array representation of AST
 
 ## Examples
 
 > Here be dragons...
+
