@@ -36,7 +36,7 @@ watch(code, (newCode: string) => {
 .tabs-root {
   display: grid;
   width: 100%;
-  height: 100%;
+  height: calc(100% - var(--header-height));
   grid-template-columns: [start] 33.333% [line2] 33.333% [line3] auto [end];
   grid-template-rows: [start] 100% [end];
 }

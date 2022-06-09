@@ -17,14 +17,12 @@ export default defineComponent({
   </header>
 </template>
 
-<style lang="scss" scoped>
-$header-height: 60px;
-
+<style scoped>
 .header-root {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: $header-height;
+  height: var(--header-height);
 }
 
 .heading {

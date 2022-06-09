@@ -47,12 +47,18 @@ export default defineComponent({
 <template>
   <div class="root">
     <CodeEditorMonaco
+      class="editor"
       v-if="variant === 'monaco-editor'"
       v-model:value="valueModel"
       :language="language"
     />
-    <CodeEditorCodemirror v-else />
+    <CodeEditorCodemirror v-else class="editor" />
   </div>
 </template>
 
-<style scoped></style>
+<style scoped>
+.root,
+.editor {
+  height: 100%;
+}
+</style>

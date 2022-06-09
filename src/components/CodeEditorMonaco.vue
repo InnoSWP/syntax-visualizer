@@ -25,6 +25,8 @@ onMounted(() => {
       enabled: false,
     },
     scrollBeyondLastLine: false,
+    automaticLayout: true,
+    extraEditorClassName: "monaco",
   })
 
   editor.onDidChangeModelContent(() => {
@@ -33,8 +35,8 @@ onMounted(() => {
 
   editor.focus()
   editor.setPosition({
-    column: 10000000,
-    lineNumber: 10000000,
+    column: Infinity,
+    lineNumber: Infinity,
   })
 
   watch(
@@ -49,11 +51,15 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="container" class="editor"></div>
+  <div ref="container"></div>
 </template>
 
-<style scoped>
-.editor {
-  height: 100vh;
+<style>
+/*
+monaco will set this class on init
+see extraEditorClassName setting above
+*/
+.monaco {
+  overflow-y: hidden;
 }
 </style>
