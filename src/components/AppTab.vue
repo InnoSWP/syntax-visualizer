@@ -35,10 +35,9 @@ export default defineComponent({
 </template>
 
 <style lang="scss" scoped>
-$tab-height: 36px;
-
 .tab-root {
   display: flex;
+  height: 100%;
   flex-direction: column;
 
   .row-1 {
@@ -64,14 +63,15 @@ $tab-height: 36px;
 .tab {
   display: flex;
   align-items: center;
-  flex: 0 0 $tab-height;
+  flex: 0 0 var(--tab-height);
   justify-content: space-between;
   width: 100%;
-  height: $tab-height;
+  height: var(--tab-height);
   padding: 0 16px 0 10px;
 }
 
 .tab-panel {
   flex: 1 0 auto;
+  height: calc(100% - var(--tab-height));
 }
 </style>

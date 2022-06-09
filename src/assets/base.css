@@ -5,8 +5,15 @@
   margin: 0;
 }
 
+
+body,
+html,
+#app {
+  min-height: 100% !important;
+  height: 100%;
+}
+
 body {
-  min-height: 100vh;
   margin: 0;
   padding: 0;
   text-rendering: optimizeLegibility;
