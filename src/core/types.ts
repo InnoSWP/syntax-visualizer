@@ -1,38 +1,46 @@
-export interface Language {
+export interface Language<ID extends string, ParserNames extends string> {
   /**
    * Unique language identifier.
    */
-  id: string
+  readonly id: ID
 
   /**
    * Human-readable language name.
    */
-  uiName: string
+  readonly uiName: string
 
   /**
    * File extension (without a dot ".") of code written in this language.
    */
-  fileExtension: string
+  readonly fileExtension: string
 
   /**
    * Name of the language icon component.
    */
-  iconName?: string
+  readonly iconName?: string
 
   /**
-   * Parsers that implement this language parsing logic.
+   * Parsers that implement this language parsing to AST.
+   * In the format: { parserName: parser }
    */
-  parsers: LanguageParser<object, object>[]
+  readonly parsers: {
+    [key in ParserNames]: LanguageParser<ParserNames, any, any>
+  }
+
+  /**
+   * Name of the default parser from parsers.
+   */
+  readonly defaultParserName: ParserNames
 
   /**
    * Code example written in this language (code or array of lines of code).
    */
-  sampleCode: string | string[]
+  readonly sampleCode: string | string[]
 }
 
-export interface LanguageParser<ParserAST, ParseOptions> {
-  name: string
-  parse: LanguageParseFunc<ParserAST, ParseOptions>
+export interface LanguageParser<Name extends string, ParserAST, ParseOptions> {
+  readonly name: Name
+  readonly parse: LanguageParseFunc<ParserAST, ParseOptions>
 }
 
 export type LanguageParseFunc<ParserAST, ParseOptions> = (
@@ -49,8 +57,6 @@ export type ParseError = string | { message: string; loc: SourceLocation }
 export interface AST {
   root?: ASTNode
 }
-
-export type FlatAST = ASTNode[]
 
 export interface ASTNode {
   loc: SourceLocation
@@ -70,4 +76,16 @@ export interface Position {
   line: number
   column: number
   index: number
+}
+
+export function defineParser<Name extends string, ParserAST, ParseOptions>(
+  parser: LanguageParser<Name, ParserAST, ParseOptions>
+) {
+  return parser
+}
+
+export function defineLanguage<ID extends string, ParserName extends string>(
+  language: Language<ID, ParserName>
+) {
+  return language
 }

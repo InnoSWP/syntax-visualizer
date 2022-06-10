@@ -5,18 +5,18 @@ import type { File, Node as BabelNode } from "@babel/types"
 import type {
   ASTNode,
   LanguageParseFuncResult,
-  LanguageParser,
   ParseError,
   SourceLocation,
 } from "@/core/types"
+import { defineParser } from "@/core/types"
 
 type ParserASTType = ParseResult<File>
 type OptionsType = ParserOptions
 
-export default {
+export default defineParser({
   name: "@babel/parser",
   parse: parse,
-} as LanguageParser<ParserASTType, OptionsType>
+})
 
 function parse(
   code: string,

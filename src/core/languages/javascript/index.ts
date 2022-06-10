@@ -1,12 +1,15 @@
-import type { Language } from "@/core/types"
-import babel from "./parsers/babel"
+import { defineLanguage } from "@/core/types"
+import babelParser from "./parsers/babel"
 
-const javascriptLanguage: Language = {
+export default defineLanguage({
   id: "javascript",
   uiName: "JavaScript",
   fileExtension: "js",
   iconName: undefined, // TODO: add icon
-  parsers: [babel],
+  parsers: {
+    [babelParser.name]: babelParser,
+  },
+  defaultParserName: babelParser.name,
   sampleCode: [
     "function greet(name) {",
     '    console.log("Welcome, " + name + "!");',
@@ -14,6 +17,4 @@ const javascriptLanguage: Language = {
     "",
     'greet("dear explorer");',
   ],
-}
-
-export default javascriptLanguage
+})
