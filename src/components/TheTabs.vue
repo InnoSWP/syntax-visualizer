@@ -1,16 +1,29 @@
 <script setup lang="ts">
+import { ref, watch } from "vue"
 import AppTab from "@/components/AppTab.vue"
 import CodeEditor from "@/components/CodeEditor.vue"
 import AbstractSyntaxTree from "@/components/AbstractSyntaxTree.vue"
 import NodeCoordinatesMatrix from "@/components/NodeCoordinatesMatrix.vue"
 import { useSettingsStore } from "@/stores/settings"
-import { ref, watch } from "vue"
+import languages from "@/core/languages"
 
 const settings = useSettingsStore()
-const code = ref('console.log("Hello, syntax!")')
+
+const lang = languages[settings.languageId]
+const parser = lang.parsers[lang.defaultParserName]
+const parse = (code: string) => parser.parse(code)
+
+const getLangSampleCode = () =>
+  typeof lang.sampleCode === "string"
+    ? lang.sampleCode
+    : lang.sampleCode.join("\n")
+
+const code = ref(getLangSampleCode())
+
+let ast = ref(parse(code.value))
 
 watch(code, (newCode: string) => {
-  console.log('Code updated to: "' + newCode + '"')
+  ast.value = parse(newCode)
 })
 </script>
 
@@ -24,7 +37,7 @@ watch(code, (newCode: string) => {
       />
     </AppTab>
     <AppTab title="AST" :row="1" :col="2">
-      <AbstractSyntaxTree :variant="settings.astVariant" />
+      <AbstractSyntaxTree :variant="settings.astVariant" :ast="ast.ast" />
     </AppTab>
     <AppTab title="NCM" :row="1" :col="3">
       <NodeCoordinatesMatrix />
