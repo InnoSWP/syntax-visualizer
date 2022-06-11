@@ -96,18 +96,148 @@ const createNodeFromBabelNode = (
   pathInOriginalAST: pathOriginalAST,
 })
 
-function getBabelNodeLabel(n: any): string | undefined {
-  // const n = node as any
-  if (n.value != null) {
-    return typeof n.value === "string"
-      ? '"' + n.value + '"'
-      : n.value.toString()
-  } else if (typeof n.name === "string") {
-    return n.name
-  } else if (typeof n.operator === "string") {
-    return n.operator
-  } else if (typeof n.kind === "string") {
-    return n.kind
+function getBabelNodeLabel(node: BabelNode): string | undefined {
+  switch (node.type) {
+    case "InterpreterDirective":
+    case "DirectiveLiteral":
+    case "BigIntLiteral":
+    case "JSXText":
+      return node.value
+
+    case "StringLiteral":
+      return '"' + node.value + '"'
+
+    case "NumericLiteral":
+    case "BooleanLiteral":
+      return String(node.value)
+
+    case "RegexLiteral":
+    case "RegExpLiteral":
+      return `/${node.pattern}/${node.flags}`
+
+    case "NullLiteral":
+      return "null"
+
+    case "Identifier":
+    case "TypeParameter":
+    case "JSXIdentifier":
+    case "V8IntrinsicIdentifier":
+    case "TSTypeParameter":
+      return node.name
+
+    case "VariableDeclaration":
+    case "Variance":
+    case "TSPropertySignature":
+      return node.kind
+
+    case "AssignmentExpression":
+    case "BinaryExpression":
+    case "UnaryExpression":
+    case "UpdateExpression":
+    case "LogicalExpression":
+      return node.operator
+
+    case "BlockStatement":
+    case "ObjectExpression":
+      return "{ … }"
+    case "BreakStatement":
+      return "break"
+    case "CatchClause":
+      return "catch"
+    case "ConditionalExpression":
+      return "… ? … : …"
+    case "ContinueStatement":
+      return "continue"
+    case "DoWhileStatement":
+      return "do while"
+    case "ForInStatement":
+      return "for in"
+    case "ForOfStatement":
+      return "for of"
+    case "ForStatement":
+      return "for"
+    case "FunctionDeclaration":
+    case "FunctionExpression":
+      return "function"
+    case "WhileStatement":
+      return "while"
+    case "WithStatement":
+      return "with"
+    case "AssignmentPattern":
+      return "="
+
+    case "ArrowFunctionExpression":
+      return "=>"
+
+    case "ClassDeclaration":
+      return "class"
+
+    case "ExportAllDeclaration":
+      return "export {}"
+
+    case "ExportDefaultDeclaration":
+      return "export default"
+
+    case "ImportDeclaration":
+      return "import {} from"
+
+    case "ImportDefaultSpecifier":
+      return "import default from"
+
+    case "ImportNamespaceSpecifier":
+      return "import namespace from"
+
+    case "SpreadProperty":
+    case "SpreadElement":
+      return "..."
+
+    case "Super":
+      return "super"
+
+    case "YieldExpression":
+      return "yield"
+
+    case "AwaitExpression":
+      return "await"
+
+    case "IfStatement":
+      return "if"
+
+    case "MemberExpression":
+      return "."
+
+    case "ReturnStatement":
+      return "return"
+
+    case "SwitchCase":
+      return "case …:"
+
+    case "SwitchStatement":
+      return "switch"
+
+    case "ThisExpression":
+      return "this"
+
+    case "TryStatement":
+      return "try"
+
+    case "ThrowStatement":
+      return "throw"
+
+    case "AnyTypeAnnotation":
+      return "any"
+    case "ArrayTypeAnnotation":
+      return "[]"
+    case "BooleanTypeAnnotation":
+      return "boolean"
+    case "NullLiteralTypeAnnotation":
+      return "null"
+
+    case "TSUndefinedKeyword":
+      return "undefined"
+
+    case "TemplateElement":
+      return node.value.cooked || node.value.raw
   }
 }
 
