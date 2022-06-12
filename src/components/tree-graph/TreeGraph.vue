@@ -53,10 +53,8 @@ export default defineComponent({
 <style scoped>
 .container {
   position: relative;
-  background-color: var(--color-bg-graph);
   --color-border-default: #a9a9a9;
   --color-border-active: #466ecc;
-  --color-bg-graph: #efefef;
   --stroke-width: 2px;
 }
 
