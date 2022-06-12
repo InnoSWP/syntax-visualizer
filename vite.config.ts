@@ -4,6 +4,9 @@ import { defineConfig } from "vite"
 import vue from "@vitejs/plugin-vue"
 import vueJsx from "@vitejs/plugin-vue-jsx"
 import monacoEditorPlugin from "vite-plugin-monaco-editor"
+import nodePolyfills from "rollup-plugin-polyfill-node"
+import NodeModulesPolyfills from "@esbuild-plugins/node-modules-polyfill"
+import GlobalsPolyfills from "@esbuild-plugins/node-globals-polyfill"
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -14,9 +17,20 @@ export default defineConfig({
     },
   },
   base: process.env.VITE_BASE_URL || "/",
-  // Node polyfill alternative to avoid exceptions in @babel/traverse
-  define: {
-    process: { env: {} },
-    Buffer: {},
+  build: {
+    rollupOptions: {
+      plugins: [nodePolyfills()],
+    },
+  },
+  optimizeDeps: {
+    esbuildOptions: {
+      plugins: [
+        NodeModulesPolyfills(),
+        GlobalsPolyfills({
+          process: true,
+          buffer: true,
+        }),
+      ],
+    },
   },
 })
