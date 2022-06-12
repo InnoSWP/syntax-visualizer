@@ -9,13 +9,13 @@ describe("Basic interaction test", () => {
     cy.contains("StringLiteral")
 
     // Enter some basic code
-    cy.contains("function")
-    cy.focused()
-      .type("{ctrl+shift+a}{backspace}")
-      .type('console.log("Hello, from test!")')
+    cy.contains("function", { timeout: 15000 })
+    cy.focused({ timeout: 15000 })
+      .type("{ctrl+shift+a}{backspace}", { timeout: 15000 })
+      .type('console.log("Hello, from test!")', { timeout: 15000 })
 
     // Check entered code
-    cy.get(".ast-root").contains("Program")
+    cy.get(".ast-root").contains("Program", { timeout: 15000 })
     cy.get(".ast-root").contains("ExpressionStatement")
     cy.get(".ast-root").contains("CallExpression")
     cy.get(".ast-root").contains("MemberExpression")
