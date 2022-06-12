@@ -25,7 +25,7 @@ export default defineComponent({
 <template>
   <div class="ast-root">
     <h3 v-if="!root">Write some (correct) code!</h3>
-    <AbstractSyntaxTreeGraph v-else-if="variant === 'graph'" />
+    <AbstractSyntaxTreeGraph v-else-if="variant === 'graph'" :root="root" />
     <AbstractSyntaxTreeJson v-else :root="root" />
   </div>
 </template>
