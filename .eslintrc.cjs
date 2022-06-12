@@ -20,6 +20,6 @@ module.exports = {
   ],
   rules: {
     "prettier/prettier": "error",
-    "no-undef": 0
+    "no-undef": 0,
   },
 }
