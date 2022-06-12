@@ -37,8 +37,8 @@ export default defineComponent({
 <style lang="scss" scoped>
 .tab-root {
   display: flex;
-  height: 100%;
   flex-direction: column;
+  height: 100%;
 
   .row-1 {
     grid-row: 1 / span 1;
