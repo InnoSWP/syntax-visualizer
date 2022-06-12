@@ -46,7 +46,7 @@ export interface LanguageParser<Name extends string, ParserAST, ParseOptions> {
 export type LanguageParseFunc<ParserAST, ParseOptions> = (
   code: string,
   options?: ParseOptions
-) => { originalAST: ParserAST; ast: AST } | ParseError
+) => { originalAST: ParserAST; ast: AST } | { error: ParseError }
 
 export type LanguageParseFuncResult<ParserAST, ParseOptions> = ReturnType<
   LanguageParseFunc<ParserAST, ParseOptions>

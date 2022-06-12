@@ -26,7 +26,7 @@ function parse(
   try {
     babelAst = babelParse(code, options)
   } catch (error) {
-    return getParseErrorFromBabelParserError(error)
+    return { error: getParseErrorFromBabelParserError(error) }
   }
 
   type BabelNodeWithCachedPath = BabelNode & { __cached_path?: string }
