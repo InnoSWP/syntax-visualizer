@@ -63,7 +63,7 @@ export interface ASTNode {
   type: string
   label?: string
   parent?: ASTNode
-  children: ASTNode[]
+  children?: ASTNode[]
   pathInOriginalAST: string
 }
 

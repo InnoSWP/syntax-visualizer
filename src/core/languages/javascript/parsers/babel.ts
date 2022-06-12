@@ -49,6 +49,9 @@ function parse(
       if (babelParent?.__cached_path) {
         const parent = nodePathInASTToNodeMap[babelParent.__cached_path]
         node.parent = parent
+        if (!parent.children) {
+          parent.children = []
+        }
         parent.children.push(node)
       }
     },
@@ -92,7 +95,6 @@ const createNodeFromBabelNode = (
   type: babelNode.type,
   label: getBabelNodeLabel(babelNode),
   loc: getSourceLocationFromBabelNodeLocation(babelNode),
-  children: [],
   pathInOriginalAST: pathOriginalAST,
 })
 
