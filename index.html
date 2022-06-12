@@ -1,41 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <script>self["MonacoEnvironment"] = (function (paths) {
+          return {
+            globalAPI: false,
+            getWorkerUrl : function (moduleId, label) {
+              var result =  paths[label];
+              if (/^((http:)|(https:)|(file:)|(\/\/))/.test(result)) {
+                var currentUrl = String(window.location);
+                var currentOrigin = currentUrl.substr(0, currentUrl.length - window.location.hash.length - window.location.search.length - window.location.pathname.length);
+                if (result.substring(0, currentOrigin.length) !== currentOrigin) {
+                  var js = '/*' + label + '*/importScripts("' + result + '");';
+                  var blob = new Blob([js], { type: 'application/javascript' });
+                  return URL.createObjectURL(blob);
+                }
+              }
+              return result;
+            }
+          };
+        })({
+  "editorWorkerService": "/monacoeditorwork/editor.worker.bundle.js",
+  "css": "/monacoeditorwork/css.worker.bundle.js",
+  "html": "/monacoeditorwork/html.worker.bundle.js",
+  "json": "/monacoeditorwork/json.worker.bundle.js",
+  "typescript": "/monacoeditorwork/ts.worker.bundle.js",
+  "javascript": "/monacoeditorwork/ts.worker.bundle.js",
+  "less": "/monacoeditorwork/css.worker.bundle.js",
+  "scss": "/monacoeditorwork/css.worker.bundle.js",
+  "handlebars": "/monacoeditorwork/html.worker.bundle.js",
+  "razor": "/monacoeditorwork/html.worker.bundle.js"
+});</script>
+
     <meta charset="UTF-8" />
-    <link rel="icon" href="/syntax-visualiser/favicon.ico" />
+    <link rel="icon" href="/syntax-visualizer/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Syntax Visualiser</title>
+    <title>Syntax Visualizer</title>
     <meta
       name="description"
-      content="Live Abstract Syntax Tree and Parallel Array Representation of your code!"
+      content="Live Abstract Syntax Tree and Node Coordinates Matrix generation for your code!"
     />
 
-    <link rel="shortcut icon" href="/syntax-visualiser/favicon.ico" />
-    <link rel="icon" href="/syntax-visualiser/favicon.ico" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/syntax-visualiser/favicon/favicon-16x16.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/syntax-visualiser/favicon/favicon-16x16.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/syntax-visualiser/favicon/favicon-32x32.png" />
+    <link rel="shortcut icon" href="/syntax-visualizer/favicon.ico" />
+    <link rel="icon" href="/syntax-visualizer/favicon.ico" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/syntax-visualizer/favicon/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/syntax-visualizer/favicon/favicon-16x16.png" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/syntax-visualizer/favicon/favicon-32x32.png" />
     <link
       rel="icon"
       type="image/png"
       sizes="192x192"
-      href="/syntax-visualiser/favicon/android-chrome-192x192.png"
+      href="/syntax-visualizer/favicon/android-chrome-192x192.png"
     />
     <link
       rel="icon"
       type="image/png"
       sizes="512x512"
-      href="/syntax-visualiser/favicon/android-chrome-512x512.png"
+      href="/syntax-visualizer/favicon/android-chrome-512x512.png"
     />
-    <link rel="apple-touch-icon" sizes="180x180" href="/syntax-visualiser/favicon/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/syntax-visualizer/favicon/apple-touch-icon.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=Poppins:wght@300&display=swap"
       rel="stylesheet"
     />
-    <script type="module" crossorigin src="/syntax-visualiser/assets/index.7279c6b6.js"></script>
-    <link rel="stylesheet" href="/syntax-visualiser/assets/index.fdf66c48.css">
+    <script type="module" crossorigin src="/syntax-visualizer/assets/index.11b33bc6.js"></script>
+    <link rel="stylesheet" href="/syntax-visualizer/assets/index.3b17f647.css">
   </head>
   <body>
     <div id="app"></div>
