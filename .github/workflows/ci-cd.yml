@@ -63,7 +63,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          VITE_BASE_URL: /syntax-visualiser/
+          VITE_BASE_URL: /syntax-visualizer/
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@v4.3.3
         with:
