@@ -16,7 +16,7 @@ export const useSettingsStore = defineStore("settings", {
   state: (): SettingsState => ({
     theme: "system",
     codeEditorVariant: "monaco-editor",
-    astVariant: "json",
+    astVariant: "graph",
     languageId: "javascript",
   }),
 })
