@@ -239,7 +239,7 @@ function getBabelNodeLabel(node: BabelNode): string | undefined {
       return "undefined"
 
     case "TemplateElement":
-      return node.value.cooked || node.value.raw
+      return '"' + (node.value.cooked || node.value.raw) + '"'
   }
 }
 
