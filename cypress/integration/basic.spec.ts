@@ -8,11 +8,15 @@ describe("Basic interaction test", () => {
     cy.contains("CallExpression")
     cy.contains("StringLiteral")
 
+    // eslint-disable-next-line cypress/no-unnecessary-waiting
+    cy.wait(5000)
+
     // Enter some basic code
     cy.contains("function", { timeout: 15000 })
     cy.focused({ timeout: 15000 })
-      .type("{ctrl+shift+a}{backspace}", { timeout: 15000 })
-      .type('console.log("Hello, from test!")', { timeout: 15000 })
+      .type("{selectall}")
+      .type("{backspace}")
+      .type('console.log("Hello, from test!")')
 
     // Check entered code
     cy.get(".ast-root").contains("Program", { timeout: 15000 })
