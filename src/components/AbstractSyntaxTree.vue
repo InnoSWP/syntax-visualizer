@@ -4,59 +4,38 @@ import { defineComponent } from "vue"
 import AbstractSyntaxTreeGraph from "@/components/AbstractSyntaxTreeGraph.vue"
 import AbstractSyntaxTreeJson from "@/components/AbstractSyntaxTreeJson.vue"
 import type { ASTVariant } from "@/stores/settings"
-import type { AST } from "@/core/types"
-
-const getCircularReplacer = () => {
-  const seen = new WeakSet()
-  return (key: any, value: any) => {
-    if (key === "parent") {
-      return
-    }
-    if (typeof value === "object" && value !== null) {
-      if (seen.has(value)) {
-        return
-      }
-      seen.add(value)
-    }
-    return value
-  }
-}
+import type { ASTNode } from "@/core/types"
 
 export default defineComponent({
   name: "AbstractSyntaxTree",
   components: { AbstractSyntaxTreeJson, AbstractSyntaxTreeGraph },
   props: {
+    root: {
+      type: Object as PropType<ASTNode>,
+      required: false,
+    },
     variant: {
       type: String as PropType<ASTVariant>,
       required: true,
-    },
-    ast: {
-      type: Object as PropType<AST | undefined>,
-      required: false,
-    },
-  },
-  computed: {
-    astJson() {
-      if (!this.ast) {
-        return "No AST"
-      }
-      return JSON.stringify(this.ast, getCircularReplacer(), 2)
     },
   },
 })
 </script>
 
 <template>
-  <div class="root">
-    <pre>{{ astJson }}</pre>
-    <AbstractSyntaxTreeGraph v-if="variant === 'graph'" />
-    <AbstractSyntaxTreeJson v-else />
+  <div class="ast-root">
+    <h3 v-if="!root">Write some (correct) code!</h3>
+    <AbstractSyntaxTreeGraph v-else-if="variant === 'graph'" />
+    <AbstractSyntaxTreeJson v-else :root="root" />
   </div>
 </template>
 
 <style scoped>
-.root {
-  overflow: auto;
-  max-height: 100%;
+.ast-root {
+  display: flex;
+  overflow: hidden;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
 }
 </style>
