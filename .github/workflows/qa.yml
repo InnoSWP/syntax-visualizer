@@ -1,4 +1,4 @@
-name: Quality Assurance & E2E Tests
+name: QA & E2E Tests
 
 on:
   pull_request:
