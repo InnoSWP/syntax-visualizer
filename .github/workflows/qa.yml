@@ -115,6 +115,8 @@ jobs:
       - name: "E2E Tests - Chrome"
         uses: cypress-io/github-action@v4
         with:
+          start: npm run preview
+          wait-on: "http://localhost:5050"
           browser: chrome
           record: true
           parallel: true
@@ -159,6 +161,8 @@ jobs:
       - name: "E2E Tests - Firefox"
         uses: cypress-io/github-action@v4
         with:
+          start: npm run preview
+          wait-on: "http://localhost:5050"
           browser: firefox
           record: true
           parallel: true
@@ -199,6 +203,8 @@ jobs:
       - name: "E2E Tests - Electron - Windows"
         uses: cypress-io/github-action@v4
         with:
+          start: npm run preview
+          wait-on: "http://localhost:5050"
           record: true
           parallel: true
           group: "E2E - Electron - Windows"
