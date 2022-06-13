@@ -92,7 +92,7 @@ jobs:
       fail-fast: false
       matrix:
         # run copies of the current job in parallel
-        containers: [ 1, 2, 3, 4, 5 ]
+        containers: [ 1, 2, 3 ]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -147,7 +147,7 @@ jobs:
       fail-fast: false
       matrix:
         # run copies of the current job in parallel
-        containers: [ 1, 2, 3, 4, 5 ]
+        containers: [ 1, 2, 3 ]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -189,7 +189,7 @@ jobs:
       fail-fast: false
       matrix:
         # run copies of the current job in parallel
-        containers: [ 1, 2, 3, 4, 5 ]
+        containers: [ 1, 2, 3 ]
     steps:
       - name: Checkout
         uses: actions/checkout@v3
