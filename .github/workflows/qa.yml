@@ -25,6 +25,7 @@ jobs:
         run: npm run build
 
   install:
+    name: Install
     runs-on: ubuntu-latest
     container:
       image: cypress/browsers:node16.14.0-chrome99-ff97
@@ -52,6 +53,7 @@ jobs:
           path: build
 
   install-windows:
+    name: Install Windows
     runs-on: windows-2019
     needs: [ lint-and-unit-tests ]
     steps:
@@ -75,6 +77,7 @@ jobs:
           path: build
 
   chrome-tests:
+    name: Chrome tests
     timeout-minutes: 15
     runs-on: ubuntu-latest
     container:
@@ -127,6 +130,7 @@ jobs:
           DEBUG: "cypress:server:args"
 
   firefox-tests:
+    name: Firefox tests
     timeout-minutes: 15
     runs-on: ubuntu-latest
     container:
@@ -169,6 +173,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   windows-tests:
+    name: Windows tests
     timeout-minutes: 40
     runs-on: windows-2019
     needs: install-windows
