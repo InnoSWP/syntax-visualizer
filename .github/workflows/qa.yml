@@ -40,7 +40,7 @@ jobs:
         with:
           runTests: false
       # report machine parameters
-      - run: cypress info
+      - run: npx cypress info
       - run: node --version
       - run: node -p 'os.cpus()'
       - run: npm run build
@@ -65,7 +65,7 @@ jobs:
         with:
           runTests: false
       # report machine parameters
-      - run: cypress info
+      - run: npx cypress info
       - run: node -p 'os.cpus()'
       - run: npm run build
 
