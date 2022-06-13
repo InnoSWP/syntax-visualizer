@@ -50,7 +50,7 @@ jobs:
         with:
           name: build
           if-no-files-found: error
-          path: build
+          path: dist
 
   install-windows:
     name: Install Windows
@@ -74,7 +74,7 @@ jobs:
         with:
           name: build
           if-no-files-found: error
-          path: build
+          path: dist
 
   chrome-tests:
     name: Chrome tests
@@ -101,7 +101,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build
-          path: build
+          path: dist
 
       - name: Cypress info
         run: npx cypress info
@@ -154,7 +154,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build
-          path: build
+          path: dist
 
       - name: "E2E Tests - Firefox"
         uses: cypress-io/github-action@v4
@@ -194,7 +194,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build
-          path: build
+          path: dist
 
       - name: "E2E Tests - Electron - Windows"
         uses: cypress-io/github-action@v4
