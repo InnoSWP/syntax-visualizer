@@ -10,7 +10,13 @@ import GlobalsPolyfills from "@esbuild-plugins/node-globals-polyfill"
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [vue(), vueJsx(), monacoEditorPlugin()],
+  plugins: [
+    vue(),
+    vueJsx(),
+    monacoEditorPlugin({
+      publicBaseUrl: process.env.VITE_BASE_URL || "/",
+    }),
+  ],
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
