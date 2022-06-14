@@ -3,6 +3,13 @@ name: Continuous Delivery
 on:
   push:
     branches: [main]
+    paths:
+      - 'src/**'
+      - 'public/**'
+      - 'index.html'
+      - 'package.json'
+      - 'tsconfig*'
+      - 'vite.config*'
 
 # Required by github-pages-deploy-action
 permissions:
