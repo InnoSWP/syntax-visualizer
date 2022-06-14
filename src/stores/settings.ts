@@ -1,12 +1,12 @@
 import { defineStore } from "pinia"
 import type { LanguageID } from "@/core/languages"
 
-export type ColorTheme = "light" | "dark" | "system"
+export type ThemeColor = "light" | "dark" | "system"
 export type CodeEditorVariant = "monaco-editor" | "codemirror"
 export type ASTVariant = "graph" | "json"
 
 export interface SettingsState {
-  theme: ColorTheme
+  theme: ThemeColor
   codeEditorVariant: CodeEditorVariant
   astVariant: ASTVariant
   languageId: LanguageID
