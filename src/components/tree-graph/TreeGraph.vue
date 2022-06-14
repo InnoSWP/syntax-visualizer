@@ -58,6 +58,10 @@ export default defineComponent({
   --stroke-width: 2px;
 }
 
+.container :deep(*) {
+  font-family: monospace;
+}
+
 .nodes {
   z-index: 1;
 }
