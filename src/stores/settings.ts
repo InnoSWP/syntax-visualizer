@@ -21,13 +21,18 @@ export const useSettingsStore = defineStore("settings", {
   }),
   actions: {
     toggleTheme() {
-      if (this.theme === "light") {
-        this.theme = "dark"
-      } else if (this.theme === "dark") {
-        this.theme = "system"
-      } else {
-        this.theme = "light"
-      }
+      this.theme = getNextTheme(this.theme)
     },
   },
 })
+
+export const getNextTheme = (currentTheme: ThemeColor): ThemeColor => {
+  switch (currentTheme) {
+    case "light":
+      return "dark"
+    case "dark":
+      return "system"
+    default:
+      return "light"
+  }
+}
