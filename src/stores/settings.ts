@@ -19,4 +19,15 @@ export const useSettingsStore = defineStore("settings", {
     astVariant: "graph",
     languageId: "javascript",
   }),
+  actions: {
+    toggleTheme() {
+      if (this.theme === "light") {
+        this.theme = "dark"
+      } else if (this.theme === "dark") {
+        this.theme = "system"
+      } else {
+        this.theme = "light"
+      }
+    },
+  },
 })
