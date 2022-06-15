@@ -3,17 +3,40 @@ import { ref } from "vue"
 
 const PLACEHOLDER = "untitled"
 const title = ref(PLACEHOLDER)
+const isFocused = ref(false)
+const input = ref<HTMLInputElement | null>(null)
+
+document.addEventListener("keydown", (event: KeyboardEvent) => {
+  if (isFocused.value && event.code.toLowerCase() === "escape") {
+    event.stopPropagation()
+    event.preventDefault()
+    input.value?.blur()
+  }
+})
+
+const handleContainerClick = () => {
+  input.value?.focus()
+}
 </script>
 
 <template>
-  <div class="document-title">
+  <div
+    :class="{
+      'document-title': true,
+      focused: isFocused,
+    }"
+    @click="handleContainerClick"
+  >
     <span class="overflow-shadow left" />
     <div class="text-wrapper">
       <input
+        ref="input"
         v-model="title"
         :placeholder="PLACEHOLDER"
         maxlength="50"
         class="input"
+        @blur="isFocused = false"
+        @focus="isFocused = true"
       />
       <span class="title-text">
         {{ title || PLACEHOLDER }}
@@ -36,6 +59,18 @@ $padding: 12px;
   margin-right: 6px;
   padding-right: $padding;
   padding-left: $padding;
+  cursor: text;
+  transition: box-shadow 0.2s ease;
+  border-radius: 6px;
+  box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0);
+
+  &:hover:not(.focused) {
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2);
+  }
+
+  &.focused {
+    box-shadow: 0 0 8px 0 rgba(#0066ff, 0.25);
+  }
 }
 
 .text-wrapper {
