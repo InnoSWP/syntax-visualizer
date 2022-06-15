@@ -17,6 +17,15 @@ document.addEventListener("keydown", (event: KeyboardEvent) => {
 const handleContainerClick = () => {
   input.value?.focus()
 }
+
+const handleInputFocus = () => {
+  isFocused.value = true
+}
+
+const handleInputBlur = () => {
+  isFocused.value = false
+  title.value = title.value.trim()
+}
 </script>
 
 <template>
@@ -35,8 +44,8 @@ const handleContainerClick = () => {
         :placeholder="PLACEHOLDER"
         maxlength="50"
         class="input"
-        @blur="isFocused = false"
-        @focus="isFocused = true"
+        @blur="handleInputBlur"
+        @focus="handleInputFocus"
       />
       <span class="title-text">
         {{ title || PLACEHOLDER }}
