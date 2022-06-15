@@ -20,12 +20,15 @@ export default defineComponent({
     return {
       node_names : [],
       matrix : [],
+      maxDepth : 0,
     }
   },
   methods: {
     addVertex(node: ASTNode, depth: number) {
       this.node_names.push([node.label, node.type, depth])
-      this.matrix.push([0])
+      this.matrix.push([])
+      //считаю максимальную глубину
+      this.maxDepth = (depth > this.maxDepth )?depth:this.maxDepth
     }
   },
   computed: {
@@ -34,6 +37,25 @@ export default defineComponent({
       //обход дерева и получения вершин и глубин
        traverseAstPreOrder(this.ats, this.addVertex)//this.node_names.push([rootProx.heading, rootProx.subheading])
        //заполнение матрицы - пока нет, тут будет
+
+       for (var i = 0; i < this.matrix.length; i++)
+       {
+           for (var j = 0; j < this.maxDepth; j++)
+           {
+                if(this.node_names[i][2] == j + 1)
+                {
+                  this.matrix[i].push(1)
+                }
+                else
+                {
+                  this.matrix[i].push(0)
+                }
+                console.log(this.node_names[i][2])
+                if(this.node_names[i][2] > j + 1)
+                  this.matrix[i][j] += this.matrix[i-1][j]
+           }
+       }
+       //складывание матрицы
 
        return this.matrix.length
     },
@@ -46,7 +68,7 @@ export default defineComponent({
 <template>
 
 <table id="matrRepresent">
-
+  <p style='display:none'>{{createMatrix}}</p>
   <!--рендеринг строчек таблицы-->
   <template v-for="(row, index) in matrix">
     <tr>
