@@ -36,11 +36,12 @@ export default defineComponent({
   }
 
   .sub {
-    font-size: small;
-    font-weight: normal;
+    font-size: large;
+
   }
   .hed{
-    font-size: large
+    font-size: small;
+    font-weight: normal;
   }
 
 
