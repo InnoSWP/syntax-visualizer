@@ -16,9 +16,10 @@ export default defineComponent({
 <template>
   <!-- рендер  заголовка если это он-->
   <th v-if="is_a_row">
-    <span class="hed">{{is_a_row?header:""}}</span>
-    <br>
     <span class='sub' v-if="subheader">{{is_a_row?subheader:""}}</span>
+    <br>
+    <span class="hed">{{is_a_row?header:""}}</span>
+
   </th>
     <!-- иначе рендер обычной ячейки -->
 <td v-else>{{header}}</td>
