@@ -51,8 +51,11 @@ export default defineComponent({
                   this.matrix[i].push(0)
                 }
                 console.log(this.node_names[i][2])
-                if(this.node_names[i][2] > j + 1)
-                  this.matrix[i][j] += this.matrix[i-1][j]
+                if(i > 0)
+                {
+                  if(this.node_names[i][2] >= j + 1)
+                    this.matrix[i][j] += this.matrix[i-1][j]
+                }
            }
        }
        //складывание матрицы
