@@ -65,11 +65,11 @@ $padding: 12px;
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0);
 
   &:hover:not(.focused) {
-    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.15);
   }
 
   &.focused {
-    box-shadow: 0 0 8px 0 rgba(#0066ff, 0.25);
+    box-shadow: 0 0 6px 4px rgba(#0066ff, 0.25);
   }
 }
 
