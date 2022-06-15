@@ -19,12 +19,13 @@ export default defineComponent({
     //в node_names заголовки таблицы и глубины - первый всегда Components, далее цифры от 1 до длины NCM
     return {
       node_names : [],
-      matrix:[0][0] = [[]],
+      matrix : [],
     }
   },
   methods: {
     addVertex(node: ASTNode, depth: number) {
       this.node_names.push([node.label, node.type, depth])
+      this.matrix.push([0])
     }
   },
   computed: {
@@ -34,7 +35,7 @@ export default defineComponent({
        traverseAstPreOrder(this.ats, this.addVertex)//this.node_names.push([rootProx.heading, rootProx.subheading])
        //заполнение матрицы - пока нет, тут будет
 
-       return this.node_names
+       return this.matrix.length
     },
   },
   components : {NodeCorMatrRowView}
@@ -43,10 +44,9 @@ export default defineComponent({
 </script>
 
 <template>
-  <!--отладка-->
-  <p>{{createMatrix}}</p>
 
 <table id="matrRepresent">
+
   <!--рендеринг строчек таблицы-->
   <template v-for="(row, index) in matrix">
     <tr>
