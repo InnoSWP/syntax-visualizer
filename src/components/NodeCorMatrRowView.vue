@@ -26,15 +26,21 @@ export default defineComponent({
 </template>
 
 <style scoped>
-  table {
-   border-collapse: collapse;
-   border: 3px solid #a9a9a9;
-   margin: 5px;
-  }
+
   td, th {
-   border: 2px solid #a9a9a9;
-   padding: 3px
-  }
+   border: 1px solid #a9a9a9;
+   padding: 3px;
+   white-space: nowrap;
+   }
+   th
+   {
+     background:#fffffe
+   }
+    td
+   {
+     position: relative;
+     text-align: center;
+   }
 
   .sub {
     font-size: large;
