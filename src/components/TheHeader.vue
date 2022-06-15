@@ -1,16 +1,20 @@
 <script lang="ts">
 import { defineComponent } from "vue"
+import DocumentTitle from "@/components/DocumentTitle.vue"
 import ThemeToggle from "@/components/ThemeToggle.vue"
 
 export default defineComponent({
   name: "TheHeader",
-  components: { ThemeToggle },
+  components: { DocumentTitle, ThemeToggle },
 })
 </script>
 
 <template>
-  <header class="container">
-    <div class="left-menu"></div>
+  <header class="header">
+    <div class="left-menu">
+      <DocumentTitle />
+      <span class="vertical-separator" />
+    </div>
     <h1 class="heading">Syntax Visualizer</h1>
     <div class="right-menu">
       <ThemeToggle />
@@ -19,20 +23,21 @@ export default defineComponent({
 </template>
 
 <style scoped>
-.container {
+.header {
   display: flex;
   align-items: center;
   justify-content: center;
+  max-width: 100%;
   height: var(--header-height);
   padding-right: 18px;
   padding-left: 18px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
-.container > * {
+.header > :deep(*) {
   display: flex;
   align-items: center;
-  flex: 1;
+  width: calc(100% / 3);
 }
 
 .left-menu {
@@ -46,5 +51,11 @@ export default defineComponent({
 
 .right-menu {
   flex-direction: row-reverse;
+}
+
+.vertical-separator {
+  width: 1px;
+  height: 28px;
+  background: #000;
 }
 </style>
