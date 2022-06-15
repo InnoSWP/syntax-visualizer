@@ -7,10 +7,18 @@ const isFocused = ref(false)
 const input = ref<HTMLInputElement | null>(null)
 
 document.addEventListener("keydown", (event: KeyboardEvent) => {
-  if (isFocused.value && event.code.toLowerCase() === "escape") {
-    event.stopPropagation()
-    event.preventDefault()
-    input.value?.blur()
+  if (!isFocused.value) {
+    return
+  }
+
+  const keyCode = event.code.toLowerCase()
+
+  switch (keyCode) {
+    case "escape":
+    case "enter":
+      event.stopPropagation()
+      event.preventDefault()
+      input.value?.blur()
   }
 })
 
