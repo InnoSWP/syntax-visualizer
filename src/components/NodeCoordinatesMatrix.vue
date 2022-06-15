@@ -34,6 +34,8 @@ export default defineComponent({
   computed: {
     //заполняет матрицукоординат
     createMatrix() {
+      this.node_names = []
+      this.matrix = []
       //обход дерева и получения вершин и глубин
        traverseAstPreOrder(this.ats, this.addVertex)//this.node_names.push([rootProx.heading, rootProx.subheading])
        //заполнение матрицы - пока нет, тут будет
@@ -50,7 +52,6 @@ export default defineComponent({
                 {
                   this.matrix[i].push(0)
                 }
-                console.log(this.node_names[i][2])
                 if(i > 0)
                 {
                   if(this.node_names[i][2] >= j + 1)
@@ -70,37 +71,49 @@ export default defineComponent({
 
 <template>
 
-<table id="matrRepresent">
-  <p style='display:none'>{{createMatrix}}</p>
-  <!--рендеринг строчек таблицы-->
-  <template v-for="(row, index) in matrix">
-    <tr>
-      <!--Заголовок и подзаголовок вершины дерева -->
-      <NodeCorMatrRowView
-        v-bind:header="node_names[index][0]"
-        v-bind:subheader="node_names[index][1]"
-        v-bind:is_a_row="true" />
-      <!-- строка матрицы ей соответственная-->
-    <NodeCorMatrRowView
-          v-for="col of row"
-          v-bind:header="col"
-          v-bind:is_a_row="false" />
-    </tr>
-  </template>
-
-</table>
+  <div class="wrapper">
+    <table id="matrRepresent">
+      <p style='display:none'>{{createMatrix}}</p>
+      <!--рендеринг строчек таблицы-->
+      <template v-for="(row, index) in matrix">
+        <tr>
+          <!--Заголовок и подзаголовок вершины дерева -->
+          <NodeCorMatrRowView
+            v-bind:header="node_names[index][0]"
+            v-bind:subheader="node_names[index][1]"
+            v-bind:is_a_row="true" />
+          <!-- строка матрицы ей соответственная-->
+        <NodeCorMatrRowView
+              v-for="col of row"
+              v-bind:header="col"
+              v-bind:is_a_row="false" />
+        </tr>
+      </template>
+    </table>
+  </div>
 </template>
 
 <style scoped>
   table {
+   display: inline-block;
    border-collapse: collapse;
-   border: 3px solid #a9a9a9;
+   border: 2px solid #a9a9a9;
    margin: 5px;
+   table-layout: fixed;
   }
+
   td, th {
    border: 2px solid #a9a9a9;
    padding: 3px;
   }
 
 
+  .wrapper {
+    overflow-x: scroll;
+    overflow-y: scroll;
+    flex-grow: 1;
+    width: 100%;
+    height: 100%;
+    background-color: #efefef;
+  }
 </style>
