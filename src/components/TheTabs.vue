@@ -1,25 +1,82 @@
 <script setup lang="ts">
-import { ref, computed } from "vue"
+import { computed, type ComputedRef, ref, type Ref, watchEffect } from "vue"
 import AppTab from "@/components/AppTab.vue"
 import CodeEditor from "@/components/CodeEditor.vue"
 import AbstractSyntaxTree from "@/components/AbstractSyntaxTree.vue"
 import NodeCoordinatesMatrix from "@/components/NodeCoordinatesMatrix.vue"
 import { useSettingsStore } from "@/stores/settings"
-import languages from "@/core/languages"
+import languages, { type LanguageID } from "@/core/languages"
+import { useRoute } from "vue-router"
+import type { Language, LanguageParser } from "@/core/types"
+import { storeToRefs } from "pinia"
+import router from "@/router"
 
 const settings = useSettingsStore()
+// Make store values reactive
+const { parserName, languageId } = storeToRefs(settings)
+const { setLanguageId, setParserName } = settings
+const route = useRoute()
 
-const lang = languages[settings.languageId]
-const parser = lang.parsers[lang.defaultParserName]
+function makeParserFromSettings(): LanguageParser<any, any, any> {
+  return makeLanguageFromSettings().parsers[parserName.value]
+}
 
-const getLangSampleCode = (): string =>
-  typeof lang.sampleCode === "string"
-    ? lang.sampleCode
-    : lang.sampleCode.join("\n")
+function makeLanguageFromSettings(): Language<any, any> {
+  return languages[languageId.value]
+}
 
-const code = ref(getLangSampleCode())
+function makeCodeFromSettings(): string {
+  let l = makeLanguageFromSettings()
+  return typeof l.sampleCode === "string"
+    ? l.sampleCode
+    : l.sampleCode.join("\n")
+}
 
-const astOrError = computed(() => parser.parse(code.value))
+// `any` type is definitely not the best way to do it...
+const lang: Ref<Language<any, any>> = ref(makeLanguageFromSettings())
+const parser: Ref<LanguageParser<any, any, any>> = ref(makeParserFromSettings())
+const code: Ref<string> = ref(makeCodeFromSettings())
+const astOrError: ComputedRef = computed(() => parser.value.parse(code.value))
+
+// Get data that was shared via url.
+// Backup to default values if url is empty or misses something
+function setSharedDataFromUrl() {
+  const queryCode = "code" in route.query ? route.query.code : null
+  const queryLanguage = "lang" in route.query ? route.query.lang : null
+  const queryParser = "parser" in route.query ? route.query.parser : null
+
+  if (queryLanguage !== null && queryLanguage !== "") {
+    console.log(queryParser, queryLanguage, queryCode)
+    setLanguageId(queryLanguage as LanguageID)
+    lang.value = makeLanguageFromSettings()
+  }
+
+  if (queryParser !== null && queryParser !== "") {
+    setParserName(queryParser as string)
+    parser.value = makeParserFromSettings()
+  }
+
+  if (queryCode !== null && queryCode !== "") {
+    code.value = queryCode as string
+  }
+}
+
+function watchForDataChangeToUpdateUrl() {
+  // Put lang, parse and code values to the url params (encoded)
+  // when any of them will be changed
+  watchEffect(() => {
+    router.push({
+      query: {
+        lang: languageId.value,
+        parser: parserName.value,
+        code: code.value,
+      },
+    })
+  })
+}
+
+setSharedDataFromUrl()
+watchForDataChangeToUpdateUrl()
 </script>
 
 <template>
@@ -28,7 +85,7 @@ const astOrError = computed(() => parser.parse(code.value))
       <CodeEditor
         v-model:value="code"
         :variant="settings.codeEditorVariant"
-        language="typescript"
+        :language="languageId"
       />
     </AppTab>
     <AppTab title="AST" :row="1" :col="2">
