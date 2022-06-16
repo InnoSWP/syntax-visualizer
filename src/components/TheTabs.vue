@@ -38,7 +38,7 @@ const astOrError = computed(() => parser.parse(code.value))
       />
     </AppTab>
     <AppTab title="NCM" :row="1" :col="3">
-      <NodeCoordinatesMatrix />
+      <NodeCoordinatesMatrix :ast="astOrError?.ast" />
     </AppTab>
   </main>
 </template>
