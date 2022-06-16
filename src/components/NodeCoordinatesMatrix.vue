@@ -1,119 +1,144 @@
 <script lang="ts">
 import { defineComponent } from "vue"
-import NodeCorMatrRowView from "@/components/NodeCorMatrRowView.vue"
+import type { PropType } from "vue"
 import { traverseAstPreOrder } from "@/core/traverse"
-import type { ASTNode } from "@/core/types"
-import { generateTreeGraphNodeProxyFromASTNode } from "@/components/tree-graph/tmpProxy"
+import type { AST, ASTNode } from "@/core/types"
+
+interface NCMNode {
+  heading: string
+  subheading?: string
+  depth: number
+  coordinates: number[]
+}
 
 export default defineComponent({
-  props : {
-    ats: {
+  name: "NodeCoordinatesMatrix",
+  props: {
+    ast: {
       type: Object as PropType<AST>,
       required: false,
-    }
-  },
-  name: "NodeCoordinatesMatrix",
-  data()
-  {
-    //в matrix хранится составленная таблица
-    //в node_names заголовки таблицы и глубины - первый всегда Components, далее цифры от 1 до длины NCM
-    return {
-      node_names : [],
-      matrix : [],
-      maxDepth : 0,
-    }
-  },
-  methods: {
-    addVertex(node: ASTNode, depth: number) {
-      this.node_names.push([node.label, node.type, depth])
-      this.matrix.push([])
-      //считаю максимальную глубину
-      this.maxDepth = (depth > this.maxDepth )?depth:this.maxDepth
-    }
-  },
-  computed: {
-    //заполняет матрицукоординат
-    createMatrix() {
-      this.node_names = []
-      this.matrix = []
-      //обход дерева и получения вершин и глубин
-       traverseAstPreOrder(this.ats, this.addVertex)//this.node_names.push([rootProx.heading, rootProx.subheading])
-       //заполнение матрицы - пока нет, тут будет
-
-       for (var i = 0; i < this.matrix.length; i++)
-       {
-           for (var j = 0; j < this.maxDepth; j++)
-           {
-                if(this.node_names[i][2] == j + 1)
-                {
-                  this.matrix[i].push(1)
-                }
-                else
-                {
-                  this.matrix[i].push(0)
-                }
-                if(i > 0)
-                {
-                  if(this.node_names[i][2] >= j + 1)
-                    this.matrix[i][j] += this.matrix[i-1][j]
-                }
-           }
-       }
-       //складывание матрицы
-
-       return this.matrix.length
     },
   },
-  components : {NodeCorMatrRowView}
-})
+  computed: {
+    matrix() {
+      if (!this.ast) {
+        return
+      }
 
+      let maxDepth = 0
+      const nodes: NCMNode[] = []
+
+      const addVertex = (node: ASTNode, depth: number) => {
+        nodes.push({
+          heading: node.type,
+          subheading: node.label,
+          depth: depth,
+          coordinates: [],
+        })
+        maxDepth = Math.max(depth, maxDepth)
+      }
+
+      traverseAstPreOrder(this.ast, addVertex)
+
+      for (let i = 0; i < nodes.length; i++) {
+        const node = nodes[i]
+        for (let j = 0; j < maxDepth; j++) {
+          const coordinate = node.depth == j + 1 ? 1 : 0
+          node.coordinates.push(coordinate)
+
+          if (i > 0 && node.depth >= j + 1) {
+            node.coordinates[j] += nodes[i - 1].coordinates[j]
+          }
+        }
+      }
+
+      return nodes
+    },
+  },
+})
 </script>
 
 <template>
-
   <div class="wrapper">
-    <table id="matrRepresent">
-      <p style='display:none'>{{createMatrix}}</p>
-      <!--рендеринг строчек таблицы-->
-      <template v-for="(row, index) in matrix">
-        <tr>
-          <!--Заголовок и подзаголовок вершины дерева -->
-          <NodeCorMatrRowView
-            v-bind:header="node_names[index][0]"
-            v-bind:subheader="node_names[index][1]"
-            v-bind:is_a_row="true" />
-          <!-- строка матрицы ей соответственная-->
-        <NodeCorMatrRowView
-              v-for="col of row"
-              v-bind:header="col"
-              v-bind:is_a_row="false" />
+    <table class="table">
+      <tbody class="table-body">
+        <tr
+          v-for="(node, nodeIndex) in matrix"
+          v-bind:key="nodeIndex"
+          class="row"
+        >
+          <th class="heading-cell">
+            <span class="heading">{{ node.heading }}</span>
+            <span v-if="node.subheading" class="subheading">
+              {{ node.subheading }}
+            </span>
+          </th>
+
+          <td
+            v-for="(coordinate, coordinateIndex) in node.coordinates"
+            v-bind:key="`${nodeIndex}-${coordinateIndex}`"
+            class="coordinate-cell"
+          >
+            <span class="coordinate-cell-wrapper">
+              {{ coordinate }}
+            </span>
+          </td>
         </tr>
-      </template>
+      </tbody>
     </table>
   </div>
 </template>
 
 <style scoped>
-  table {
-   display: inline-block;
-   border-collapse: collapse;
-   border: 2px solid #a9a9a9;
-   margin: 5px;
-   table-layout: fixed;
-  }
+.wrapper {
+  position: relative;
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+  background-color: #efefef;
+}
 
-  td, th {
-   border: 2px solid #a9a9a9;
-   padding: 3px;
-  }
+.table {
+  position: absolute;
+  border-collapse: collapse;
+  /*border: 2px solid #a9a9a9;*/
+}
 
+.table-body {
+  display: block;
+  overflow: auto;
+}
 
-  .wrapper {
-    overflow-x: scroll;
-    overflow-y: scroll;
-    flex-grow: 1;
-    width: 100%;
-    height: 100%;
-    background-color: #efefef;
-  }
+.heading-cell,
+.coordinate-cell {
+  border: 1px solid #a9a9a9;
+}
+
+.heading-cell {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.heading {
+  font-size: 0.875rem;
+  font-weight: bold;
+}
+
+.subheading {
+  font-size: 0.75rem;
+  font-weight: normal;
+}
+
+.coordinate-cell {
+  font-size: 0.75rem;
+}
+
+.coordinate-cell-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 16px;
+  min-height: 16px;
+}
 </style>
