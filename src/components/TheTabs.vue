@@ -12,7 +12,6 @@ import { storeToRefs } from "pinia"
 import router from "@/router"
 
 const settings = useSettingsStore()
-// Make store values reactive
 const { parserName, languageId } = storeToRefs(settings)
 const { setLanguageId, setParserName } = settings
 const route = useRoute()
@@ -45,18 +44,18 @@ function setSharedDataFromUrl() {
   const queryLanguage = "lang" in route.query ? route.query.lang : null
   const queryParser = "parser" in route.query ? route.query.parser : null
 
-  if (queryLanguage !== null && queryLanguage !== "") {
+  if (queryLanguage) {
     console.log(queryParser, queryLanguage, queryCode)
     setLanguageId(queryLanguage as LanguageID)
     lang.value = makeLanguageFromSettings()
   }
 
-  if (queryParser !== null && queryParser !== "") {
+  if (queryParser) {
     setParserName(queryParser as string)
     parser.value = makeParserFromSettings()
   }
 
-  if (queryCode !== null && queryCode !== "") {
+  if (queryCode) {
     code.value = queryCode as string
   }
 }
