@@ -24,7 +24,7 @@ onMounted(() => {
     minimap: {
       enabled: false,
     },
-    scrollBeyondLastLine: false,
+    scrollBeyondLastLine: true,
     automaticLayout: true,
     extraEditorClassName: "monaco",
   })
@@ -53,13 +53,3 @@ onMounted(() => {
 <template>
   <div ref="container"></div>
 </template>
-
-<style>
-/*
-monaco will set this class on init
-see extraEditorClassName setting above
-*/
-.monaco {
-  overflow-y: hidden;
-}
-</style>
