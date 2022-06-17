@@ -1,4 +1,7 @@
-export interface Language<ID extends string, ParserNames extends string> {
+export interface Language<
+  ID extends Readonly<string>,
+  ParserNames extends Readonly<string>
+> {
   /**
    * Unique language identifier.
    */
@@ -24,7 +27,7 @@ export interface Language<ID extends string, ParserNames extends string> {
    * In the format: { parserName: parser }
    */
   readonly parsers: {
-    [key in ParserNames]: LanguageParser<ParserNames, any, any>
+    [key in ParserNames]: LanguageParser<ParserNames, unknown>
   }
 
   /**
@@ -38,21 +41,28 @@ export interface Language<ID extends string, ParserNames extends string> {
   readonly sampleCode: string | string[]
 }
 
-export interface LanguageParser<Name extends string, ParserAST, ParseOptions> {
+export interface LanguageParser<Name extends Readonly<string>, ParseOptions> {
   readonly name: Name
-  readonly parse: LanguageParseFunc<ParserAST, ParseOptions>
+  readonly parse: ParserFunc<ParseOptions>
 }
 
-export type LanguageParseFunc<ParserAST, ParseOptions> = (
+export type ParserFunc<ParseOptions> = (
   code: string,
   options?: ParseOptions
-) => { originalAST: ParserAST; ast: AST } | { error: ParseError }
+) => ParseResult
 
-export type LanguageParseFuncResult<ParserAST, ParseOptions> = ReturnType<
-  LanguageParseFunc<ParserAST, ParseOptions>
->
+export type ParseResult = SuccessParseResult | FailedParseResult
 
-export type ParseError = string | { message: string; loc: SourceLocation }
+export interface SuccessParseResult {
+  success: true
+  ast: AST
+}
+
+export interface FailedParseResult {
+  success: false
+  message: string
+  location?: SourceLocation
+}
 
 export interface AST {
   root?: ASTNode
@@ -78,8 +88,8 @@ export interface Position {
   index: number
 }
 
-export function defineParser<Name extends string, ParserAST, ParseOptions>(
-  parser: LanguageParser<Name, ParserAST, ParseOptions>
+export function defineParser<Name extends string, ParseOptions>(
+  parser: LanguageParser<Name, ParseOptions>
 ) {
   return parser
 }

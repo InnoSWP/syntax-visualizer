@@ -1,25 +1,22 @@
 <script setup lang="ts">
-import { ref, computed } from "vue"
+import { nextTick, ref } from "vue"
 import AppTab from "@/components/AppTab.vue"
 import CodeEditor from "@/components/CodeEditor.vue"
 import AbstractSyntaxTree from "@/components/AbstractSyntaxTree.vue"
 import NodeCoordinatesMatrix from "@/components/NodeCoordinatesMatrix.vue"
 import { useSettingsStore } from "@/stores/settings"
-import languages from "@/core/languages"
+import { useParsingController } from "@/core/controller"
 
-const settings = useSettingsStore()
+const { codeEditorVariant, astVariant } = useSettingsStore()
 
-const lang = languages[settings.languageId]
-const parser = lang.parsers[lang.defaultParserName]
+// TODO: refactor
+// Set initial debounce time to zero to parse AST for the initial code immediately
+const debounceTime = ref(0)
+nextTick(() => {
+  debounceTime.value = 300
+})
 
-const getLangSampleCode = (): string =>
-  typeof lang.sampleCode === "string"
-    ? lang.sampleCode
-    : lang.sampleCode.join("\n")
-
-const code = ref(getLangSampleCode())
-
-const astOrError = computed(() => parser.parse(code.value))
+const { code, ast } = useParsingController(debounceTime)
 </script>
 
 <template>
@@ -27,18 +24,15 @@ const astOrError = computed(() => parser.parse(code.value))
     <AppTab title="Code" :row="1" :col="1">
       <CodeEditor
         v-model:value="code"
-        :variant="settings.codeEditorVariant"
+        :variant="codeEditorVariant"
         language="typescript"
       />
     </AppTab>
     <AppTab title="AST" :row="1" :col="2">
-      <AbstractSyntaxTree
-        :variant="settings.astVariant"
-        :root="astOrError?.ast?.root"
-      />
+      <AbstractSyntaxTree :variant="astVariant" :root="ast?.root" />
     </AppTab>
     <AppTab title="NCM" :row="1" :col="3">
-      <NodeCoordinatesMatrix :ast="astOrError?.ast" />
+      <NodeCoordinatesMatrix :ast="ast" />
     </AppTab>
   </main>
 </template>

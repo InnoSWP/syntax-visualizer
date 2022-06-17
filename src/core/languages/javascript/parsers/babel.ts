@@ -1,32 +1,21 @@
-import type { ParseResult, ParserOptions } from "@babel/parser"
+import type { ParserOptions as BabelParserOptions } from "@babel/parser"
 import { parse as babelParse } from "@babel/parser"
 import traverse, { NodePath } from "@babel/traverse"
-import type { File, Node as BabelNode } from "@babel/types"
-import type {
-  ASTNode,
-  LanguageParseFuncResult,
-  ParseError,
-  SourceLocation,
-} from "@/core/types"
+import type { Node as BabelNode } from "@babel/types"
+import type { ASTNode, SourceLocation, ParseResult } from "@/core/types"
 import { defineParser } from "@/core/types"
-
-type ParserASTType = ParseResult<File>
-type OptionsType = ParserOptions
 
 export default defineParser({
   name: "@babel/parser",
   parse: parse,
 })
 
-function parse(
-  code: string,
-  options?: OptionsType
-): LanguageParseFuncResult<ParserASTType, OptionsType> {
+function parse(code: string, options?: BabelParserOptions): ParseResult {
   let babelAst
   try {
     babelAst = babelParse(code, options)
   } catch (error) {
-    return { error: getParseErrorFromBabelParserError(error) }
+    return { success: false, ...parseBabelError(error) }
   }
 
   type BabelNodeWithCachedPath = BabelNode & { __cached_path?: string }
@@ -58,23 +47,28 @@ function parse(
   })
 
   return {
-    originalAST: babelAst,
+    success: true,
     ast: { root },
   }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function getParseErrorFromBabelParserError(error: any): ParseError {
-  const message = error?.message ?? "Syntax error"
-  const loc = error?.loc
+const parseBabelError = (
+  error: any
+): {
+  message: string
+  location?: SourceLocation
+} => {
+  const message = error?.message ?? "Invalid syntax"
+
+  const location = error?.loc
   if (
-    loc &&
-    typeof loc.index === "number" &&
-    typeof loc.start === "number" &&
-    typeof loc.end === "number"
+    location &&
+    typeof location.index === "number" &&
+    typeof location.start === "number" &&
+    typeof location.end === "number"
   )
-    return { message, loc }
-  return message
+    return { message, location }
+  return { message }
 }
 
 function getPathOfBabelNodePath(path: NodePath): string {
