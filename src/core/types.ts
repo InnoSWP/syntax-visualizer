@@ -27,7 +27,7 @@ export interface Language<
    * In the format: { parserName: parser }
    */
   readonly parsers: {
-    [key in ParserNames]: LanguageParser<ParserNames, unknown>
+    [key in ParserNames]: LanguageParser<ParserNames, any>
   }
 
   /**
