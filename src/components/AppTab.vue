@@ -71,11 +71,16 @@ export default defineComponent({
 .tab {
   display: flex;
   align-items: center;
+  align-self: center;
   flex: 0 0 var(--tab-height);
   justify-content: space-between;
-  width: 100%;
+  width: calc(100% - 6px);
   height: var(--tab-height);
+  margin: 6px 0;
   padding: 0 16px 0 10px;
+  border-radius: 6px;
+  background-color: #ffffff;
+  box-shadow: 2px 4px 10px 2px rgba(0, 0, 0, 0.25);
 }
 
 .tab-title-wrapper {
@@ -99,6 +104,6 @@ export default defineComponent({
 
 .tab-panel {
   flex: 1 0 auto;
-  height: calc(100% - var(--tab-height));
+  height: calc(100% - var(--tab-height) - 12px);
 }
 </style>
