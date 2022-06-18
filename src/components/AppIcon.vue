@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import { defineAsyncComponent } from "vue"
 import type { PropType } from "vue"
+import type { IconName } from "@/components/icons"
+import icons from "@/components/icons"
 
 defineProps({
   name: {
@@ -8,24 +9,6 @@ defineProps({
     required: true,
   },
 })
-
-const icons = {
-  moon: defineAsyncComponent(() => import("./icons/MoonIcon.vue")),
-  sun: defineAsyncComponent(() => import("./icons/SunIcon.vue")),
-  share: defineAsyncComponent(() => import("./icons/ShareIcon.vue")),
-  copy: defineAsyncComponent(() => import("./icons/CopyIcon.vue")),
-  copied: defineAsyncComponent(() => import("./icons/CopiedIcon.vue")),
-  fileCode: defineAsyncComponent(() => import("./icons/FileCodeIcon.vue")),
-  python: defineAsyncComponent(() => import("./icons/PythonIcon.vue")),
-  downloadCode: defineAsyncComponent(() => import("./icons/DownloadCodeIcon.vue")),
-  tree: defineAsyncComponent(() => import("./icons/TreeIcon.vue")),
-  matrix: defineAsyncComponent(() => import("./icons/MatrixIcon.vue")),
-  downloadAstNcm: defineAsyncComponent(() => import("./icons/DownloadAstNcmIcon.vue")),
-  info: defineAsyncComponent(() => import("./icons/InfoIcon.vue")),
-  gear: defineAsyncComponent(() => import("./icons/GearIcon.vue")),
-} as const
-
-export type IconName = keyof typeof icons
 </script>
 
 <template>
