@@ -95,7 +95,6 @@ export default defineComponent({
   overflow: auto;
   width: 100%;
   height: 100%;
-  background-color: #efefef;
 }
 
 .table {

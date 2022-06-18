@@ -31,6 +31,7 @@ export default defineComponent({
   height: var(--header-height);
   padding-right: 18px;
   padding-left: 18px;
+  background-color: #ffffff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
