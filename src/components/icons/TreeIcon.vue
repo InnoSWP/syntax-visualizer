@@ -24,7 +24,6 @@
     stroke-linecap="round"
     stroke-linejoin="round"
   />
-  <path d="M12.5 5V18C12.5 19.1 13.4 20 14.5 20H16" fill="white" />
   <path
     d="M12.5 5V18C12.5 19.1 13.4 20 14.5 20H16"
     stroke-width="1.5"
