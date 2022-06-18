@@ -97,6 +97,20 @@ export default defineComponent({
   height: 100%;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  border-radius: 5px;
+  background: #dedede;
+}
+
+::-webkit-scrollbar-corner {
+  background: #efefef;
+}
+
 .table {
   position: absolute;
   border-collapse: collapse;
