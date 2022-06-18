@@ -24,20 +24,20 @@ const astOrError = computed(() => parser.parse(code.value))
 
 <template>
   <main class="tabs-root">
-    <AppTab title="Code" :row="1" :col="1">
+    <AppTab title="Code" icon="fileCode" :row="1" :col="1">
       <CodeEditor
         v-model:value="code"
         :variant="settings.codeEditorVariant"
         language="typescript"
       />
     </AppTab>
-    <AppTab title="AST" :row="1" :col="2">
+    <AppTab title="AST" icon="tree" :row="1" :col="2">
       <AbstractSyntaxTree
         :variant="settings.astVariant"
         :root="astOrError?.ast?.root"
       />
     </AppTab>
-    <AppTab title="NCM" :row="1" :col="3">
+    <AppTab title="NCM" icon="matrix" :row="1" :col="3">
       <NodeCoordinatesMatrix :ast="astOrError?.ast" />
     </AppTab>
   </main>
