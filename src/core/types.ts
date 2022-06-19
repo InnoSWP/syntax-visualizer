@@ -1,6 +1,6 @@
 export interface Language<
   ID extends Readonly<string>,
-  ParserNames extends Readonly<string>
+  ParserName extends Readonly<string>
 > {
   /**
    * Unique language identifier.
@@ -27,13 +27,13 @@ export interface Language<
    * In the format: { parserName: parser }
    */
   readonly parsers: {
-    [key in ParserNames]: LanguageParser<ParserNames, any>
+    [key in ParserName]: LanguageParser<ParserName, any>
   }
 
   /**
    * Name of the default parser from parsers.
    */
-  readonly defaultParserName: ParserNames
+  readonly defaultParserName: ParserName
 
   /**
    * Code example written in this language (code or array of lines of code).
