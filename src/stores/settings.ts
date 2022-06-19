@@ -1,5 +1,6 @@
 import { defineStore } from "pinia"
 import type { LanguageID } from "@/core/languages"
+import * as monaco from "monaco-editor"
 
 export type ThemeColor = "light" | "dark" | "system"
 export type CodeEditorVariant = "monaco-editor" | "codemirror"
@@ -36,3 +37,12 @@ export const getNextTheme = (currentTheme: ThemeColor): ThemeColor => {
       return "light"
   }
 }
+
+monaco.editor.defineTheme("light", {
+  colors: {
+    "editor.background": "#efefef",
+  },
+  rules: [],
+  base: "vs",
+  inherit: true,
+})

@@ -27,6 +27,12 @@ onMounted(() => {
     scrollBeyondLastLine: true,
     automaticLayout: true,
     extraEditorClassName: "monaco",
+    theme: "light",
+    overviewRulerBorder: false,
+    hideCursorInOverviewRuler: true,
+    scrollbar: {
+      vertical: "hidden",
+    },
   })
 
   editor.onDidChangeModelContent(() => {
@@ -45,7 +51,7 @@ onMounted(() => {
       if (editor.getValue() !== newVal) {
         editor.setValue(newVal)
       }
-    }
+    },
   )
 })
 </script>

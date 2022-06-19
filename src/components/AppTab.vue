@@ -51,18 +51,23 @@ export default defineComponent({
   .row-1 {
     grid-row: 1 / span 1;
   }
+
   .row-2 {
     grid-row: 2 / span 1;
   }
+
   .row-3 {
     grid-row: 3 / span 1;
   }
+
   .col-1 {
     grid-column: 1 / span 1;
   }
+
   .col-2 {
     grid-column: 2 / span 1;
   }
+
   .col-3 {
     grid-column: 3 / span 1;
   }
@@ -78,6 +83,7 @@ export default defineComponent({
   height: var(--tab-height);
   margin: 6px 0;
   padding: 0 16px 0 10px;
+  z-index: 10;
   border-radius: 6px;
   background-color: #ffffff;
   box-shadow: 2px 4px 10px 2px rgba(0, 0, 0, 0.25);
