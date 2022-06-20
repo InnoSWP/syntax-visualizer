@@ -60,7 +60,7 @@ export default defineComponent({
 
 <template>
   <div class="wrapper">
-    <table class="table">
+    <table class="table" aria-label="Node Coordinates Matrix">
       <tbody class="table-body">
         <tr
           v-for="(node, nodeIndex) in matrix"
