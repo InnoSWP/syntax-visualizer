@@ -15,7 +15,7 @@ function parse(code: string, options?: BabelParserOptions): ParseResult {
   try {
     babelAst = babelParse(code, options)
   } catch (error) {
-    return { success: false, ...parseBabelError(error) }
+    return { success: false, error: parseBabelError(error) }
   }
 
   type BabelNodeWithCachedPath = BabelNode & { __cached_path?: string }
@@ -60,6 +60,7 @@ const parseBabelError = (
 } => {
   const message = error?.message ?? "Invalid syntax"
 
+  // TODO: check whether the location of babel matches SourceLocation type
   const location = error?.loc
   if (
     location &&

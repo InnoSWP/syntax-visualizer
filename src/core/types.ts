@@ -60,6 +60,10 @@ export interface SuccessParseResult {
 
 export interface FailedParseResult {
   success: false
+  error: ParseError
+}
+
+export interface ParseError {
   message: string
   location?: SourceLocation
 }

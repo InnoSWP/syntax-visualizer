@@ -3,15 +3,13 @@ import { ref, watch } from "vue"
 import { watchDebounced } from "@vueuse/core"
 import { useSettingsStore } from "@/stores/settings"
 import languages from "@/core/languages"
-import type { AST, FailedParseResult } from "@/core/types"
+import type { AST, ParseError } from "@/core/types"
 
-export function useParsingController(
-  debounceTime: Ref<number> | number
-): ControllerReturn {
+export function useParsingController(debounceTime: Ref<number> | number) {
   const { parse, sampleCode } = useLanguageSettings()
   const code = ref<string>(sampleCode)
   const ast = ref<AST | null>(null)
-  const error = ref<Omit<FailedParseResult, "success"> | null>(null)
+  const error = ref<ParseError | null>(null)
   const isActual = ref<boolean>(false)
 
   watch(code, () => {
@@ -27,7 +25,7 @@ export function useParsingController(
         ast.value = result.ast
         error.value = null
       } else {
-        error.value = result
+        error.value = result.error
       }
 
       isActual.value = true
@@ -36,13 +34,6 @@ export function useParsingController(
   )
 
   return { code, ast, error, isActual }
-}
-
-export interface ControllerReturn {
-  code: Ref<string>
-  ast: Ref<AST | null>
-  error: Ref<Omit<FailedParseResult, "success"> | null>
-  isActual: Ref<boolean>
 }
 
 function useLanguageSettings() {
