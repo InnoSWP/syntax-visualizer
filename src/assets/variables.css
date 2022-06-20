@@ -1,5 +1,6 @@
 :root {
   --header-height: 60px;
   --tab-height: 36px;
+  --font-family: Poppins, -apple-system, Roboto, sans-serif;
+  --font-family-mono: "JetBrains Mono", "Roboto Mono", monospace;
 }
-
