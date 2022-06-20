@@ -2,7 +2,7 @@ name: QA & E2E Tests
 
 on:
   pull_request:
-    branches: [main]
+    branches: [main, dev]
 
 jobs:
   lint-and-unit-tests:
@@ -31,6 +31,7 @@ jobs:
       image: cypress/browsers:node16.14.0-chrome99-ff97
       options: --user 1001
     needs: [lint-and-unit-tests]
+    if: github.ref == 'refs/heads/main'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
