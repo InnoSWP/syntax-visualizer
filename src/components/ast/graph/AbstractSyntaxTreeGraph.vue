@@ -2,8 +2,8 @@
 import { defineComponent } from "vue"
 import type { PropType } from "vue"
 import type { ASTNode } from "@/core/types"
-import TreeGraph from "@/components/tree-graph/TreeGraph.vue"
-import { generateTreeGraphNodeProxyFromASTNode } from "@/components/tree-graph/tmpProxy"
+import TreeGraph from "./TreeGraph.vue"
+import { generateTreeGraphNodeProxyFromASTNode } from "./tmpProxy"
 
 export default defineComponent({
   name: "AbstractSyntaxTreeGraph",

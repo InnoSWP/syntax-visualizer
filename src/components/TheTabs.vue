@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref, computed } from "vue"
 import AppTab from "@/components/AppTab.vue"
-import CodeEditor from "@/components/CodeEditor.vue"
-import AbstractSyntaxTree from "@/components/AbstractSyntaxTree.vue"
-import NodeCoordinatesMatrix from "@/components/NodeCoordinatesMatrix.vue"
+import CodeEditor from "@/components/editor/CodeEditor.vue"
+import AbstractSyntaxTree from "@/components/ast/AbstractSyntaxTree.vue"
+import NodeCoordinatesMatrix from "@/components/ncm/NodeCoordinatesMatrix.vue"
 import { useSettingsStore } from "@/stores/settings"
 import languages from "@/core/languages"
 

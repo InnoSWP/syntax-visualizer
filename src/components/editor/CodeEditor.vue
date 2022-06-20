@@ -7,11 +7,11 @@ export default defineComponent({
   name: "CodeEditor",
   components: {
     CodeEditorMonaco: defineAsyncComponent({
-      loader: () => import("@/components/CodeEditorMonaco.vue"),
+      loader: () => import("./monaco/CodeEditorMonaco.vue"),
       // TODO: add loading and error components
     }),
     CodeEditorCodemirror: defineAsyncComponent({
-      loader: () => import("@/components/CodeEditorCodemirror.vue"),
+      loader: () => import("./codemirror/CodeEditorCodemirror.vue"),
       // TODO: add loading and error components
     }),
   },
@@ -47,9 +47,9 @@ export default defineComponent({
 <template>
   <div class="root">
     <CodeEditorMonaco
-      class="editor"
       v-if="variant === 'monaco-editor'"
       v-model:value="valueModel"
+      class="editor"
       :language="language"
     />
     <CodeEditorCodemirror v-else class="editor" />
