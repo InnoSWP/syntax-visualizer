@@ -7,5 +7,3 @@ const settings = useSettingsStore()
 <template>
   <button @click="settings.toggleTheme">Theme: {{ settings.theme }}</button>
 </template>
-
-<style scoped></style>
