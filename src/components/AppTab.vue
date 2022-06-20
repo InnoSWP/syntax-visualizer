@@ -1,12 +1,20 @@
 <script lang="ts">
+import type { PropType } from "vue"
 import { defineComponent } from "vue"
+import AppIcon from "@/components/AppIcon.vue"
+import type { IconName } from "@/components/icons"
 
 export default defineComponent({
   name: "AppTab",
+  components: { AppIcon },
   props: {
     title: {
       type: String,
       required: true,
+    },
+    icon: {
+      type: String as PropType<IconName>,
+      required: false,
     },
     row: {
       type: Number,
@@ -24,7 +32,7 @@ export default defineComponent({
   <div :class="['tab-root', 'row-' + row, 'col-' + col]">
     <div class="tab" role="tab">
       <div class="tab-title-wrapper">
-        <slot class="tab-title-icon" name="icon" />
+        <AppIcon v-if="icon" :name="icon" class="tab-icon" />
         <h2 class="tab-heading">{{ title }}</h2>
       </div>
     </div>
@@ -63,15 +71,39 @@ export default defineComponent({
 .tab {
   display: flex;
   align-items: center;
+  align-self: center;
   flex: 0 0 var(--tab-height);
   justify-content: space-between;
-  width: 100%;
+  width: calc(100% - 6px);
   height: var(--tab-height);
+  margin: 6px 0;
   padding: 0 16px 0 10px;
+  border-radius: 6px;
+  background-color: #ffffff;
+  box-shadow: 2px 4px 10px 2px rgba(0, 0, 0, 0.25);
+}
+
+.tab-title-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.tab-icon,
+.tab-heading {
+  font-size: 1.25rem;
+}
+
+.tab-icon {
+  margin-right: 6px;
+}
+
+.tab-heading {
+  font-weight: 400;
 }
 
 .tab-panel {
   flex: 1 0 auto;
-  height: calc(100% - var(--tab-height));
+  height: calc(100% - var(--tab-height) - 12px);
 }
 </style>

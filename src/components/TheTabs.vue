@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { nextTick, ref } from "vue"
 import AppTab from "@/components/AppTab.vue"
-import CodeEditor from "@/components/CodeEditor.vue"
-import AbstractSyntaxTree from "@/components/AbstractSyntaxTree.vue"
-import NodeCoordinatesMatrix from "@/components/NodeCoordinatesMatrix.vue"
+import CodeEditor from "@/components/editor/CodeEditor.vue"
+import AbstractSyntaxTree from "@/components/ast/AbstractSyntaxTree.vue"
+import NodeCoordinatesMatrix from "@/components/ncm/NodeCoordinatesMatrix.vue"
 import { useSettingsStore } from "@/stores/settings"
 import { useParsingController } from "@/core/controller"
 
@@ -21,17 +21,17 @@ const { code, ast } = useParsingController(debounceTime)
 
 <template>
   <main class="tabs-root">
-    <AppTab title="Code" :row="1" :col="1">
+    <AppTab title="Code" icon="fileCode" :row="1" :col="1">
       <CodeEditor
         v-model:value="code"
         :variant="codeEditorVariant"
         language="typescript"
       />
     </AppTab>
-    <AppTab title="AST" :row="1" :col="2">
+    <AppTab title="AST" icon="tree" :row="1" :col="2">
       <AbstractSyntaxTree :variant="astVariant" :root="ast?.root" />
     </AppTab>
-    <AppTab title="NCM" :row="1" :col="3">
+    <AppTab title="NCM" icon="matrix" :row="1" :col="3">
       <NodeCoordinatesMatrix :ast="ast" />
     </AppTab>
   </main>
