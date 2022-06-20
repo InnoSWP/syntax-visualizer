@@ -28,10 +28,10 @@ const { code, ast } = useParsingController(debounceTime)
         language="typescript"
       />
     </AppTab>
-    <AppTab title="AST" icon="tree" :row="1" :col="2">
+    <AppTab title="Abstract Syntax Tree" icon="tree" :row="1" :col="2">
       <AbstractSyntaxTree :variant="astVariant" :root="ast?.root" />
     </AppTab>
-    <AppTab title="NCM" icon="matrix" :row="1" :col="3">
+    <AppTab title="Node Coordinates Matrix" icon="matrix" :row="1" :col="3">
       <NodeCoordinatesMatrix :ast="ast" />
     </AppTab>
   </main>
@@ -42,7 +42,7 @@ const { code, ast } = useParsingController(debounceTime)
   display: grid;
   width: 100%;
   height: calc(100% - var(--header-height));
-  grid-template-columns: [start] 33.333% [line2] 33.333% [line3] auto [end];
+  grid-template-columns: [start] 33.333% [line2] 33.333% [line3] 33.333% [end];
   grid-template-rows: [start] 100% [end];
 }
 </style>
