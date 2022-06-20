@@ -1,9 +1,9 @@
 <script lang="ts">
 import { defineComponent } from "vue"
 import type { PropType } from "vue"
-import TreeGraphNode from "@/components/tree-graph/TreeGraphNode.vue"
-import { drawLinesFromNodeToChildrenOnSvgRecursively } from "@/components/tree-graph/domGraphicUtils"
-import type { TreeNode } from "@/components/tree-graph/types"
+import TreeGraphNode from "./TreeGraphNode.vue"
+import { drawLinesFromNodeToChildrenOnSvgRecursively } from "./domGraphicUtils"
+import type { TreeNode } from "./types"
 
 export default defineComponent({
   name: "TreeGraph",
@@ -56,6 +56,10 @@ export default defineComponent({
   --color-border-default: #a9a9a9;
   --color-border-active: #466ecc;
   --stroke-width: 2px;
+}
+
+.container :deep(*) {
+  font-family: monospace;
 }
 
 .nodes {

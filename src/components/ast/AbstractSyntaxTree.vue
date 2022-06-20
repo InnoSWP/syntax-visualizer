@@ -1,8 +1,8 @@
 <script lang="ts">
 import type { PropType } from "vue"
 import { defineComponent } from "vue"
-import AbstractSyntaxTreeGraph from "@/components/AbstractSyntaxTreeGraph.vue"
-import AbstractSyntaxTreeJson from "@/components/AbstractSyntaxTreeJson.vue"
+import AbstractSyntaxTreeGraph from "./graph/AbstractSyntaxTreeGraph.vue"
+import AbstractSyntaxTreeJson from "./json/AbstractSyntaxTreeJson.vue"
 import type { ASTVariant } from "@/stores/settings"
 import type { ASTNode } from "@/core/types"
 

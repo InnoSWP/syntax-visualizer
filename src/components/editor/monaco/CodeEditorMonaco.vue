@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import * as monaco from "monaco-editor"
 import { onMounted, ref, watch } from "vue"
+import { darkTheme, lightTheme } from "./themes"
 
 const props = defineProps({
   value: {
@@ -18,6 +19,9 @@ const emit = defineEmits(["update:value"])
 const container = ref()
 
 onMounted(() => {
+  monaco.editor.defineTheme("sv-light", lightTheme)
+  monaco.editor.defineTheme("sv-dark", darkTheme)
+
   const editor = monaco.editor.create(container.value, {
     value: props.value,
     language: props.language,
@@ -27,6 +31,7 @@ onMounted(() => {
     scrollBeyondLastLine: true,
     automaticLayout: true,
     extraEditorClassName: "monaco",
+    theme: "sv-light",
   })
 
   editor.onDidChangeModelContent(() => {

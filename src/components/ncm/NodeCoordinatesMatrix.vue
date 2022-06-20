@@ -60,7 +60,7 @@ export default defineComponent({
 
 <template>
   <div class="wrapper">
-    <table class="table">
+    <table class="table" aria-label="Node Coordinates Matrix">
       <tbody class="table-body">
         <tr
           v-for="(node, nodeIndex) in matrix"
@@ -95,13 +95,11 @@ export default defineComponent({
   overflow: auto;
   width: 100%;
   height: 100%;
-  background-color: #efefef;
 }
 
 .table {
   position: absolute;
   border-collapse: collapse;
-  /*border: 2px solid #a9a9a9;*/
 }
 
 .table-body {

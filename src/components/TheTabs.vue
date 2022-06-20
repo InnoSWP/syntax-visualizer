@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { ref, computed } from "vue"
 import AppTab from "@/components/AppTab.vue"
-import CodeEditor from "@/components/CodeEditor.vue"
-import AbstractSyntaxTree from "@/components/AbstractSyntaxTree.vue"
-import NodeCoordinatesMatrix from "@/components/NodeCoordinatesMatrix.vue"
+import CodeEditor from "@/components/editor/CodeEditor.vue"
+import AbstractSyntaxTree from "@/components/ast/AbstractSyntaxTree.vue"
+import NodeCoordinatesMatrix from "@/components/ncm/NodeCoordinatesMatrix.vue"
 import { useSettingsStore } from "@/stores/settings"
 import languages from "@/core/languages"
 
@@ -24,20 +24,20 @@ const astOrError = computed(() => parser.parse(code.value))
 
 <template>
   <main class="tabs-root">
-    <AppTab title="Code" :row="1" :col="1">
+    <AppTab title="Code" icon="fileCode" :row="1" :col="1">
       <CodeEditor
         v-model:value="code"
         :variant="settings.codeEditorVariant"
         language="typescript"
       />
     </AppTab>
-    <AppTab title="AST" :row="1" :col="2">
+    <AppTab title="AST" icon="tree" :row="1" :col="2">
       <AbstractSyntaxTree
         :variant="settings.astVariant"
         :root="astOrError?.ast?.root"
       />
     </AppTab>
-    <AppTab title="NCM" :row="1" :col="3">
+    <AppTab title="NCM" icon="matrix" :row="1" :col="3">
       <NodeCoordinatesMatrix :ast="astOrError?.ast" />
     </AppTab>
   </main>

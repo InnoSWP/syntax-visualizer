@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest"
 import { mount } from "@vue/test-utils"
 import { createTestingPinia } from "@pinia/testing"
-import TheHeader from "@/components/header/TheHeader.vue"
+import TheHeader from "@/components/TheHeader.vue"
 
 describe("TheHeader", () => {
   it("contains logo", () => {

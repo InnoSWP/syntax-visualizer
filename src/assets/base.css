@@ -11,9 +11,11 @@ html,
 #app {
   height: 100%;
   min-height: 100% !important;
+  background-color: #efefef;
 }
 
 body {
+  font-family: var(--font-family);
   margin: 0;
   padding: 0;
   text-rendering: optimizeLegibility;
