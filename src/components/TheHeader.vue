@@ -29,16 +29,19 @@ export default defineComponent({
   justify-content: center;
   max-width: 100%;
   height: var(--header-height);
-  padding-right: 18px;
-  padding-left: 18px;
+  padding: 0 18px;
   background-color: #ffffff;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
 .header > :deep(*) {
+  width: calc(100% / 3);
+}
+
+.left-menu,
+.right-menu {
   display: flex;
   align-items: center;
-  width: calc(100% / 3);
 }
 
 .left-menu {
@@ -48,7 +51,10 @@ export default defineComponent({
 .heading {
   font-size: 2rem;
   font-weight: 300;
-  justify-content: center;
+  overflow: hidden;
+  text-align: center;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .right-menu {
