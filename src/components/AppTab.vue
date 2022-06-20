@@ -30,10 +30,15 @@ export default defineComponent({
 
 <template>
   <div :class="['tab-root', 'row-' + row, 'col-' + col]">
-    <div class="tab" role="tab">
-      <div class="tab-title-wrapper">
-        <AppIcon v-if="icon" :name="icon" class="tab-icon" />
-        <h2 class="tab-heading">{{ title }}</h2>
+    <div class="tab-wrapper">
+      <div class="tab" role="tab">
+        <div class="tab-title-wrapper">
+          <AppIcon v-if="icon" :name="icon" class="tab-icon" />
+          <h2 class="tab-heading">{{ title }}</h2>
+        </div>
+        <div class="tab-menu">
+          <slot name="menu" />
+        </div>
       </div>
     </div>
     <div class="tab-panel" role="tabpanel">
@@ -68,41 +73,55 @@ export default defineComponent({
   }
 }
 
+.tab-wrapper {
+  padding: 6px;
+}
+
 .tab {
+  font-size: 1.25rem;
   display: flex;
   align-items: center;
   align-self: center;
   flex: 0 0 var(--tab-height);
   justify-content: space-between;
-  width: calc(100% - 6px);
+  width: 100%;
   height: var(--tab-height);
-  margin: 6px 0;
-  padding: 0 16px 0 10px;
+  padding: 0 10px;
   border-radius: 6px;
   background-color: #ffffff;
   box-shadow: 2px 4px 10px 2px rgba(0, 0, 0, 0.25);
 }
 
-.tab-title-wrapper {
+.tab-title-wrapper,
+.tab-menu {
   display: flex;
   align-items: center;
   justify-content: flex-start;
 }
 
-.tab-icon,
-.tab-heading {
-  font-size: 1.25rem;
+.tab-title-wrapper {
+  min-width: 0;
+}
+
+.tab-menu {
+  flex: 0 0 auto;
 }
 
 .tab-icon {
+  flex: 0 0 auto;
   margin-right: 6px;
 }
 
 .tab-heading {
+  font: inherit;
   font-weight: 400;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .tab-panel {
+  overflow: hidden;
   flex: 1 0 auto;
   height: calc(100% - var(--tab-height) - 12px);
 }
