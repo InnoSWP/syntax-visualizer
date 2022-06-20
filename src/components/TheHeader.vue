@@ -42,6 +42,7 @@ export default defineComponent({
 }
 
 .left-menu {
+  flex-direction: row;
 }
 
 .heading {
