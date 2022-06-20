@@ -50,7 +50,6 @@ export default defineComponent({
 <style lang="scss" scoped>
 .tab-root {
   display: flex;
-  overflow: hidden;
   flex-direction: column;
   height: 100%;
 
@@ -122,6 +121,7 @@ export default defineComponent({
 }
 
 .tab-panel {
+  overflow: hidden;
   flex: 1 0 auto;
   height: calc(100% - var(--tab-height) - 12px);
 }
