@@ -39,18 +39,4 @@ export default defineComponent({
 .tree-graph {
   min-height: 100%;
 }
-
-::-webkit-scrollbar {
-  width: 10px;
-  height: 12px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  border-radius: 5px;
-  background: #dedede;
-}
-
-::-webkit-scrollbar-corner {
-  background: #efefef;
-}
 </style>
