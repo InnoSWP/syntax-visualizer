@@ -86,7 +86,10 @@ export default defineComponent({
             v-bind:key="`${nodeIndex}-${coordinateIndex}`"
             class="coordinate-cell"
           >
-            <span class="coordinate-cell-wrapper">
+            <span v-if="coordinate" class="coordinate-cell-wrapper">
+              {{ coordinate }}
+            </span>
+            <span v-else class="coordinate-cell-wrapper-zeroes">
               {{ coordinate }}
             </span>
           </div>
@@ -146,12 +149,16 @@ export default defineComponent({
   width: 0.75rem;
 }
 
-.coordinate-cell-wrapper {
+.coordinate-cell-wrapper,
+.coordinate-cell-wrapper-zeroes {
   display: flex;
   align-items: center;
   justify-content: center;
   min-width: 16px;
   min-height: 16px;
   text-align: center;
+}
+.coordinate-cell-wrapper-zeroes {
+  opacity: 0.5;
 }
 </style>
