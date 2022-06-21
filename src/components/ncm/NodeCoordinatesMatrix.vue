@@ -19,11 +19,13 @@ export default defineComponent({
       required: false,
     },
   },
-  mounted() {
-    for (let subheading of this.$refs.subheadings) {
-      subheading.style.left =
-        (this.$refs.headings[0].clientWidth as string) + "px"
+  updated() {
+    let subheadings: HTMLElement[] | unknown = this.$refs.subheadings
+    let widthFirst: number = this.$refs.headings[0].clientWidth
+    for (let subheading of subheadings) {
+      subheading.style.left = widthFirst + "px"
     }
+    this.$refs.upp_heading.style.left = widthFirst + "px"
   },
   computed: {
     matrix() {
@@ -62,7 +64,6 @@ export default defineComponent({
           }
         }
       }
-
       return nodes
     },
   },
@@ -73,6 +74,21 @@ export default defineComponent({
   <div class="wrapper">
     <div class="table" aria-label="Node Coordinates Matrix">
       <div class="table-body">
+        <div class="row">
+          <div class="upper-heading-cell">
+            <div class="heading">Type</div>
+          </div>
+          <div ref="upp_heading" class="upper-heading-cell">
+            <div class="heading">Label</div>
+          </div>
+          <div
+            v-for="nodeIndex in matrix[0].coordinates.length"
+            v-bind:key="nodeIndex"
+            class="coordinate-heading"
+          >
+            <div class="heading">{{ nodeIndex }}</div>
+          </div>
+        </div>
         <div
           v-for="(node, nodeIndex) in matrix"
           v-bind:key="nodeIndex"
@@ -128,15 +144,37 @@ export default defineComponent({
   display: table-row;
 }
 
+.upper-heading-cell,
 .heading-cell,
-.coordinate-cell {
+.coordinate-cell,
+.coordinate-heading {
   display: table-cell;
   text-align: center;
 }
 
+.coordinate-heading {
+  position: sticky;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  border-top: 1px solid #a9a9a9;
+  border-bottom: 1px solid #a9a9a9;
+  background-color: white;
+}
+
+.upper-heading-cell {
+  position: sticky;
+  z-index: 5;
+  top: 0;
+  left: 0;
+  border-top: 1px solid #a9a9a9;
+  border-bottom: 1px solid #a9a9a9;
+  background-color: white;
+}
+
 .heading-cell {
   position: sticky;
-  z-index: 1;
+  z-index: 2;
   left: 0;
   border-top: 1px solid #a9a9a9;
   border-bottom: 1px solid #a9a9a9;
