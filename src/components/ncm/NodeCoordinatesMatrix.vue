@@ -46,8 +46,13 @@ export default defineComponent({
           const coordinate = node.depth == j + 1 ? 1 : 0
           node.coordinates.push(coordinate)
 
-          if (i > 0 && node.depth >= j + 1) {
-            node.coordinates[j] += nodes[i - 1].coordinates[j]
+          if (i > 0) {
+            if (!(i == nodes.length - 1 && nodes[i].depth < j + 1)) {
+              node.coordinates[j] += nodes[i - 1].coordinates[j]
+            }
+            if (nodes[i - 1].depth < j + 1) {
+              nodes[i - 1].coordinates[j] = 0
+            }
           }
         }
       }
