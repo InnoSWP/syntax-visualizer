@@ -74,6 +74,8 @@ export default defineComponent({
         >
           <div class="heading-cell">
             <span class="heading">{{ node.heading }}</span>
+          </div>
+          <div class="heading-cell">
             <span v-if="node.subheading" class="subheading">
               {{ node.subheading }}
             </span>
@@ -124,9 +126,8 @@ export default defineComponent({
 }
 
 .heading-cell {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  display: table-cell;
+  text-align: center;
 }
 
 .heading {
