@@ -19,6 +19,12 @@ export default defineComponent({
       required: false,
     },
   },
+  mounted() {
+    for (let subheading of this.$refs.subheadings) {
+      subheading.style.left =
+        (this.$refs.headings[0].clientWidth as string) + "px"
+    }
+  },
   computed: {
     matrix() {
       if (!this.ast) {
@@ -72,13 +78,13 @@ export default defineComponent({
           v-bind:key="nodeIndex"
           class="row"
         >
-          <div class="heading-cell">
-            <span class="heading">{{ node.heading }}</span>
+          <div ref="headings" class="heading-cell">
+            <div class="heading">{{ node.heading }}</div>
           </div>
-          <div class="heading-cell">
-            <span v-if="node.subheading" class="subheading">
+          <div ref="subheadings" class="heading-cell">
+            <div v-if="node.subheading" class="subheading">
               {{ node.subheading }}
-            </span>
+            </div>
           </div>
 
           <div
@@ -125,28 +131,42 @@ export default defineComponent({
 .heading-cell,
 .coordinate-cell {
   display: table-cell;
-  border: 1px solid #a9a9a9;
+  text-align: center;
 }
 
 .heading-cell {
-  display: table-cell;
-  text-align: center;
+  position: sticky;
+  z-index: 1;
+  left: 0;
+  border-top: 1px solid #a9a9a9;
+  border-bottom: 1px solid #a9a9a9;
+  background-color: white;
 }
 
 .heading {
   font-size: 0.875rem;
   font-weight: bold;
+  z-index: 2;
+  margin-right: auto;
+  margin-left: auto;
+  border-right: 1px solid #a9a9a9;
+  border-left: 1px solid #a9a9a9;
 }
 
 .subheading {
   font-size: 0.75rem;
   font-weight: normal;
+  width: max-content;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
 }
 
 .coordinate-cell {
   font-size: 0.75rem;
-  display: table-cell;
-  width: 0.75rem;
+  width: 0.875rem;
+  height: 0.875rem;
+  border: 1px solid #a9a9a9;
 }
 
 .coordinate-cell-wrapper,
