@@ -65,21 +65,21 @@ export default defineComponent({
 
 <template>
   <div class="wrapper">
-    <table class="table" aria-label="Node Coordinates Matrix">
-      <tbody class="table-body">
-        <tr
+    <div class="table" aria-label="Node Coordinates Matrix">
+      <div class="table-body">
+        <div
           v-for="(node, nodeIndex) in matrix"
           v-bind:key="nodeIndex"
           class="row"
         >
-          <th class="heading-cell">
+          <div class="heading-cell">
             <span class="heading">{{ node.heading }}</span>
             <span v-if="node.subheading" class="subheading">
               {{ node.subheading }}
             </span>
-          </th>
+          </div>
 
-          <td
+          <div
             v-for="(coordinate, coordinateIndex) in node.coordinates"
             v-bind:key="`${nodeIndex}-${coordinateIndex}`"
             class="coordinate-cell"
@@ -87,10 +87,10 @@ export default defineComponent({
             <span class="coordinate-cell-wrapper">
               {{ coordinate }}
             </span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -104,16 +104,22 @@ export default defineComponent({
 
 .table {
   position: absolute;
+  display: table;
   border-collapse: collapse;
 }
 
 .table-body {
-  display: block;
+  display: table-row-group;
   overflow: auto;
+}
+
+.row {
+  display: table-row;
 }
 
 .heading-cell,
 .coordinate-cell {
+  display: table-cell;
   border: 1px solid #a9a9a9;
 }
 
@@ -135,6 +141,8 @@ export default defineComponent({
 
 .coordinate-cell {
   font-size: 0.75rem;
+  display: table-cell;
+  width: 0.75rem;
 }
 
 .coordinate-cell-wrapper {
@@ -143,5 +151,6 @@ export default defineComponent({
   justify-content: center;
   min-width: 16px;
   min-height: 16px;
+  text-align: center;
 }
 </style>
