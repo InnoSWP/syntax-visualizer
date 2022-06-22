@@ -108,7 +108,7 @@ export default defineComponent({
             v-bind:key="`${nodeIndex}-${coordinateIndex}`"
             class="coordinate-cell"
           >
-            <span v-if="coordinate" class="coordinate-cell-wrapper">
+            <span v-if="coordinate != 0" class="coordinate-cell-wrapper">
               {{ coordinate }}
             </span>
             <span v-else class="coordinate-cell-wrapper-zeroes">
