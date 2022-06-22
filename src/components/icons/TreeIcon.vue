@@ -1,3 +1,4 @@
+<script setup lang="ts"></script>
 <template>
   <path
     d="M7 8H4C2.9 8 2 7.1 2 6V4C2 2.9 2.9 2 4 2H7C8.1 2 9 2.9 9 4V6C9 7.1 8.1 8 7 8Z"
