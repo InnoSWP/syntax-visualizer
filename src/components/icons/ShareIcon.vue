@@ -1,3 +1,4 @@
+<script setup lang="ts"></script>
 <template>
   <path
     d="M13 11L21.2 2.80005"

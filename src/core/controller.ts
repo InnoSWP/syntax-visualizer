@@ -8,8 +8,8 @@ import type { AST, ParseError } from "@/core/types"
 export function useParsingController(debounceTime: Ref<number> | number) {
   const { parse, sampleCode } = useLanguageSettings()
   const code = ref<string>(sampleCode)
-  const ast = ref<AST | null>(null)
-  const error = ref<ParseError | null>(null)
+  const ast = ref<AST>()
+  const error = ref<ParseError>()
   const isActual = ref<boolean>(false)
 
   watch(code, () => {
@@ -23,7 +23,7 @@ export function useParsingController(debounceTime: Ref<number> | number) {
 
       if (result.success) {
         ast.value = result.ast
-        error.value = null
+        error.value = undefined
       } else {
         error.value = result.error
       }
