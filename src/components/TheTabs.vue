@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { nextTick, ref } from "vue"
 import AppTab from "@/components/AppTab.vue"
 import CodeEditor from "@/components/editor/CodeEditor.vue"
 import AbstractSyntaxTree from "@/components/ast/AbstractSyntaxTree.vue"
@@ -9,14 +8,7 @@ import { useParsingController } from "@/core/controller"
 
 const { codeEditorVariant, astVariant } = useSettingsStore()
 
-// TODO: refactor
-// Set initial debounce time to zero to parse AST for the initial code immediately
-const debounceTime = ref(0)
-nextTick(() => {
-  debounceTime.value = 300
-})
-
-const { code, ast } = useParsingController(debounceTime)
+const { code, ast } = useParsingController()
 </script>
 
 <template>
