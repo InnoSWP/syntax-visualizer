@@ -7,12 +7,14 @@ import monacoEditorPlugin from "vite-plugin-monaco-editor"
 import nodePolyfills from "rollup-plugin-polyfill-node"
 import NodeModulesPolyfills from "@esbuild-plugins/node-modules-polyfill"
 import GlobalsPolyfills from "@esbuild-plugins/node-globals-polyfill"
+import languagesSampleCodePlugin from "./plugins/languagesSampleCodePlugin"
 
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [
     vue(),
     vueJsx(),
+    languagesSampleCodePlugin(),
     monacoEditorPlugin({
       publicBaseUrl: process.env.VITE_BASE_URL || "/",
     }),
