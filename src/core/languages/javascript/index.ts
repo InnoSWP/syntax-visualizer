@@ -10,11 +10,4 @@ export default defineLanguage({
     [babelParser.name]: babelParser,
   },
   defaultParserName: babelParser.name,
-  sampleCode: [
-    "function greet(name) {",
-    '    console.log("Welcome, " + name + "!");',
-    "}",
-    "",
-    'greet("dear explorer");',
-  ],
 })

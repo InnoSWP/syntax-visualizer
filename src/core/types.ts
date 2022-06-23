@@ -34,11 +34,6 @@ export interface Language<
    * Name of the default parser from parsers.
    */
   readonly defaultParserName: ParserName
-
-  /**
-   * Code example written in this language (code or array of lines of code).
-   */
-  readonly sampleCode: string | string[]
 }
 
 export interface LanguageParser<Name extends Readonly<string>, ParseOptions> {
