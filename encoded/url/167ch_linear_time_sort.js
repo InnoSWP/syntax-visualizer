@@ -1,0 +1,1 @@
+%2F**%0A%20*%20Function%20that%20prints%20sorted%20numbers%20of%20array.%0A%20*%2F%0Afunction%20printSortedNumbers(array)%20%7B%0A%20%20for%20(const%20i%20of%20array)%20%7B%0A%20%20%20%20setTimeout(()%20%3D%3E%20console.log(i)%2C%20i)%0A%20%20%7D%0A%7D%0A

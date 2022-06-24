@@ -1,0 +1,139 @@
+> compressions-test@1.0.0 test
+> node -r esm test.js
+
+Encoding "base64":
+	File: ./samples/167ch_linear_time_sort.js
+	Initial size: undefined
+	Encoded size: undefined
+	Savings: undefined
+	Encode time: 0ms
+	Decode time: -1ms
+	Verdict: FAIL
+	-----------------------------------------------------
+	File: ./samples/172062_microsoft_com.html
+	Initial size: undefined
+	Encoded size: undefined
+	Savings: undefined
+	Encode time: 0ms
+	Decode time: -1ms
+	Verdict: FAIL
+	-----------------------------------------------------
+	File: ./samples/686ch_doc.html
+	Initial size: undefined
+	Encoded size: undefined
+	Savings: undefined
+	Encode time: 0ms
+	Decode time: -1ms
+	Verdict: FAIL
+	-----------------------------------------------------
+	File: ./samples/84ch_hello_world.py
+	Initial size: undefined
+	Encoded size: undefined
+	Savings: undefined
+	Encode time: 0ms
+	Decode time: -1ms
+	Verdict: FAIL
+	-----------------------------------------------------
+=========================================================
+Encoding "url":
+	File: 84ch_hello_world.py
+	Initial size: 86
+	Encoded size: 168
+	Savings: +195%
+	Encode time: 0ms
+	Decode time: 0ms
+	Verdict: SUCCESS
+	-----------------------------------------------------
+	File: 167ch_linear_time_sort.js
+	Initial size: 167
+	Encoded size: 255
+	Savings: +153%
+	Encode time: 0ms
+	Decode time: 0ms
+	Verdict: SUCCESS
+	-----------------------------------------------------
+	File: 686ch_doc.html
+	Initial size: 701
+	Encoded size: 1207
+	Savings: +172%
+	Encode time: 0ms
+	Decode time: 0ms
+	Verdict: SUCCESS
+	-----------------------------------------------------
+	File: 172062_microsoft_com.html
+	Initial size: 172062
+	Encoded size: 286752
+	Savings: +167%
+	Encode time: 1ms
+	Decode time: 1ms
+	Verdict: SUCCESS
+	-----------------------------------------------------
+=========================================================
+Encoding "lz_url":
+	File: 84ch_hello_world.py
+	Initial size: 86
+	Encoded size: 114
+	Savings: +133%
+	Encode time: 0ms
+	Decode time: 0ms
+	Verdict: SUCCESS
+	-----------------------------------------------------
+	File: 167ch_linear_time_sort.js
+	Initial size: 167
+	Encoded size: 197
+	Savings: +118%
+	Encode time: 0ms
+	Decode time: 0ms
+	Verdict: SUCCESS
+	-----------------------------------------------------
+	File: 686ch_doc.html
+	Initial size: 701
+	Encoded size: 711
+	Savings: +101%
+	Encode time: 10ms
+	Decode time: 12ms
+	Verdict: SUCCESS
+	-----------------------------------------------------
+	File: 172062_microsoft_com.html
+	Initial size: 172062
+	Encoded size: 96412
+	Savings: +56%
+	Encode time: 41ms
+	Decode time: 20ms
+	Verdict: SUCCESS
+	-----------------------------------------------------
+=========================================================
+Encoding "lz_base64":
+	File: 84ch_hello_world.py
+	Initial size: 86
+	Encoded size: 116
+	Savings: +135%
+	Encode time: 0ms
+	Decode time: 0ms
+	Verdict: SUCCESS
+	-----------------------------------------------------
+	File: 167ch_linear_time_sort.js
+	Initial size: 167
+	Encoded size: 200
+	Savings: +120%
+	Encode time: 0ms
+	Decode time: 0ms
+	Verdict: SUCCESS
+	-----------------------------------------------------
+	File: 686ch_doc.html
+	Initial size: 701
+	Encoded size: 712
+	Savings: +102%
+	Encode time: 9ms
+	Decode time: 8ms
+	Verdict: SUCCESS
+	-----------------------------------------------------
+	File: 172062_microsoft_com.html
+	Initial size: 172062
+	Encoded size: 96412
+	Savings: +56%
+	Encode time: 32ms
+	Decode time: 19ms
+	Verdict: SUCCESS
+	-----------------------------------------------------
+=========================================================

@@ -1,0 +1,14 @@
+{
+  "name": "compressions-test",
+  "version": "1.0.0",
+  "description": "",
+  "main": "test.js",
+  "scripts": {
+    "test": "node -r esm test.js"
+  },
+  "dependencies": {
+    "esm": "^3.2.25",
+    "lz-string": "^1.4.4"
+  },
+  "type": "commonjs"
+}
