@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import type { PropType } from "vue"
 import { onMounted, ref } from "vue"
-import { EditorView } from "@codemirror/view"
 import { EditorState } from "@codemirror/state"
+import { EditorView } from "@codemirror/view"
 import type { LanguageID } from "@/core/languages"
-import { updateListeners, defaultExtensions } from "./extensions"
+import { defaultExtensions, updateListeners } from "./extensions"
 
 const props = defineProps({
   modelValue: {
@@ -20,8 +20,8 @@ const props = defineProps({
 const emit = defineEmits(["update:modelValue"])
 
 const editor = {
-  view: null as EditorView | null,
   state: null as EditorState | null,
+  view: null as EditorView | null,
 }
 
 const container = ref<HTMLDivElement | null>(null)
