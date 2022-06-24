@@ -1,3 +1,5 @@
+import type { LanguageSupport } from "@codemirror/language"
+
 export interface Language<
   ID extends Readonly<string>,
   ParserName extends Readonly<string>
@@ -34,6 +36,11 @@ export interface Language<
    * Name of the default parser from parsers.
    */
   readonly defaultParserName: ParserName
+
+  /**
+   * Async function that loads the codemirror support for this language.
+   */
+  readonly codemirrorLoader?: () => Promise<LanguageSupport>
 }
 
 export interface LanguageParser<Name extends Readonly<string>, ParseOptions> {

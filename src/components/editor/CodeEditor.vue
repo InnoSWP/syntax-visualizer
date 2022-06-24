@@ -1,43 +1,35 @@
 <script lang="ts">
-import { defineAsyncComponent, defineComponent } from "vue"
 import type { PropType } from "vue"
-import type { CodeEditorVariant } from "@/stores/settings"
+import { defineAsyncComponent, defineComponent } from "vue"
+import type { LanguageID } from "@/core/languages"
 
 export default defineComponent({
   name: "CodeEditor",
   components: {
-    CodeEditorMonaco: defineAsyncComponent({
-      loader: () => import("./monaco/CodeEditorMonaco.vue"),
-      // TODO: add loading and error components
-    }),
     CodeEditorCodemirror: defineAsyncComponent({
       loader: () => import("./codemirror/CodeEditorCodemirror.vue"),
       // TODO: add loading and error components
     }),
   },
   props: {
-    value: {
+    modelValue: {
       type: String,
       required: false,
       default: "",
     },
-    language: {
-      type: String,
-      required: false,
-      default: "typescript",
-    },
-    variant: {
-      type: String as PropType<CodeEditorVariant>,
+    languageId: {
+      type: String as PropType<LanguageID>,
       required: true,
     },
+    autofocus: Boolean,
   },
   computed: {
-    valueModel: {
+    code: {
       get() {
-        return this.value
+        return this.modelValue
       },
-      set(value: string) {
-        this.$emit("update:value", value)
+      set(modelValue: string) {
+        this.$emit("update:modelValue", modelValue)
       },
     },
   },
@@ -45,20 +37,21 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="root">
-    <CodeEditorMonaco
-      v-if="variant === 'monaco-editor'"
-      v-model:value="valueModel"
-      class="editor"
-      :language="language"
-    />
-    <CodeEditorCodemirror v-else class="editor" />
-  </div>
+  <CodeEditorCodemirror
+    v-model="code"
+    v-bind="{ languageId, autofocus }"
+    class="editor"
+  />
 </template>
 
 <style scoped>
-.root,
 .editor {
+  width: 100%;
+  height: 100%;
+}
+
+.editor > :deep(*) {
+  width: 100%;
   height: 100%;
 }
 </style>

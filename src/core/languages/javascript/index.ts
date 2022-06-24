@@ -10,4 +10,6 @@ export default defineLanguage({
     [babelParser.name]: babelParser,
   },
   defaultParserName: babelParser.name,
+  codemirrorLoader: async () =>
+    (await import("@codemirror/lang-javascript")).javascript(),
 })
