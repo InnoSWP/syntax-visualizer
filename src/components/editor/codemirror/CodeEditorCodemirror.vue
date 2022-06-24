@@ -4,8 +4,8 @@ import { onMounted, ref, watch } from "vue"
 import { Compartment, EditorState } from "@codemirror/state"
 import { EditorView } from "@codemirror/view"
 import type { LanguageID } from "@/core/languages"
+import { loadCodemirrorLanguageSupport } from "@/core/languages"
 import { defaultExtensions, updateListeners } from "./extensions"
-import loadLanguageSupport from "./loadLanguageSupport"
 
 const props = defineProps({
   modelValue: {
@@ -62,7 +62,7 @@ onMounted(() => {
   watch(
     () => props.languageId,
     async (newLanguage) => {
-      const languageSupport = await loadLanguageSupport(newLanguage)
+      const languageSupport = await loadCodemirrorLanguageSupport(newLanguage)
       if (languageSupport) {
         editor.view?.dispatch({
           effects: language.reconfigure(languageSupport),
