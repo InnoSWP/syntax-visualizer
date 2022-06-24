@@ -21,6 +21,7 @@ export default defineComponent({
       type: String as PropType<LanguageID>,
       required: true,
     },
+    autofocus: Boolean,
   },
   computed: {
     code: {
@@ -38,7 +39,7 @@ export default defineComponent({
 <template>
   <CodeEditorCodemirror
     v-model="code"
-    :languageId="languageId"
+    v-bind="{ languageId, autofocus }"
     class="editor"
   />
 </template>

@@ -17,6 +17,7 @@ const props = defineProps({
     type: String as PropType<LanguageID>,
     required: true,
   },
+  autofocus: Boolean,
 })
 
 const emit = defineEmits(["update:modelValue"])
@@ -57,6 +58,7 @@ onMounted(() => {
     parent: container.value,
   })
 
+  // Handle language change
   watch(
     () => props.languageId,
     async (newLanguage) => {
@@ -71,6 +73,10 @@ onMounted(() => {
     },
     { immediate: true }
   )
+
+  if (props.autofocus) {
+    editor.view.focus()
+  }
 })
 </script>
 

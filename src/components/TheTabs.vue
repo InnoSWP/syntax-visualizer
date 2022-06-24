@@ -14,7 +14,7 @@ const { code, ast } = useParsingController()
 <template>
   <main class="tabs-root">
     <AppTab title="Code" icon="fileCode" :row="1" :col="1">
-      <CodeEditor v-model="code" :languageId="languageId" />
+      <CodeEditor v-model="code" :languageId="languageId" autofocus />
     </AppTab>
     <AppTab title="Abstract Syntax Tree" icon="tree" :row="1" :col="2">
       <AbstractSyntaxTree :variant="astVariant" :root="ast?.root" />
