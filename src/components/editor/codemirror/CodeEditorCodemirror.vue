@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import type { PropType } from "vue"
-import { onMounted, ref } from "vue"
-import { EditorState } from "@codemirror/state"
+import { onMounted, ref, watch } from "vue"
+import { Compartment, EditorState } from "@codemirror/state"
 import { EditorView } from "@codemirror/view"
 import type { LanguageID } from "@/core/languages"
 import { defaultExtensions, updateListeners } from "./extensions"
+import loadLanguageSupport from "./loadLanguageSupport"
 
 const props = defineProps({
   modelValue: {
@@ -12,23 +13,26 @@ const props = defineProps({
     required: false,
     default: "",
   },
-  language: {
+  languageId: {
     type: String as PropType<LanguageID>,
     required: true,
   },
 })
-const emit = defineEmits(["update:modelValue"])
 
-const editor = {
-  state: null as EditorState | null,
-  view: null as EditorView | null,
-}
+const emit = defineEmits(["update:modelValue"])
 
 const container = ref<HTMLDivElement | null>(null)
 
 const handleDocChange = (newDoc: string) => {
   emit("update:modelValue", newDoc)
 }
+
+const editor = {
+  state: null as EditorState | null,
+  view: null as EditorView | null,
+}
+
+const language = new Compartment()
 
 onMounted(() => {
   if (container.value == null) {
@@ -40,7 +44,8 @@ onMounted(() => {
   editor.state = EditorState.create({
     doc: props.modelValue,
     extensions: [
-      ...defaultExtensions,
+      defaultExtensions,
+      language.of([]),
       updateListeners({
         onChange: handleDocChange,
       }),
@@ -51,6 +56,21 @@ onMounted(() => {
     state: editor.state,
     parent: container.value,
   })
+
+  watch(
+    () => props.languageId,
+    async (newLanguage) => {
+      const languageSupport = await loadLanguageSupport(newLanguage)
+      if (languageSupport) {
+        editor.view?.dispatch({
+          effects: language.reconfigure(languageSupport),
+        })
+      } else {
+        // TODO: handle case when there is no codemirror language support
+      }
+    },
+    { immediate: true }
+  )
 })
 </script>
 

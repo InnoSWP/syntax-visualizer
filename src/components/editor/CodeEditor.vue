@@ -17,7 +17,7 @@ export default defineComponent({
       required: false,
       default: "",
     },
-    language: {
+    languageId: {
       type: String as PropType<LanguageID>,
       required: true,
     },
@@ -36,7 +36,11 @@ export default defineComponent({
 </script>
 
 <template>
-  <CodeEditorCodemirror v-model="code" :language="language" class="editor" />
+  <CodeEditorCodemirror
+    v-model="code"
+    :languageId="languageId"
+    class="editor"
+  />
 </template>
 
 <style scoped>

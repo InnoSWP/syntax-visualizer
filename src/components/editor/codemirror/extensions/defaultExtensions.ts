@@ -2,7 +2,6 @@ import type { Extension } from "@codemirror/state"
 import { EditorState } from "@codemirror/state"
 import {
   drawSelection,
-  dropCursor,
   highlightActiveLine,
   highlightActiveLineGutter,
   highlightSpecialChars,
@@ -12,9 +11,11 @@ import {
 } from "@codemirror/view"
 import {
   bracketMatching,
+  defaultHighlightStyle,
   foldGutter,
   foldKeymap,
   indentOnInput,
+  syntaxHighlighting,
 } from "@codemirror/language"
 import { defaultKeymap, history, historyKeymap } from "@codemirror/commands"
 import {
@@ -33,9 +34,9 @@ export const defaultExtensions: Extension[] = [
   history(),
   foldGutter(),
   drawSelection(),
-  dropCursor(),
   EditorState.allowMultipleSelections.of(true),
   indentOnInput(),
+  syntaxHighlighting(defaultHighlightStyle, { fallback: true }),
   bracketMatching(),
   closeBrackets(),
   autocompletion(),
