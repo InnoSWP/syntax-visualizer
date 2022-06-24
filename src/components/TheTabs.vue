@@ -6,7 +6,7 @@ import NodeCoordinatesMatrix from "@/components/ncm/NodeCoordinatesMatrix.vue"
 import { useSettingsStore } from "@/stores/settings"
 import { useParsingController } from "@/core/controller"
 
-const { codeEditorVariant, astVariant } = useSettingsStore()
+const { astVariant, languageId } = useSettingsStore()
 
 const { code, ast } = useParsingController()
 </script>
@@ -14,11 +14,7 @@ const { code, ast } = useParsingController()
 <template>
   <main class="tabs-root">
     <AppTab title="Code" icon="fileCode" :row="1" :col="1">
-      <CodeEditor
-        v-model:value="code"
-        :variant="codeEditorVariant"
-        language="typescript"
-      />
+      <CodeEditor v-model="code" :language="languageId" />
     </AppTab>
     <AppTab title="Abstract Syntax Tree" icon="tree" :row="1" :col="2">
       <AbstractSyntaxTree :variant="astVariant" :root="ast?.root" />
