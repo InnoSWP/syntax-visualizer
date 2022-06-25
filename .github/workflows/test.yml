@@ -44,7 +44,7 @@ jobs:
       - run: node -p 'os.cpus()'
       - name: Build with coverage maps
         run: npm run build:coverage
-        with:
+        env:
           NODE_OPTIONS: "--max-old-space-size=8192"
       - name: Save build folder
         uses: actions/upload-artifact@v3
