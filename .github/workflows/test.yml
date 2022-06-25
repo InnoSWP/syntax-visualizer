@@ -234,9 +234,9 @@ jobs:
       - name: Merge coverages
         run: |
           mkdir ./coverage
-          nyc merge ./coverage-merged ./.nyc_output
+          npx nyc merge ./coverage-merged ./.nyc_output
       - name: Generate coverage
-        run: nyc report -r lcov
+        run: npx nyc report -r lcov
       - name: SonarCloud Scan
         if: always()
         uses: SonarSource/sonarcloud-github-action@master
