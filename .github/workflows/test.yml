@@ -234,8 +234,8 @@ jobs:
           path: ./coverage-merged/e2e-chrome-3
       - name: Merge coverages
         run: |
-          mkdir ./coverage
-          npx nyc merge ./coverage-merged ./.nyc_output
+          mkdir ./.nyc_output
+          npx nyc merge ./coverage-merged ./.nyc_output/coverage-final.json
       - name: Generate coverage
         run: npx nyc report -r lcov
       - name: SonarCloud Scan
