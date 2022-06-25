@@ -181,7 +181,6 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Make coverage directories
-        id: make_coverage_directories
         run: |
           mkdir -p ./coverage-merged/unit/
           mkdir -p ./coverage-merged/e2e-chrome-1/
@@ -191,43 +190,43 @@ jobs:
           mkdir -p ./coverage-merged/e2e-firefox-2/
           mkdir -p ./coverage-merged/e2e-firefox-3/
       - name: Download unit tests coverage
-        if: steps.make_coverage_directories.outcome == 'success'
+        continue-on-error: true
         uses: actions/download-artifact@v3
         with:
           name: coverage-unit-json
           path: ./coverage-merged/unit
       - name: Download E2E Firefox 1 coverage
-        if: steps.make_coverage_directories.outcome == 'success'
+        continue-on-error: true
         uses: actions/download-artifact@v3
         with:
           name: coverage-e2e-firefox-1-json
           path: ./coverage-merged/e2e-firefox-1
       - name: Download E2E Firefox 2 coverage
-        if: steps.make_coverage_directories.outcome == 'success'
+        continue-on-error: true
         uses: actions/download-artifact@v3
         with:
           name: coverage-e2e-firefox-2-json
           path: ./coverage-merged/e2e-firefox-2
       - name: Download E2E Firefox 3 coverage
-        if: steps.make_coverage_directories.outcome == 'success'
+        continue-on-error: true
         uses: actions/download-artifact@v3
         with:
           name: coverage-e2e-firefox-3-json
           path: ./coverage-merged/e2e-firefox-3
       - name: Download E2E Chrome 1 coverage
-        if: steps.make_coverage_directories.outcome == 'success'
+        continue-on-error: true
         uses: actions/download-artifact@v3
         with:
           name: coverage-e2e-chrome-1-json
           path: ./coverage-merged/e2e-chrome-1
       - name: Download E2E Chrome 2 coverage
-        if: steps.make_coverage_directories.outcome == 'success'
+        continue-on-error: true
         uses: actions/download-artifact@v3
         with:
           name: coverage-e2e-chrome-2-json
           path: ./coverage-merged/e2e-chrome-2
       - name: Download E2E Chrome 3 coverage
-        if: steps.make_coverage_directories.outcome == 'success'
+        continue-on-error: true
         uses: actions/download-artifact@v3
         with:
           name: coverage-e2e-chrome-3-json
