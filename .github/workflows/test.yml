@@ -110,7 +110,7 @@ jobs:
       - name: Upload coverage
         uses: actions/upload-artifact@v3
         with:
-          name: coverage-e2e-chrome-${{ matrix.container }}-json
+          name: coverage-e2e-chrome-${{ matrix.containers }}-json
           path: coverage/coverage-final.json
 
   firefox-tests:
@@ -160,7 +160,7 @@ jobs:
       - name: Upload coverage
         uses: actions/upload-artifact@v3
         with:
-          name: coverage-e2e-firefox-${{ matrix.container }}-json
+          name: coverage-e2e-firefox-${{ matrix.containers }}-json
           path: coverage/coverage-final.json
 
   sonar-cloud:
