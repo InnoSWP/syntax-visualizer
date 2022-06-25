@@ -7,6 +7,7 @@ import monacoEditorPlugin from "vite-plugin-monaco-editor"
 import nodePolyfills from "rollup-plugin-polyfill-node"
 import NodeModulesPolyfills from "@esbuild-plugins/node-modules-polyfill"
 import GlobalsPolyfills from "@esbuild-plugins/node-globals-polyfill"
+import istanbul from "vite-plugin-istanbul"
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -15,6 +16,14 @@ export default defineConfig({
     vueJsx(),
     monacoEditorPlugin({
       publicBaseUrl: process.env.VITE_BASE_URL || "/",
+    }),
+    istanbul({
+      include: "src/*",
+      exclude: ["node_modules", "test/"],
+      extension: [".js", ".ts", ".vue"],
+      requireEnv: true,
+      cypress: true,
+      forceBuildInstrument: true,
     }),
   ],
   resolve: {
@@ -27,6 +36,7 @@ export default defineConfig({
     rollupOptions: {
       plugins: [nodePolyfills()],
     },
+    sourcemap: process.env.CYPRESS_COVERAGE ? "inline" : false,
   },
   optimizeDeps: {
     esbuildOptions: {
@@ -37,6 +47,13 @@ export default defineConfig({
           buffer: true,
         }),
       ],
+    },
+  },
+  // Vitest C8 config
+  test: {
+    coverage: {
+      include: ["src/*"],
+      reporter: ["json"],
     },
   },
 })
