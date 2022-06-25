@@ -109,6 +109,7 @@ jobs:
           DEBUG: "cypress:server:args"
       - name: Upload coverage
         uses: actions/upload-artifact@v3
+        if: always()
         with:
           name: coverage-e2e-chrome-${{ matrix.containers }}-json
           path: coverage/coverage-final.json
