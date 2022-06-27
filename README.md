@@ -38,4 +38,4 @@ representations
 
 ## License 
 
-
+The project is licensed under a [MIT license](LICENSE).
