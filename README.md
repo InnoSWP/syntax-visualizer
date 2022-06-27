@@ -6,9 +6,9 @@
 
 <p align="center">
 Programming languages syntax visualizer with
-<strong>Abstract Syntax Tree</strong>
+<b>Abstract Syntax Tree</b>
 &
-<strong>Node Coordinates Matrix</strong> 
+<b>Node Coordinates Matrix</b> 
 representations
 </p>
 
@@ -35,4 +35,7 @@ representations
 ## Examples
 
 > Here be dragons...
+
+## License 
+
 
