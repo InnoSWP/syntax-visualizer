@@ -6,15 +6,16 @@
 
 <p align="center">
 Programming languages syntax visualizer with
-<strong>Abstract Syntax Tree</strong>
+<b>Abstract Syntax Tree</b>
 &
-<strong>Node Coordinates Matrix</strong> 
+<b>Node Coordinates Matrix</b> 
 representations
 </p>
 
 - [Motivation](#motivation)
 - [Features](#features)
 - [Examples](#examples)
+- [License](#license)
 
 ## Motivation
 
@@ -36,3 +37,6 @@ representations
 
 > Here be dragons...
 
+## License 
+
+The project is licensed under a [MIT license](LICENSE).
