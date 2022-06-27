@@ -15,6 +15,7 @@ representations
 - [Motivation](#motivation)
 - [Features](#features)
 - [Examples](#examples)
+- [License](#license)
 
 ## Motivation
 
