@@ -1,58 +1,14 @@
 <script lang="ts">
 import { defineComponent } from "vue"
 import type { PropType } from "vue"
-import { traverseAstPreOrder } from "@/core/traverse"
-import type { AST, ASTNode } from "@/core/types"
-
-interface NCMNode {
-  heading: string
-  subheading?: string
-  depth: number
-  coordinates: number[]
-}
+import type { ASTNodes } from "@/core/types"
 
 export default defineComponent({
   name: "NodeCoordinatesMatrix",
   props: {
-    ast: {
-      type: Object as PropType<AST>,
+    nodes: {
+      type: Array as PropType<ASTNodes>,
       required: false,
-    },
-  },
-  computed: {
-    matrix() {
-      if (!this.ast) {
-        return
-      }
-
-      let maxDepth = 0
-      const nodes: NCMNode[] = []
-
-      const addVertex = (node: ASTNode, depth: number) => {
-        nodes.push({
-          heading: node.type,
-          subheading: node.label,
-          depth: depth,
-          coordinates: [],
-        })
-        maxDepth = Math.max(depth, maxDepth)
-      }
-
-      traverseAstPreOrder(this.ast, addVertex)
-
-      for (let i = 0; i < nodes.length; i++) {
-        const node = nodes[i]
-        for (let j = 0; j < maxDepth; j++) {
-          const coordinate = node.depth == j + 1 ? 1 : 0
-          node.coordinates.push(coordinate)
-
-          if (i > 0 && node.depth >= j + 1) {
-            node.coordinates[j] += nodes[i - 1].coordinates[j]
-          }
-        }
-      }
-
-      return nodes
     },
   },
 })
@@ -63,14 +19,14 @@ export default defineComponent({
     <table class="table" aria-label="Node Coordinates Matrix">
       <tbody class="table-body">
         <tr
-          v-for="(node, nodeIndex) in matrix"
+          v-for="(node, nodeIndex) in nodes"
           v-bind:key="nodeIndex"
           class="row"
         >
           <th class="heading-cell">
-            <span class="heading">{{ node.heading }}</span>
-            <span v-if="node.subheading" class="subheading">
-              {{ node.subheading }}
+            <span class="heading">{{ node.type }}</span>
+            <span v-if="node.label" class="subheading">
+              {{ node.label }}
             </span>
           </th>
 

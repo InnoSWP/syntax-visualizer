@@ -1,9 +1,9 @@
 import type { LanguageSupport } from "@codemirror/language"
-import type { LanguageID } from "@/core/languages"
+import type { LanguageId } from "@/core/languages"
 import languages from "@/core/languages"
 
 export async function loadLanguageSampleCode(
-  languageId: LanguageID
+  languageId: LanguageId
 ): Promise<string | null> {
   const language = languages[languageId]
   try {
@@ -17,7 +17,7 @@ export async function loadLanguageSampleCode(
 }
 
 export async function loadCodemirrorLanguageSupport(
-  languageId: LanguageID
+  languageId: LanguageId
 ): Promise<LanguageSupport | null> {
   const loader = languages[languageId].codemirrorLoader
   if (loader == null) return null

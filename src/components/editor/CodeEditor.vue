@@ -1,7 +1,7 @@
 <script lang="ts">
 import type { PropType } from "vue"
 import { defineAsyncComponent, defineComponent } from "vue"
-import type { LanguageID } from "@/core/languages"
+import type { LanguageId } from "@/core/languages"
 
 export default defineComponent({
   name: "CodeEditor",
@@ -18,7 +18,7 @@ export default defineComponent({
       default: "",
     },
     languageId: {
-      type: String as PropType<LanguageID>,
+      type: String as PropType<LanguageId>,
       required: true,
     },
     autofocus: Boolean,

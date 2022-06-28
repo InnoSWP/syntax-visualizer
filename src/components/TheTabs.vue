@@ -4,11 +4,11 @@ import CodeEditor from "@/components/editor/CodeEditor.vue"
 import AbstractSyntaxTree from "@/components/ast/AbstractSyntaxTree.vue"
 import NodeCoordinatesMatrix from "@/components/ncm/NodeCoordinatesMatrix.vue"
 import { useSettingsStore } from "@/stores/settings"
-import { useParsingController } from "@/core/controller"
+import { useController } from "@/core/useController"
 
 const { astVariant, languageId } = useSettingsStore()
 
-const { code, ast } = useParsingController()
+const { code, lastNodes } = useController()
 </script>
 
 <template>
@@ -17,10 +17,10 @@ const { code, ast } = useParsingController()
       <CodeEditor v-model="code" :languageId="languageId" autofocus />
     </AppTab>
     <AppTab title="Abstract Syntax Tree" icon="tree" :row="1" :col="2">
-      <AbstractSyntaxTree :variant="astVariant" :root="ast?.root" />
+      <AbstractSyntaxTree :variant="astVariant" :nodes="lastNodes" />
     </AppTab>
     <AppTab title="Node Coordinates Matrix" icon="matrix" :row="1" :col="3">
-      <NodeCoordinatesMatrix :ast="ast" />
+      <NodeCoordinatesMatrix :nodes="lastNodes" />
     </AppTab>
   </main>
 </template>

@@ -1,9 +1,12 @@
-import type { ASTNode } from "@/core/types"
+import type { ASTNode, ASTNodes } from "@/core/types"
 import type { TreeNode } from "@/components/ast/graph/types"
 
 let idCounter = 0
 
-export function generateTreeGraphNodeProxyFromASTNode(node: ASTNode) {
+export function generateTreeGraphNodeProxyFromASTNode(
+  node: ASTNode,
+  nodes: ASTNodes
+) {
   const proxyHandler = {
     children: undefined as TreeNode[] | undefined,
     id: idCounter++,
@@ -11,8 +14,8 @@ export function generateTreeGraphNodeProxyFromASTNode(node: ASTNode) {
       switch (prop) {
         case "children":
           if (!this.children) {
-            this.children = (target.children ?? []).map(
-              generateTreeGraphNodeProxyFromASTNode
+            this.children = (target.childrenIndexes ?? []).map((index) =>
+              generateTreeGraphNodeProxyFromASTNode(nodes[index], nodes)
             )
           }
           return this.children

@@ -3,7 +3,7 @@ import type { PropType } from "vue"
 import { onMounted, ref, watch } from "vue"
 import { Compartment, EditorState } from "@codemirror/state"
 import { EditorView } from "@codemirror/view"
-import type { LanguageID } from "@/core/languages"
+import type { LanguageId } from "@/core/languages"
 import { loadCodemirrorLanguageSupport } from "@/core/languages"
 import { defaultExtensions, updateListeners } from "./extensions"
 
@@ -14,7 +14,7 @@ const props = defineProps({
     default: "",
   },
   languageId: {
-    type: String as PropType<LanguageID>,
+    type: String as PropType<LanguageId>,
     required: true,
   },
   autofocus: Boolean,
