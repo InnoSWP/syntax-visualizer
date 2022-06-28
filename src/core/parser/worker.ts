@@ -17,7 +17,6 @@ let parseRequestToExecute: WorkerRequestParse | null = null
 
 onmessage = (event: MessageEvent) => {
   const request = event.data as WorkerRequest
-  console.log("Worker received message:\n", request)
 
   switch (request.type) {
     case "parse":
@@ -78,7 +77,6 @@ export async function loadParserImplementation(
     FullParserId,
     ">"
   >
-  console.log("LOADING PARSER", languageId, parserId)
 
   return {
     parser: fullParserId,

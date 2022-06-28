@@ -21,7 +21,6 @@ export function parse<Options>(
   options?: Options
 ): ParseResult {
   const result = parserImplementation.parse(code, options)
-  console.log("Raw parser result:", result)
 
   if (result.success) {
     return {
@@ -65,8 +64,6 @@ function transformParserAst<ParserNode>(
   }
 
   traverseNodePreOrder(astRoot, getNodeChildren, visitNode)
-
-  console.log("Intermediate nodes:", intermediateNodes)
 
   completeIntermediateAstNodes(intermediateNodes)
 

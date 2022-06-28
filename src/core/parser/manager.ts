@@ -45,7 +45,6 @@ export class ParserWorkerManager {
 
   private handleWorkerResponse(event: MessageEvent) {
     const data = event.data as WorkerResponse
-    console.log("Worker sent message:\n", data)
 
     switch (data.type) {
       case "parse-result":
