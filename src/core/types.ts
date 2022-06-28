@@ -110,10 +110,20 @@ export interface SourceLocation {
   end: Position
 }
 
-export interface Position {
+export type Position =
+  | PositionComplete
+  | PositionWithIndex
+  | PositionWithLineAndColumn
+
+export type PositionComplete = PositionWithIndex & PositionWithLineAndColumn
+
+export interface PositionWithIndex {
+  index: number
+}
+
+export interface PositionWithLineAndColumn {
   line: number
   column: number
-  index?: number
 }
 
 export type ParseResult = SuccessParseResult | FailedParseResult
