@@ -8,7 +8,7 @@ import { useParsingController } from "@/core/controller"
 
 const { astVariant, languageId } = useSettingsStore()
 
-const { code, ast } = useParsingController()
+const { code, lastNodes } = useParsingController()
 </script>
 
 <template>
@@ -17,10 +17,10 @@ const { code, ast } = useParsingController()
       <CodeEditor v-model="code" :languageId="languageId" autofocus />
     </AppTab>
     <AppTab title="Abstract Syntax Tree" icon="tree" :row="1" :col="2">
-      <AbstractSyntaxTree :variant="astVariant" :root="ast?.root" />
+      <AbstractSyntaxTree :variant="astVariant" :nodes="lastNodes" />
     </AppTab>
     <AppTab title="Node Coordinates Matrix" icon="matrix" :row="1" :col="3">
-      <NodeCoordinatesMatrix :ast="ast" />
+      <NodeCoordinatesMatrix :nodes="lastNodes" />
     </AppTab>
   </main>
 </template>

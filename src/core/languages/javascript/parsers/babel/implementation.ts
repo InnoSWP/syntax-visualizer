@@ -1,54 +1,32 @@
-import type { ParserOptions as BabelParserOptions } from "@babel/parser"
+import type { Node } from "@babel/types"
+import type { ParserOptions } from "@babel/parser"
 import { parse as babelParse } from "@babel/parser"
-import traverse, { NodePath } from "@babel/traverse"
-import type { Node as BabelNode } from "@babel/types"
-import type { ASTNode, SourceLocation, ParseResult } from "@/core/types"
-import { defineParser } from "@/core/types"
+import type {
+  LanguageParserImplementation,
+  RawParseResult,
+  SourceLocation,
+} from "@/core/types"
 
-export default defineParser({
-  name: "@babel/parser",
-  parse: parse,
-})
+export default {
+  parse,
+  getNodeType,
+  getNodeJsonSerializableMetadata,
+  getNodeLocation,
+  getNodeChildren,
+  getNodeLabel,
+} as LanguageParserImplementation<ParserOptions, Node>
 
-function parse(code: string, options?: BabelParserOptions): ParseResult {
-  let babelAst
+function parse(code: string, options?: ParserOptions): RawParseResult<Node> {
   try {
-    babelAst = babelParse(code, options)
+    return {
+      success: true,
+      astRoot: babelParse(code, options).program,
+    }
   } catch (error) {
-    return { success: false, error: parseBabelError(error) }
-  }
-
-  type BabelNodeWithCachedPath = BabelNode & { __cached_path?: string }
-
-  const nodePathInASTToNodeMap = {} as Record<string, ASTNode>
-  let root: undefined | ASTNode
-
-  traverse(babelAst, {
-    enter(path) {
-      const babelNode = path.node as BabelNodeWithCachedPath
-      const pathStr = getPathOfBabelNodePath(path)
-      babelNode.__cached_path = pathStr
-      const node = createNodeFromBabelNode(babelNode, pathStr)
-      nodePathInASTToNodeMap[pathStr] = node
-
-      // Assume that first entry is the root
-      if (root == null) root = node
-
-      const babelParent = path.parent as undefined | BabelNodeWithCachedPath
-      if (babelParent?.__cached_path) {
-        const parent = nodePathInASTToNodeMap[babelParent.__cached_path]
-        node.parent = parent
-        if (!parent.children) {
-          parent.children = []
-        }
-        parent.children.push(node)
-      }
-    },
-  })
-
-  return {
-    success: true,
-    ast: { root },
+    return {
+      success: false,
+      error: parseBabelError(error),
+    }
   }
 }
 
@@ -72,28 +50,46 @@ const parseBabelError = (
   return { message }
 }
 
-function getPathOfBabelNodePath(path: NodePath): string {
-  const key = path.key
-  const parentPath = path.parentPath
-  if (key == null) {
-    return ""
-  } else if (parentPath == null) {
-    return key.toString()
-  }
-  return getPathOfBabelNodePath(parentPath) + "." + key
+function getNodeType(node: Node): string {
+  return node.type
 }
 
-const createNodeFromBabelNode = (
-  babelNode: BabelNode,
-  pathOriginalAST: string
-): ASTNode => ({
-  type: babelNode.type,
-  label: getBabelNodeLabel(babelNode),
-  loc: getSourceLocationFromBabelNodeLocation(babelNode),
-  pathInOriginalAST: pathOriginalAST,
-})
+function getNodeJsonSerializableMetadata(node: Node) {
+  // TODO: implement
+  return {}
+}
 
-function getBabelNodeLabel(node: BabelNode): string | undefined {
+function getNodeLocation(node: Node): SourceLocation | null {
+  if (!node.loc) return null
+  const { start, end } = node.loc
+  return {
+    start: {
+      line: start.line - 1, // Babel line index starts from 1
+      column: start.column,
+    },
+    end: {
+      line: end.line - 1, // Babel line index starts from 1
+      column: end.column,
+    },
+  }
+}
+
+function getNodeChildren(node: Node): Node[] | null {
+  switch (node.type) {
+    case "Program":
+    case "BlockStatement":
+      return node.body
+
+    // TODO: complete this!
+    //  For specification see:
+    //  https://github.com/babel/babel/blob/main/packages/babel-parser/ast/spec.md#node-objects
+
+    default:
+      return null
+  }
+}
+
+function getNodeLabel(node: Node): string | null {
   switch (node.type) {
     case "InterpreterDirective":
     case "DirectiveLiteral":
@@ -235,22 +231,8 @@ function getBabelNodeLabel(node: BabelNode): string | undefined {
 
     case "TemplateElement":
       return '"' + (node.value.cooked || node.value.raw) + '"'
+
+    default:
+      return null
   }
 }
-
-const getSourceLocationFromBabelNodeLocation = ({
-  loc,
-  start,
-  end,
-}: BabelNode): SourceLocation => ({
-  start: {
-    line: loc!.start.line,
-    column: loc!.start.column,
-    index: start!,
-  },
-  end: {
-    line: loc!.end.line,
-    column: loc!.end.column,
-    index: end!,
-  },
-})

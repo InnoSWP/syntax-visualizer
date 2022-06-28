@@ -1,49 +1,65 @@
 import type { Ref } from "vue"
-import { computed, ref, watch } from "vue"
+import { ref, watch } from "vue"
 import { watchDebounced, watchThrottled } from "@vueuse/core"
 import { storeToRefs } from "pinia"
 import { useSettingsStore } from "@/stores/settings"
-import languages, { loadLanguageSampleCode } from "@/core/languages"
-import type { AST, ParseError } from "@/core/types"
+import type { LanguageID } from "@/core/languages"
+import { loadLanguageSampleCode } from "@/core/languages"
+import type { ASTNodes, ParseError } from "@/core/types"
+import Parser from "@/core/parser"
 
 export function useParsingController() {
   const { languageId, parserName } = storeToRefs(useSettingsStore())
-  const parse = computed(
-    () => languages[languageId.value].parsers[parserName.value].parse
-  )
-  const code = useCode()
+  const parser = new Parser(`${languageId.value}>${parserName.value}`)
+  const code = useCode(languageId)
   const debounceTime = useDebounceTimeBasedOnCode(code)
-  const ast = ref<AST>()
+  const isPending = ref(false)
+  const loadingParsePromiseVersion = ref()
+  const isLoading = ref(false)
+  const lastNodes = ref<ASTNodes>()
   const error = ref<ParseError>()
-  const isParsing = ref<boolean>(false)
 
   watch(code, () => {
-    isParsing.value = false
+    isPending.value = true
   })
 
   watchDebounced(
     code,
     () => {
-      const result = parse.value(code.value)
+      const [versionId, promise] = parser.parse(code.value)
 
-      if (result.success) {
-        ast.value = result.ast
-        error.value = undefined
-      } else {
-        error.value = result.error
-      }
+      loadingParsePromiseVersion.value = versionId
+      isPending.value = false
+      isLoading.value = true
 
-      isParsing.value = true
+      promise.then((result) => {
+        if (loadingParsePromiseVersion.value === versionId) {
+          isPending.value = false
+          isLoading.value = false
+
+          if (result.success) {
+            lastNodes.value = result.nodes
+            error.value = undefined
+          } else {
+            error.value = result.error
+          }
+        }
+      })
     },
     { debounce: debounceTime, immediate: true }
   )
 
-  return { code, ast, error, isParsing }
+  return {
+    code,
+    lastNodes,
+    error,
+    isPending,
+    isLoading,
+  }
 }
 
-function useCode() {
+function useCode(languageId: Ref<LanguageID>) {
   const code = ref("")
-  const { languageId } = storeToRefs(useSettingsStore())
 
   // Set the code to a sample code when the language changes
   watch(

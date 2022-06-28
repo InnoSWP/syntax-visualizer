@@ -16,7 +16,7 @@ export const useSettingsStore = defineStore("settings", {
     theme: "system",
     astVariant: "graph",
     languageId: "javascript",
-    parserName: "@babel/parser",
+    parserName: "babel",
   }),
   actions: {
     toggleTheme() {
