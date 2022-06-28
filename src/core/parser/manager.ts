@@ -1,5 +1,5 @@
 import type { ParseResult } from "@/core/types"
-import type { FullParserName } from "@/core/languages"
+import type { FullParserId } from "@/core/languages"
 import type { WorkerRequestSetParser, WorkerResponse } from "./types"
 import ParserWorker from "./worker?worker"
 
@@ -9,7 +9,7 @@ export class ParserWorkerManager {
   worker: Worker
   parsePromise: ParsePromise | null = null
 
-  constructor(defaultLanguageParserName: FullParserName) {
+  constructor(defaultLanguageParserName: FullParserId) {
     this.worker = new ParserWorker()
     this.worker.onmessage = this.handleWorkerResponse.bind(this)
     this.worker.onerror = this.handleWorkerError.bind(this)
@@ -35,10 +35,10 @@ export class ParserWorkerManager {
     return [version, parsePromise]
   }
 
-  setParser(fullParserName: FullParserName) {
+  setParser(fullParserId: FullParserId) {
     const request: WorkerRequestSetParser = {
       type: "set-parser",
-      parser: fullParserName,
+      parser: fullParserId,
     }
     this.worker.postMessage(request)
   }

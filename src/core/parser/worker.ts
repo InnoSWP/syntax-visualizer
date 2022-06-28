@@ -1,5 +1,5 @@
 import type { LanguageParserImplementation } from "@/core/types"
-import type { FullParserName } from "@/core/languages"
+import type { FullParserId } from "@/core/languages"
 import type {
   WorkerRequest,
   WorkerRequestParse,
@@ -11,8 +11,8 @@ let parserImplementation: LanguageParserImplementation<
   unknown,
   unknown
 > | null = null
-let currentParserName: FullParserName | null = null
-let requiredParserName: FullParserName | null = null
+let currentParserId: FullParserId | null = null
+let requiredParserId: FullParserId | null = null
 let parseRequestToExecute: WorkerRequestParse | null = null
 
 onmessage = (event: MessageEvent) => {
@@ -25,11 +25,11 @@ onmessage = (event: MessageEvent) => {
       executeParseRequestIfPossible()
       break
     case "set-parser":
-      requiredParserName = request.parser
-      if (currentParserName !== requiredParserName) {
-        loadParserImplementation(requiredParserName).then((loaded) => {
-          if (loaded.name === requiredParserName) {
-            currentParserName = loaded.name
+      requiredParserId = request.parser
+      if (currentParserId !== requiredParserId) {
+        loadParserImplementation(requiredParserId).then((loaded) => {
+          if (loaded.parser === requiredParserId) {
+            currentParserId = loaded.parser
             parserImplementation = loaded.implementation
             executeParseRequestIfPossible()
           }
@@ -47,8 +47,8 @@ function executeParseRequestIfPossible(): void {
   if (
     parseRequestToExecute != null &&
     parserImplementation != null &&
-    currentParserName != null &&
-    currentParserName === requiredParserName
+    currentParserId != null &&
+    currentParserId === requiredParserId
   ) {
     // This might take a while...
     const result = parse(
@@ -69,22 +69,22 @@ function executeParseRequestIfPossible(): void {
 }
 
 export async function loadParserImplementation(
-  fullParserName: FullParserName
+  fullParserId: FullParserId
 ): Promise<{
-  name: FullParserName
+  parser: FullParserId
   implementation: LanguageParserImplementation<unknown, unknown>
 }> {
-  const [languageId, parserName] = fullParserName.split(">") as Split<
-    FullParserName,
+  const [languageId, parserId] = fullParserId.split(">") as Split<
+    FullParserId,
     ">"
   >
-  console.log("LOADING PARSER", languageId, parserName)
+  console.log("LOADING PARSER", languageId, parserId)
 
   return {
-    name: fullParserName,
+    parser: fullParserId,
     implementation: (
       await import(
-        `../languages/${languageId}/parsers/${parserName}/implementation.ts`
+        `../languages/${languageId}/parsers/${parserId}/implementation.ts`
       )
     ).default,
   }

@@ -2,12 +2,14 @@ import type { LanguageSupport } from "@codemirror/language"
 
 export interface Language<
   ID extends Readonly<string>,
-  ParserName extends Readonly<string>
+  ParserID extends Readonly<string>
 > {
   /**
    * Unique language identifier.
-   * Important: should match the name of the folder containing the language.
-   * Important: symbol ">" is forbidden.
+   *
+   * _**Important:** should match the name of the folder containing the language._
+   *
+   * _**Important:** symbol ">" is forbidden._
    */
   readonly id: ID
 
@@ -31,13 +33,13 @@ export interface Language<
    * In the format: { parserName: parser }
    */
   readonly parsers: {
-    [key in ParserName]: LanguageParser<key, any, any>
+    [key in ParserID]: LanguageParser<key, any, any>
   }
 
   /**
-   * Name of the default parser from parsers.
+   * Identifier of the default parser from parsers.
    */
-  readonly defaultParserName: ParserName
+  readonly defaultParserId: ParserID
 
   /**
    * Async function that loads the codemirror support for this language.
@@ -46,15 +48,18 @@ export interface Language<
 }
 
 export interface LanguageParser<
-  Name extends Readonly<string>,
+  ID extends Readonly<string>,
   ParserOptions,
   ParserASTNode
 > {
   /**
-   * Unique for the language name of the parser.
-   * Important: symbol ">" is forbidden.
+   * Unique for the language identifier of the parser.
+   *
+   * _**Important:** should match the name of the folder containing the parser._
+   *
+   * _**Important:** symbol ">" is forbidden._
    */
-  readonly name: Name
+  readonly id: ID
   readonly uiName: string
   readonly loadImplementation: () => Promise<
     LanguageParserImplementation<ParserOptions, ParserASTNode>
@@ -136,6 +141,7 @@ export interface ASTNode {
 
   /**
    * Original metadata of the node provided by parser.
+   *
    * _**Important:** it should be JSON-serializable._
    */
   meta: Record<string, any>
@@ -169,18 +175,18 @@ export interface ASTNode {
 }
 
 export function defineParser<
-  Name extends Readonly<string>,
+  ID extends Readonly<string>,
   ParserOptions,
   ParserASTNode
 >(
-  parser: LanguageParser<Name, ParserOptions, ParserASTNode>
-): LanguageParser<Name, ParserOptions, ParserASTNode> {
+  parser: LanguageParser<ID, ParserOptions, ParserASTNode>
+): LanguageParser<ID, ParserOptions, ParserASTNode> {
   return parser
 }
 
 export function defineLanguage<
   ID extends Readonly<string>,
-  ParserName extends string
->(language: Language<ID, ParserName>): Language<ID, ParserName> {
+  ParserID extends Readonly<string>
+>(language: Language<ID, ParserID>): Language<ID, ParserID> {
   return language
 }

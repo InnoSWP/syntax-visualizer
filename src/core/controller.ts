@@ -3,14 +3,14 @@ import { ref, watch } from "vue"
 import { watchDebounced, watchThrottled } from "@vueuse/core"
 import { storeToRefs } from "pinia"
 import { useSettingsStore } from "@/stores/settings"
-import type { LanguageID } from "@/core/languages"
+import type { LanguageId } from "@/core/languages"
 import { loadLanguageSampleCode } from "@/core/languages"
 import type { ASTNodes, ParseError } from "@/core/types"
 import Parser from "@/core/parser"
 
 export function useParsingController() {
-  const { languageId, parserName } = storeToRefs(useSettingsStore())
-  const parser = new Parser(`${languageId.value}>${parserName.value}`)
+  const { languageId, parserId } = storeToRefs(useSettingsStore())
+  const parser = new Parser(`${languageId.value}>${parserId.value}`)
   const code = useCode(languageId)
   const debounceTime = useDebounceTimeBasedOnCode(code)
   const isPending = ref(false)
@@ -58,7 +58,7 @@ export function useParsingController() {
   }
 }
 
-function useCode(languageId: Ref<LanguageID>) {
+function useCode(languageId: Ref<LanguageId>) {
   const code = ref("")
 
   // Set the code to a sample code when the language changes

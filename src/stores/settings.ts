@@ -1,14 +1,14 @@
 import { defineStore } from "pinia"
-import type { LanguageID, ParserNameOfLanguage } from "@/core/languages"
+import type { LanguageId, ParserIdOfLanguage } from "@/core/languages"
 
 export type ThemeColor = "light" | "dark" | "system"
 export type ASTVariant = "graph" | "json"
 
-export interface SettingsState<L extends LanguageID = "javascript"> {
+export interface SettingsState<L extends LanguageId = "javascript"> {
   theme: ThemeColor
   astVariant: ASTVariant
   languageId: L
-  parserName: ParserNameOfLanguage<L>
+  parserId: ParserIdOfLanguage<L>
 }
 
 export const useSettingsStore = defineStore("settings", {
@@ -16,7 +16,7 @@ export const useSettingsStore = defineStore("settings", {
     theme: "system",
     astVariant: "graph",
     languageId: "javascript",
-    parserName: "babel",
+    parserId: "babel",
   }),
   actions: {
     toggleTheme() {

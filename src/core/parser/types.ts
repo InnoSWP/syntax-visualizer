@@ -1,9 +1,9 @@
-import type { FullParserName } from "@/core/languages"
+import type { FullParserId } from "@/core/languages"
 import type { ParseResult } from "@/core/types"
 
 export type WorkerRequestSetParser = {
   type: "set-parser"
-  parser: FullParserName
+  parser: FullParserId
 }
 
 export type WorkerRequestParse = {
