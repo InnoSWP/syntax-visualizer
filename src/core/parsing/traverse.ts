@@ -1,6 +1,5 @@
 /**
  * Traverses a node of type `N` using pre-order traversal algorithm.
- * TODO: write tests
  *
  * @param node The node (root) to traverse.
  * @param childrenGetter A function that accepts a node and returns its children (if any).
