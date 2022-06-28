@@ -2,13 +2,12 @@
 import type { PropType } from "vue"
 import { defineComponent } from "vue"
 import AbstractSyntaxTreeGraph from "./graph/AbstractSyntaxTreeGraph.vue"
-import AbstractSyntaxTreeJson from "./json/AbstractSyntaxTreeJson.vue"
 import type { ASTVariant } from "@/stores/settings"
 import type { ASTNodes } from "@/core/types"
 
 export default defineComponent({
   name: "AbstractSyntaxTree",
-  components: { AbstractSyntaxTreeJson, AbstractSyntaxTreeGraph },
+  components: { AbstractSyntaxTreeGraph },
   props: {
     nodes: {
       type: Array as PropType<ASTNodes>,
@@ -26,7 +25,7 @@ export default defineComponent({
   <div class="ast-root">
     <h3 v-if="!nodes">Write some (correct) code!</h3>
     <AbstractSyntaxTreeGraph v-else-if="variant === 'graph'" :nodes="nodes" />
-    <AbstractSyntaxTreeJson v-else :root="root" />
+    <!--  TODO: add JSON representation  -->
   </div>
 </template>
 
