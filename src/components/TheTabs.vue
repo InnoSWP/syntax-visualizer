@@ -4,11 +4,11 @@ import CodeEditor from "@/components/editor/CodeEditor.vue"
 import AbstractSyntaxTree from "@/components/ast/AbstractSyntaxTree.vue"
 import NodeCoordinatesMatrix from "@/components/ncm/NodeCoordinatesMatrix.vue"
 import { useSettingsStore } from "@/stores/settings"
-import { useParsingController } from "@/core/controller"
+import { useController } from "@/core/useController"
 
 const { astVariant, languageId } = useSettingsStore()
 
-const { code, lastNodes } = useParsingController()
+const { code, lastNodes } = useController()
 </script>
 
 <template>

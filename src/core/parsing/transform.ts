@@ -4,7 +4,7 @@ import type {
   LanguageParserImplementation,
   ParseResult,
 } from "@/core/types"
-import { traverseNodePreOrder } from "@/core/traverse"
+import { traverseNodePreOrder } from "./traverse"
 
 /**
  * Parses the source code using parser implementation

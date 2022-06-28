@@ -1,16 +1,16 @@
 import type { ParseResult } from "@/core/types"
 import type { FullParserId } from "@/core/languages"
 import type { WorkerRequestSetParser, WorkerResponse } from "./types"
-import ParserWorker from "./worker?worker"
+import ParsingWorker from "./worker?worker"
 
 let codeVersionCounter = 0
 
-export class ParserWorkerManager {
+export class ParsingManager {
   worker: Worker
   parsePromise: ParsePromise | null = null
 
   constructor(defaultParser: FullParserId) {
-    this.worker = new ParserWorker()
+    this.worker = new ParsingWorker()
     this.worker.onmessage = this.handleWorkerResponse.bind(this)
     this.worker.onerror = this.handleWorkerError.bind(this)
 

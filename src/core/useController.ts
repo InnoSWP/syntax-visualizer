@@ -3,58 +3,26 @@ import { ref, watch } from "vue"
 import { watchDebounced, watchThrottled } from "@vueuse/core"
 import { storeToRefs } from "pinia"
 import { useSettingsStore } from "@/stores/settings"
-import type { LanguageId } from "@/core/languages"
-import { loadLanguageSampleCode } from "@/core/languages"
-import type { ASTNodes, ParseError } from "@/core/types"
-import Parser from "@/core/parser"
+import type { LanguageId, ParserId } from "./languages"
+import { loadLanguageSampleCode } from "./languages"
+import type { ASTNodes, ParseError } from "./types"
+import { ParsingManager } from "./parsing"
 
-export function useParsingController() {
+export function useController() {
   const { languageId, parserId } = storeToRefs(useSettingsStore())
-  const parser = new Parser(`${languageId.value}>${parserId.value}`)
   const code = useCode(languageId)
-  const debounceTime = useDebounceTimeBasedOnCode(code)
-  const isPending = ref(false)
-  const loadingParsePromiseVersion = ref()
-  const isLoading = ref(false)
-  const lastNodes = ref<ASTNodes>()
-  const error = ref<ParseError>()
-
-  watch(code, () => {
-    isPending.value = true
-  })
-
-  watchDebounced(
+  const { isPending, isLoading, lastNodes, error } = useParsingManager(
     code,
-    () => {
-      const [versionId, promise] = parser.parse(code.value)
-
-      loadingParsePromiseVersion.value = versionId
-      isPending.value = false
-      isLoading.value = true
-
-      promise.then((result) => {
-        if (loadingParsePromiseVersion.value === versionId) {
-          isPending.value = false
-          isLoading.value = false
-
-          if (result.success) {
-            lastNodes.value = result.nodes
-            error.value = undefined
-          } else {
-            error.value = result.error
-          }
-        }
-      })
-    },
-    { debounce: debounceTime, immediate: true }
+    languageId,
+    parserId
   )
 
   return {
     code,
-    lastNodes,
-    error,
     isPending,
     isLoading,
+    lastNodes,
+    error,
   }
 }
 
@@ -78,6 +46,66 @@ function useCode(languageId: Ref<LanguageId>) {
   )
 
   return code
+}
+
+function useParsingManager(
+  code: Ref<string>,
+  languageId: Ref<LanguageId>,
+  parserId: Ref<ParserId>
+) {
+  const parsingManager = new ParsingManager(
+    `${languageId.value}>${parserId.value}`
+  )
+  const isPending = ref(false)
+  const loadingParsePromiseVersion = ref<number>()
+  const isLoading = ref(false)
+  const lastNodes = ref<ASTNodes>()
+  const error = ref<ParseError>()
+  const debounceTime = useDebounceTimeBasedOnCode(code)
+
+  watch([languageId, parserId], ([newLanguageId, newParserId]) => {
+    parsingManager.setParser(`${newLanguageId}>${newParserId}`)
+  })
+
+  watch(
+    code,
+    () => {
+      isPending.value = true
+    },
+    { immediate: true }
+  )
+
+  watchDebounced(
+    code,
+    () => {
+      const [versionId, promise] = parsingManager.parse(code.value)
+
+      loadingParsePromiseVersion.value = versionId
+      isPending.value = false
+      isLoading.value = true
+
+      promise.then((result) => {
+        if (loadingParsePromiseVersion.value === versionId) {
+          isLoading.value = false
+
+          if (result.success) {
+            lastNodes.value = result.nodes
+            error.value = undefined
+          } else {
+            error.value = result.error
+          }
+        }
+      })
+    },
+    { debounce: debounceTime, immediate: true }
+  )
+
+  return {
+    isPending,
+    isLoading,
+    lastNodes,
+    error,
+  }
 }
 
 function useDebounceTimeBasedOnCode(code: Ref<string>) {
