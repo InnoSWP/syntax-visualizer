@@ -67,10 +67,10 @@ function executeParseRequestIfPossible(): void {
   }
 }
 
-export async function loadParserImplementation(
-  fullParserId: FullParserId
+export async function loadParserImplementation<P extends FullParserId>(
+  fullParserId: P
 ): Promise<{
-  parser: FullParserId
+  parser: P
   implementation: LanguageParserImplementation<unknown, unknown>
 }> {
   const [languageId, parserId] = fullParserId.split(">") as Split<
