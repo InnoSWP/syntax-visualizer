@@ -1,7 +1,6 @@
 import type { LanguageSupport } from "@codemirror/language"
-import type { FullParserId, LanguageId, ParserId } from "@/core/languages"
+import type { LanguageId } from "@/core/languages"
 import languages from "@/core/languages"
-import type { LanguageParserImplementation } from "@/core/types"
 
 export async function loadLanguageSampleCode(
   languageId: LanguageId
@@ -27,24 +26,5 @@ export async function loadCodemirrorLanguageSupport(
   } catch (error) {
     console.error(`Failed to load support for language "${languageId}".`, error)
     return null
-  }
-}
-
-export async function loadParserImplementation(
-  fullParserId: FullParserId
-): Promise<{
-  parser: FullParserId
-  implementation: LanguageParserImplementation<unknown, unknown>
-}> {
-  const [languageId, parserId] = fullParserId.split(">") as Split<
-    FullParserId,
-    ">"
-  >
-
-  const parser = languages[languageId].parsers[parserId as ParserId]
-
-  return {
-    parser: fullParserId,
-    implementation: await parser.loadImplementation(),
   }
 }
