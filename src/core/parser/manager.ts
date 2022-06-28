@@ -9,13 +9,13 @@ export class ParserWorkerManager {
   worker: Worker
   parsePromise: ParsePromise | null = null
 
-  constructor(defaultLanguageParserName: FullParserId) {
+  constructor(defaultParser: FullParserId) {
     this.worker = new ParserWorker()
     this.worker.onmessage = this.handleWorkerResponse.bind(this)
     this.worker.onerror = this.handleWorkerError.bind(this)
 
-    if (defaultLanguageParserName != null) {
-      this.setParser(defaultLanguageParserName)
+    if (defaultParser != null) {
+      this.setParser(defaultParser)
     }
   }
 
