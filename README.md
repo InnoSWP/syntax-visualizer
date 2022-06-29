@@ -12,9 +12,20 @@ Programming languages syntax visualizer with
 representations
 </p>
 
+<p align="center">
+  <a href="https://opensource.org/licenses/MIT">
+    <img src="https://img.shields.io/badge/License-MIT-yellow.svg">
+  </a>
+</p>
+
+## Table of Contents
+
 - [Motivation](#motivation)
 - [Features](#features)
+- [Usage](#usage)
 - [Examples](#examples)
+- [Run locally](#run-locally)
+- [Stack](#stack)
 
 ## Motivation
 
@@ -27,12 +38,43 @@ representations
 
 ## Features
 
-- ✨ Node Coordinates Matrix representation of the AST
-- 👨‍💻️ Support for different programming languages
-- ⚙️ Highly customizable
-- 🌍 Sharing
+- Node Coordinates Matrix representation of the AST
+- Support for different programming languages
+- Highly customizable
+- Sharing
+
+## Usage
+
+Just the type the code in the editor and see the result!
+Pretty straightforward, right?
+
+See the [examples](#examples) for more information.
 
 ## Examples
 
 > Here be dragons...
 
+## Run locally
+
+You will need...
+- node.js
+- git
+- npm
+
+```bash
+git clone https://github.com/InnoSWP/syntax-visualizer.git
+cd syntax-visualizer
+npm install
+npm run dev
+```
+
+## Stack
+
+- [Vue.js](https://vuejs.org/) as the frontend framework
+- [Pinia](https://pinia.vuejs.org/) as a state management framework
+- [TypeScript](https://www.typescriptlang.org/) as the language
+- [Vite](https://vitejs.dev/) as the build tool
+- [ESLint](https://eslint.org/) as the linter
+- [Prettier](https://prettier.io/) as the formatter
+- [Monaco](https://microsoft.github.io/monaco-editor/) & [CodeMirror](https://codemirror.net/) as the editors
+- "A" grade as the motivation
