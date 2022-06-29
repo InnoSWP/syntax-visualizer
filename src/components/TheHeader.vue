@@ -64,6 +64,8 @@ export default defineComponent({
 .vertical-separator {
   width: 1px;
   height: 28px;
+  margin-right: 12px;
+  margin-left: 12px;
   background: #000;
 }
 </style>
