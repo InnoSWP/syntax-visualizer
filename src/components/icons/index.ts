@@ -2,7 +2,6 @@ import { defineAsyncComponent } from "vue"
 
 // prettier-ignore
 const icons = {
-  copied: defineAsyncComponent(() => import("./CopiedIcon.vue")),
   copy: defineAsyncComponent(() => import("./CopyIcon.vue")),
   doneCircle: defineAsyncComponent(() => import("./DoneCircleIcon.vue")),
   downloadAstNcm: defineAsyncComponent(() => import("./DownloadAstNcmIcon.vue")),
