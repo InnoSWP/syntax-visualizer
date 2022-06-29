@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import { ref } from "vue"
+import { useElementHover } from "@vueuse/core"
+
+const container = ref()
+const input = ref()
 
 const PLACEHOLDER = "untitled"
 const title = ref(PLACEHOLDER)
 const isFocused = ref(false)
-const input = ref<HTMLInputElement | null>(null)
+const isHovered = useElementHover(container)
 
 document.addEventListener("keydown", (event: KeyboardEvent) => {
   if (!isFocused.value) {
@@ -38,9 +42,11 @@ const handleInputBlur = () => {
 
 <template>
   <div
+    ref="container"
     :class="{
       'document-title': true,
       focused: isFocused,
+      active: isHovered || isFocused,
     }"
     @click="handleContainerClick"
   >
@@ -64,22 +70,23 @@ const handleInputBlur = () => {
 </template>
 
 <style scoped lang="scss">
-$padding: 12px;
+$side-padding: 12px;
 
 .document-title {
   position: relative;
   display: flex;
   overflow: hidden;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   max-width: 300px;
-  margin-right: 6px;
-  padding-right: $padding;
-  padding-left: $padding;
+  padding-right: var(--side-padding);
+  padding-left: var(--side-padding);
   cursor: text;
-  transition: box-shadow 0.2s ease;
+  transition: box-shadow 0.2s ease, padding 0.2s ease;
   border-radius: 6px;
   box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0);
+
+  --side-padding: 0px;
 
   &:hover:not(.focused) {
     box-shadow: 0 0 8px 0 rgba(0, 0, 0, 0.15);
@@ -88,13 +95,17 @@ $padding: 12px;
   &.focused {
     box-shadow: 0 0 6px 4px rgba(#0066ff, 0.25);
   }
+
+  &.active {
+    --side-padding: #{$side-padding};
+  }
 }
 
 .text-wrapper {
   position: relative;
   display: flex;
-  justify-content: center;
-  max-width: calc(100% + #{$padding} * 2);
+  justify-content: flex-start;
+  max-width: calc(100% + var(--side-padding) * 2);
   padding: 4px 0;
 }
 
@@ -138,8 +149,13 @@ $padding: 12px;
   z-index: 2;
   top: 0;
   bottom: 0;
-  width: $padding;
+  width: 0;
   height: 100%;
+  transition: width 0.2s ease;
+}
+
+.document-title.active .overflow-shadow {
+  width: var(--side-padding);
 }
 
 .overflow-shadow.left {
