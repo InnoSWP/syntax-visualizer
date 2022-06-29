@@ -31,7 +31,7 @@ const handleClick = () => {
       name="copy"
       :class="{ icon: true, active: !copied && isHovered }"
     />
-    <AppIcon name="copied" :class="{ icon: true, active: copied }" />
+    <AppIcon name="doneCircle" :class="{ icon: true, active: copied }" />
   </button>
 </template>
 
@@ -60,7 +60,7 @@ const handleClick = () => {
   position: absolute;
   top: 0;
   left: 0;
-  transition: opacity 0.2s ease, transform 0.2s ease;
+  transition: opacity 0.125s ease, transform 0.125s ease;
   transform: scale(0.65);
   opacity: 0;
 
