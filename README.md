@@ -45,7 +45,7 @@ representations
 
 ## Usage
 
-Just the type the code in the editor and see the result!
+Just type the code in the editor and see the result!
 Pretty straightforward, right?
 
 See the [examples](#examples) for more information.
