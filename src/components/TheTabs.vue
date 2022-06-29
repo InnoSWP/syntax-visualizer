@@ -4,17 +4,21 @@ import CodeEditor from "@/components/editor/CodeEditor.vue"
 import AbstractSyntaxTree from "@/components/ast/AbstractSyntaxTree.vue"
 import NodeCoordinatesMatrix from "@/components/ncm/NodeCoordinatesMatrix.vue"
 import { useSettingsStore } from "@/stores/settings"
-import { useController } from "@/core/useController"
+import { useController } from "@/composables"
 
-const { astVariant, languageId } = useSettingsStore()
-
-const { code, lastNodes } = useController()
+const { astVariant } = useSettingsStore()
+const { languageId, code, save, lastNodes } = useController()
 </script>
 
 <template>
   <main class="tabs-root">
     <AppTab title="Code" icon="fileCode" :row="1" :col="1">
-      <CodeEditor v-model="code" :languageId="languageId" autofocus />
+      <CodeEditor
+        v-model="code"
+        :languageId="languageId"
+        autofocus
+        @blur="save"
+      />
     </AppTab>
     <AppTab title="Abstract Syntax Tree" icon="tree" :row="1" :col="2">
       <AbstractSyntaxTree :variant="astVariant" :nodes="lastNodes" />

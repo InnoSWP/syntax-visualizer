@@ -9,7 +9,7 @@ export class ParsingManager {
   worker: Worker
   parsePromise: ParsePromise | null = null
 
-  constructor(defaultParser: FullParserId) {
+  constructor(defaultParser?: FullParserId) {
     this.worker = new ParsingWorker()
     this.worker.onmessage = this.handleWorkerResponse.bind(this)
     this.worker.onerror = this.handleWorkerError.bind(this)

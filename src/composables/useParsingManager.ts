@@ -1,61 +1,15 @@
 import type { Ref } from "vue"
 import { ref, watch } from "vue"
+import type { FullParserId } from "@/core/languages"
+import { ParsingManager } from "@/core/parsing"
+import type { ASTNodes, ParseError } from "@/core/types"
 import { watchDebounced, watchThrottled } from "@vueuse/core"
-import { storeToRefs } from "pinia"
-import { useSettingsStore } from "@/stores/settings"
-import type { LanguageId, ParserId } from "./languages"
-import { loadLanguageSampleCode } from "./languages"
-import type { ASTNodes, ParseError } from "./types"
-import { ParsingManager } from "./parsing"
 
-export function useController() {
-  const { languageId, parserId } = storeToRefs(useSettingsStore())
-  const code = useCode(languageId)
-  const { isPending, isLoading, lastNodes, error } = useParsingManager(
-    code,
-    languageId,
-    parserId
-  )
-
-  return {
-    code,
-    isPending,
-    isLoading,
-    lastNodes,
-    error,
-  }
-}
-
-function useCode(languageId: Ref<LanguageId>) {
-  const code = ref("")
-
-  // Set the code to a sample code when the language changes
-  watch(
-    [code, languageId],
-    async ([newCode, newLanguageId], [oldCode, oldLanguageId]) => {
-      const wasCodeUpdated = newCode !== oldCode && oldCode !== undefined
-      if (wasCodeUpdated) return
-
-      const wasLanguageUpdated = newLanguageId !== oldLanguageId
-      if (wasLanguageUpdated) {
-        const sampleCode = await loadLanguageSampleCode(newLanguageId)
-        code.value = sampleCode || ""
-      }
-    },
-    { immediate: true }
-  )
-
-  return code
-}
-
-function useParsingManager(
+export function useParsingManager(
   code: Ref<string>,
-  languageId: Ref<LanguageId>,
-  parserId: Ref<ParserId>
+  fullParserId: Ref<FullParserId>
 ) {
-  const parsingManager = new ParsingManager(
-    `${languageId.value}>${parserId.value}`
-  )
+  const parsingManager = new ParsingManager()
   const isPending = ref(false)
   const loadingParsePromiseVersion = ref<number>()
   const isLoading = ref(false)
@@ -63,9 +17,13 @@ function useParsingManager(
   const error = ref<ParseError>()
   const debounceTime = useDebounceTimeBasedOnCode(code)
 
-  watch([languageId, parserId], ([newLanguageId, newParserId]) => {
-    parsingManager.setParser(`${newLanguageId}>${newParserId}`)
-  })
+  watch(
+    fullParserId,
+    (newParser) => {
+      parsingManager.setParser(newParser)
+    },
+    { immediate: true }
+  )
 
   watch(
     code,
