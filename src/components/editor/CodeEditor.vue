@@ -33,6 +33,7 @@ export default defineComponent({
       },
     },
   },
+  emits: ["update:modelValue", "blur"],
 })
 </script>
 
@@ -41,6 +42,7 @@ export default defineComponent({
     v-model="code"
     v-bind="{ languageId, autofocus }"
     class="editor"
+    @blur="$emit('blur')"
   />
 </template>
 

@@ -20,7 +20,7 @@ const props = defineProps({
   autofocus: Boolean,
 })
 
-const emit = defineEmits(["update:modelValue"])
+const emit = defineEmits(["update:modelValue", "blur"])
 
 const container = ref<HTMLDivElement | null>(null)
 
@@ -49,6 +49,9 @@ onMounted(() => {
       language.of([]),
       updateListeners({
         onChange: handleDocChange,
+        onBlur: () => {
+          emit("blur")
+        },
       }),
     ],
   })
