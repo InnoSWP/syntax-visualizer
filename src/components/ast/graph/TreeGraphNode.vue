@@ -73,6 +73,7 @@ $circle-in-margin-top: 10px;
   border: $border-width solid var(--color-border-default);
   border-radius: 4px;
   background-color: var(--color-bg-node);
+  box-shadow: 1px 2px 5px 1px rgba(0, 0, 0, 0.25);
 }
 
 .node-rect__heading {
