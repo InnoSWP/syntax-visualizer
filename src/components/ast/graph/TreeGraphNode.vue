@@ -149,8 +149,8 @@ $circle-in-margin-top: 10px;
   align-items: flex-start;
   flex-direction: column;
   justify-content: flex-start;
-  margin-top: 18px;
+  margin-top: 8px;
   padding-left: 30px;
-  gap: 18px;
+  gap: 8px;
 }
 </style>
