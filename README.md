@@ -73,5 +73,5 @@ git, nodejs (tested on version 16) and npm are required.
 - [Vite](https://vitejs.dev/) as the build tool
 - [ESLint](https://eslint.org/) as the linter
 - [Prettier](https://prettier.io/) as the formatter
-- [Monaco](https://microsoft.github.io/monaco-editor/) & [CodeMirror](https://codemirror.net/) as the editors
+- [CodeMirror](https://codemirror.net/) as the code editor
 - "A" grade as the motivation
