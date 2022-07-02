@@ -16,7 +16,11 @@ export default defineComponent({
 
 <template>
   <div class="wrapper">
-    <div class="table" aria-label="Node Coordinates Matrix">
+    <div
+      v-if="nodes && nodes.length > 0"
+      class="table"
+      aria-label="Node Coordinates Matrix"
+    >
       <div class="table-body">
         <div class="row">
           <div class="upper-heading-cell">
@@ -26,7 +30,7 @@ export default defineComponent({
             <div class="heading">Label</div>
           </div>
           <div
-            v-for="nodeIndex in matrix[0].coordinates.length"
+            v-for="nodeIndex in nodes[0].coordinates.length"
             v-bind:key="nodeIndex"
             class="coordinate-heading"
           >
@@ -34,16 +38,16 @@ export default defineComponent({
           </div>
         </div>
         <div
-          v-for="(node, nodeIndex) in matrix"
+          v-for="(node, nodeIndex) in nodes"
           v-bind:key="nodeIndex"
           class="row"
         >
           <div ref="headings" class="heading-cell">
-            <div class="heading">{{ node.heading }}</div>
+            <div class="heading">{{ node.type }}</div>
           </div>
           <div ref="subheadings" class="heading-cell">
-            <div v-if="node.subheading" class="subheading">
-              {{ node.subheading }}
+            <div v-if="node.label" class="subheading">
+              {{ node.label }}
             </div>
           </div>
           <div
@@ -51,7 +55,7 @@ export default defineComponent({
             v-bind:key="`${nodeIndex}-${coordinateIndex}`"
             class="coordinate-cell"
           >
-            <span v-if="coordinate != 0" class="coordinate-cell-wrapper">
+            <span v-if="coordinate !== 0" class="coordinate-cell-wrapper">
               {{ coordinate }}
             </span>
             <span v-else class="coordinate-cell-wrapper-zeroes">
