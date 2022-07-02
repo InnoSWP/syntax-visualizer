@@ -46,7 +46,7 @@ representations
 
 ## Usage
 
-Just type the code in the editor and see the result!
+Open [Syntax Visualizer](https://innoswp.github.io/syntax-visualizer/) in the browser and just type the code into the editor and see the result!
 Pretty straightforward, right?
 
 ## Demo
