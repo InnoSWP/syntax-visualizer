@@ -9,18 +9,11 @@ module.exports = {
     "@vue/eslint-config-typescript/recommended",
     "@vue/eslint-config-prettier",
   ],
-  env: {
-    "vue/setup-compiler-macros": true,
-  },
   overrides: [
     {
-      files: ["cypress/integration/**.spec.{js,ts,jsx,tsx}"],
+      files: ["cypress/e2e/**.{cy,spec}.{js,ts,jsx,tsx}"],
       extends: ["plugin:cypress/recommended"],
     },
   ],
-  rules: {
-    "prettier/prettier": "error",
-    "no-undef": 0,
-  },
   ignorePatterns: ["src/**/sample.code.*"],
 }
