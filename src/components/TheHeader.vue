@@ -1,20 +1,14 @@
 <script setup lang="ts">
 import DocumentTitle from "@/components/DocumentTitle.vue"
-import ThemeToggle from "@/components/ThemeToggle.vue"
-import ShareButton from "@/components/ShareButton.vue"
 </script>
 
 <template>
   <header class="header">
     <div class="left-menu">
       <DocumentTitle />
-      <span class="vertical-separator" />
-      <ShareButton />
     </div>
     <h1 class="heading">Syntax Visualizer</h1>
-    <div class="right-menu">
-      <ThemeToggle />
-    </div>
+    <div class="right-menu"></div>
   </header>
 </template>
 
@@ -55,13 +49,5 @@ import ShareButton from "@/components/ShareButton.vue"
 
 .right-menu {
   flex-direction: row-reverse;
-}
-
-.vertical-separator {
-  width: 1px;
-  height: 28px;
-  margin-right: 12px;
-  margin-left: 12px;
-  background: #000;
 }
 </style>
