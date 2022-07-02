@@ -1,11 +1,12 @@
 {
   "extends": "@vue/tsconfig/tsconfig.web.json",
   "include": ["env.d.ts", "src/**/*", "package.json"],
-  "exclude": ["src/**/__tests__/*"],
+  "exclude": ["src/**/__tests__/*", "src/**/sample.code.*"],
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "lib": ["es5", "es6", "dom", "dom.iterable"],
   }
 }

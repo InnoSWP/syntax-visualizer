@@ -1,70 +1,14 @@
 <script lang="ts">
 import { defineComponent } from "vue"
 import type { PropType } from "vue"
-import { traverseAstPreOrder } from "@/core/traverse"
-import type { AST, ASTNode } from "@/core/types"
-
-interface NCMNode {
-  heading: string
-  subheading?: string
-  depth: number
-  coordinates: number[]
-}
+import type { ASTNodes } from "@/core/types"
 
 export default defineComponent({
   name: "NodeCoordinatesMatrix",
   props: {
-    ast: {
-      type: Object as PropType<AST>,
+    nodes: {
+      type: Array as PropType<ASTNodes>,
       required: false,
-    },
-  },
-  updated() {
-    let subheadings: HTMLElement[] | unknown = this.$refs.subheadings
-    let widthFirst: number = this.$refs.headings[0].clientWidth
-    for (let subheading of subheadings) {
-      subheading.style.left = widthFirst + "px"
-    }
-    this.$refs.upp_heading.style.left = widthFirst + "px"
-  },
-  computed: {
-    matrix() {
-      if (!this.ast) {
-        return
-      }
-
-      let maxDepth = 0
-      const nodes: NCMNode[] = []
-
-      const addVertex = (node: ASTNode, depth: number) => {
-        nodes.push({
-          heading: node.type,
-          subheading: node.label,
-          depth: depth,
-          coordinates: [],
-        })
-        maxDepth = Math.max(depth, maxDepth)
-      }
-
-      traverseAstPreOrder(this.ast, addVertex)
-
-      for (let i = 0; i < nodes.length; i++) {
-        const node = nodes[i]
-        for (let j = 0; j < maxDepth; j++) {
-          const coordinate = node.depth == j + 1 ? 1 : 0
-          node.coordinates.push(coordinate)
-
-          if (i > 0) {
-            if (!(i == nodes.length - 1 && nodes[i].depth < j + 1)) {
-              node.coordinates[j] += nodes[i - 1].coordinates[j]
-            }
-            if (nodes[i - 1].depth < j + 1) {
-              nodes[i - 1].coordinates[j] = 0
-            }
-          }
-        }
-      }
-      return nodes
     },
   },
 })
@@ -102,7 +46,6 @@ export default defineComponent({
               {{ node.subheading }}
             </div>
           </div>
-
           <div
             v-for="(coordinate, coordinateIndex) in node.coordinates"
             v-bind:key="`${nodeIndex}-${coordinateIndex}`"

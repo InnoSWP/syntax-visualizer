@@ -22,4 +22,5 @@ module.exports = {
     "prettier/prettier": "error",
     "no-undef": 0,
   },
+  ignorePatterns: ["src/**/sample.code.*"],
 }

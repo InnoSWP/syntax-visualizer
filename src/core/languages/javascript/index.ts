@@ -7,14 +7,9 @@ export default defineLanguage({
   fileExtension: "js",
   iconName: undefined, // TODO: add icon
   parsers: {
-    [babelParser.name]: babelParser,
+    [babelParser.id]: babelParser,
   },
-  defaultParserName: babelParser.name,
-  sampleCode: [
-    "function greet(name) {",
-    '    console.log("Welcome, " + name + "!");',
-    "}",
-    "",
-    'greet("dear explorer");',
-  ],
+  defaultParserId: babelParser.id,
+  codemirrorLoader: async () =>
+    (await import("@codemirror/lang-javascript")).javascript(),
 })
