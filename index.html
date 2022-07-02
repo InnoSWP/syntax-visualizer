@@ -1,36 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <script>self["MonacoEnvironment"] = (function (paths) {
-          return {
-            globalAPI: false,
-            getWorkerUrl : function (moduleId, label) {
-              var result =  paths[label];
-              if (/^((http:)|(https:)|(file:)|(\/\/))/.test(result)) {
-                var currentUrl = String(window.location);
-                var currentOrigin = currentUrl.substr(0, currentUrl.length - window.location.hash.length - window.location.search.length - window.location.pathname.length);
-                if (result.substring(0, currentOrigin.length) !== currentOrigin) {
-                  var js = '/*' + label + '*/importScripts("' + result + '");';
-                  var blob = new Blob([js], { type: 'application/javascript' });
-                  return URL.createObjectURL(blob);
-                }
-              }
-              return result;
-            }
-          };
-        })({
-  "editorWorkerService": "/syntax-visualizer/monaco-editor-workers/editor.worker.bundle.js",
-  "css": "/syntax-visualizer/monaco-editor-workers/css.worker.bundle.js",
-  "html": "/syntax-visualizer/monaco-editor-workers/html.worker.bundle.js",
-  "json": "/syntax-visualizer/monaco-editor-workers/json.worker.bundle.js",
-  "typescript": "/syntax-visualizer/monaco-editor-workers/ts.worker.bundle.js",
-  "javascript": "/syntax-visualizer/monaco-editor-workers/ts.worker.bundle.js",
-  "less": "/syntax-visualizer/monaco-editor-workers/css.worker.bundle.js",
-  "scss": "/syntax-visualizer/monaco-editor-workers/css.worker.bundle.js",
-  "handlebars": "/syntax-visualizer/monaco-editor-workers/html.worker.bundle.js",
-  "razor": "/syntax-visualizer/monaco-editor-workers/html.worker.bundle.js"
-});</script>
-
     <meta charset="UTF-8" />
     <link rel="icon" href="/syntax-visualizer/favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -60,8 +30,8 @@
       href="/syntax-visualizer/favicon/android-chrome-512x512.png"
     />
     <link rel="apple-touch-icon" sizes="180x180" href="/syntax-visualizer/favicon/apple-touch-icon.png" />
-    <script type="module" crossorigin src="/syntax-visualizer/assets/index.02d65cda.js"></script>
-    <link rel="stylesheet" href="/syntax-visualizer/assets/index.84377400.css">
+    <script type="module" crossorigin src="/syntax-visualizer/assets/index.b4771008.js"></script>
+    <link rel="stylesheet" href="/syntax-visualizer/assets/index.d95c539b.css">
   </head>
   <body>
     <div id="app"></div>
