@@ -38,10 +38,11 @@ representations
 
 ## Features
 
-- Node Coordinates Matrix representation of the AST
-- Support for different programming languages
-- Highly customizable
-- Sharing
+- Node Coordinates Matrix representation
+- Restoring written code on page reopen
+- Nodes highlighting (soon...)
+- Sharing (soon...)
+- Different programming languages support (soon...)
 
 ## Usage
 
