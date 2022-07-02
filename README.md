@@ -12,9 +12,20 @@ Programming languages syntax visualizer with
 representations
 </p>
 
+<p align="center">
+  <a href="https://opensource.org/licenses/MIT">
+    <img src="https://img.shields.io/badge/License-MIT-yellow.svg">
+  </a>
+</p>
+
+## Table of Contents
+
 - [Motivation](#motivation)
 - [Features](#features)
-- [Examples](#examples)
+- [Usage](#usage)
+- [Demo](#demo)
+- [Run locally](#run-locally)
+- [Stack](#stack)
 - [License](#license)
 
 ## Motivation
@@ -28,15 +39,44 @@ representations
 
 ## Features
 
-- ✨ Node Coordinates Matrix representation of the AST
-- 👨‍💻️ Support for different programming languages
-- ⚙️ Highly customizable
-- 🌍 Sharing
+- Node Coordinates Matrix representation
+- Restoring written code on page reopen
+- Nodes highlighting (soon...)
+- Sharing (soon...)
+- Different programming languages support (soon...)
 
-## Examples
+## Usage
 
-> Here be dragons...
+Open [Syntax Visualizer](https://innoswp.github.io/syntax-visualizer/) in the browser and just type the code into the editor and see the result!
+Pretty straightforward, right?
 
-## License 
+## Demo
+
+https://user-images.githubusercontent.com/62389790/176512301-f7ea7d0e-c65b-4724-89d8-2c797d90def7.mov
+
+## Run locally
+
+You can clone and run project locally:
+```bash
+git clone https://github.com/InnoSWP/syntax-visualizer.git
+cd syntax-visualizer
+npm install
+npm run dev
+```
+
+git, nodejs (tested on version 16) and npm are required.
+
+## Stack
+
+- [Vue.js](https://vuejs.org/) as the frontend framework
+- [Pinia](https://pinia.vuejs.org/) as a state management framework
+- [TypeScript](https://www.typescriptlang.org/) as the language
+- [Vite](https://vitejs.dev/) as the build tool
+- [ESLint](https://eslint.org/) as the linter
+- [Prettier](https://prettier.io/) as the formatter
+- [CodeMirror](https://codemirror.net/) as the code editor
+- "A" grade as the motivation
+
+## License
 
 The project is licensed under a [MIT license](LICENSE).

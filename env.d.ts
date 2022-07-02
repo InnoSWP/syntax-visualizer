@@ -2,6 +2,7 @@
 
 interface ImportMetaEnv {
   readonly VITE_BASE_URL: string
+  readonly CYPRESS_COVERAGE: boolean
 }
 
 interface ImportMeta {
