@@ -73,6 +73,7 @@ $circle-in-margin-top: 10px;
   border: $border-width solid var(--color-border-default);
   border-radius: 4px;
   background-color: var(--color-bg-node);
+  box-shadow: 1px 2px 5px 1px rgba(0, 0, 0, 0.25);
 }
 
 .node-rect__heading {
@@ -149,8 +150,8 @@ $circle-in-margin-top: 10px;
   align-items: flex-start;
   flex-direction: column;
   justify-content: flex-start;
-  margin-top: 18px;
+  margin-top: 8px;
   padding-left: 30px;
-  gap: 18px;
+  gap: 8px;
 }
 </style>

@@ -1,12 +1,7 @@
-<script lang="ts">
-import { defineComponent } from "vue"
+<script setup lang="ts">
 import DocumentTitle from "@/components/DocumentTitle.vue"
 import ThemeToggle from "@/components/ThemeToggle.vue"
-
-export default defineComponent({
-  name: "TheHeader",
-  components: { DocumentTitle, ThemeToggle },
-})
+import ShareButton from "@/components/ShareButton.vue"
 </script>
 
 <template>
@@ -14,6 +9,7 @@ export default defineComponent({
     <div class="left-menu">
       <DocumentTitle />
       <span class="vertical-separator" />
+      <ShareButton />
     </div>
     <h1 class="heading">Syntax Visualizer</h1>
     <div class="right-menu">
@@ -64,6 +60,8 @@ export default defineComponent({
 .vertical-separator {
   width: 1px;
   height: 28px;
+  margin-right: 12px;
+  margin-left: 12px;
   background: #000;
 }
 </style>
