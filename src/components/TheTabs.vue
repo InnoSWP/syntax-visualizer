@@ -1,38 +1,30 @@
 <script setup lang="ts">
-import { nextTick, ref } from "vue"
 import AppTab from "@/components/AppTab.vue"
 import CodeEditor from "@/components/editor/CodeEditor.vue"
 import AbstractSyntaxTree from "@/components/ast/AbstractSyntaxTree.vue"
 import NodeCoordinatesMatrix from "@/components/ncm/NodeCoordinatesMatrix.vue"
 import { useSettingsStore } from "@/stores/settings"
-import { useParsingController } from "@/core/controller"
+import { useController } from "@/composables"
 
-const { codeEditorVariant, astVariant } = useSettingsStore()
-
-// TODO: refactor
-// Set initial debounce time to zero to parse AST for the initial code immediately
-const debounceTime = ref(0)
-nextTick(() => {
-  debounceTime.value = 300
-})
-
-const { code, ast } = useParsingController(debounceTime)
+const { astVariant } = useSettingsStore()
+const { languageId, code, save, lastNodes } = useController()
 </script>
 
 <template>
   <main class="tabs-root">
     <AppTab title="Code" icon="fileCode" :row="1" :col="1">
       <CodeEditor
-        v-model:value="code"
-        :variant="codeEditorVariant"
-        language="typescript"
+        v-model="code"
+        :languageId="languageId"
+        autofocus
+        @blur="save"
       />
     </AppTab>
     <AppTab title="Abstract Syntax Tree" icon="tree" :row="1" :col="2">
-      <AbstractSyntaxTree :variant="astVariant" :root="ast?.root" />
+      <AbstractSyntaxTree :variant="astVariant" :nodes="lastNodes" />
     </AppTab>
     <AppTab title="Node Coordinates Matrix" icon="matrix" :row="1" :col="3">
-      <NodeCoordinatesMatrix :ast="ast" />
+      <NodeCoordinatesMatrix :nodes="lastNodes" />
     </AppTab>
   </main>
 </template>

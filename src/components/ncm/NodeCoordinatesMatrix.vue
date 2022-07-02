@@ -1,58 +1,14 @@
 <script lang="ts">
 import { defineComponent } from "vue"
 import type { PropType } from "vue"
-import { traverseAstPreOrder } from "@/core/traverse"
-import type { AST, ASTNode } from "@/core/types"
-
-interface NCMNode {
-  heading: string
-  subheading?: string
-  depth: number
-  coordinates: number[]
-}
+import type { ASTNodes } from "@/core/types"
 
 export default defineComponent({
   name: "NodeCoordinatesMatrix",
   props: {
-    ast: {
-      type: Object as PropType<AST>,
+    nodes: {
+      type: Array as PropType<ASTNodes>,
       required: false,
-    },
-  },
-  computed: {
-    matrix() {
-      if (!this.ast) {
-        return
-      }
-
-      let maxDepth = 0
-      const nodes: NCMNode[] = []
-
-      const addVertex = (node: ASTNode, depth: number) => {
-        nodes.push({
-          heading: node.type,
-          subheading: node.label,
-          depth: depth,
-          coordinates: [],
-        })
-        maxDepth = Math.max(depth, maxDepth)
-      }
-
-      traverseAstPreOrder(this.ast, addVertex)
-
-      for (let i = 0; i < nodes.length; i++) {
-        const node = nodes[i]
-        for (let j = 0; j < maxDepth; j++) {
-          const coordinate = node.depth == j + 1 ? 1 : 0
-          node.coordinates.push(coordinate)
-
-          if (i > 0 && node.depth >= j + 1) {
-            node.coordinates[j] += nodes[i - 1].coordinates[j]
-          }
-        }
-      }
-
-      return nodes
     },
   },
 })
@@ -60,32 +16,55 @@ export default defineComponent({
 
 <template>
   <div class="wrapper">
-    <table class="table" aria-label="Node Coordinates Matrix">
-      <tbody class="table-body">
-        <tr
-          v-for="(node, nodeIndex) in matrix"
+    <div
+      v-if="nodes && nodes.length > 0"
+      class="table"
+      aria-label="Node Coordinates Matrix"
+    >
+      <div class="table-body">
+        <div class="row">
+          <div class="upper-heading-cell">
+            <div class="heading">Type</div>
+          </div>
+          <div ref="upp_heading" class="upper-heading-cell">
+            <div class="heading">Label</div>
+          </div>
+          <div
+            v-for="nodeIndex in nodes[0].coordinates.length"
+            v-bind:key="nodeIndex"
+            class="coordinate-heading"
+          >
+            <div class="heading">{{ nodeIndex }}</div>
+          </div>
+        </div>
+        <div
+          v-for="(node, nodeIndex) in nodes"
           v-bind:key="nodeIndex"
           class="row"
         >
-          <th class="heading-cell">
-            <span class="heading">{{ node.heading }}</span>
-            <span v-if="node.subheading" class="subheading">
-              {{ node.subheading }}
-            </span>
-          </th>
-
-          <td
+          <div ref="headings" class="heading-cell">
+            <div class="heading">{{ node.type }}</div>
+          </div>
+          <div ref="subheadings" class="heading-cell">
+            <div v-if="node.label" class="subheading">
+              {{ node.label }}
+            </div>
+          </div>
+          <div
             v-for="(coordinate, coordinateIndex) in node.coordinates"
             v-bind:key="`${nodeIndex}-${coordinateIndex}`"
             class="coordinate-cell"
           >
-            <span class="coordinate-cell-wrapper">
+            <span v-if="coordinate !== 0" class="coordinate-cell-wrapper">
               {{ coordinate }}
             </span>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+            <span v-else class="coordinate-cell-wrapper-zeroes">
+              {{ coordinate }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -99,44 +78,92 @@ export default defineComponent({
 
 .table {
   position: absolute;
+  display: table;
   border-collapse: collapse;
 }
 
 .table-body {
-  display: block;
+  display: table-row-group;
   overflow: auto;
 }
 
+.row {
+  display: table-row;
+}
+
+.upper-heading-cell,
 .heading-cell,
-.coordinate-cell {
-  border: 1px solid #a9a9a9;
+.coordinate-cell,
+.coordinate-heading {
+  display: table-cell;
+  text-align: center;
+}
+
+.coordinate-heading {
+  position: sticky;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  border-top: 1px solid #a9a9a9;
+  border-bottom: 1px solid #a9a9a9;
+  background-color: white;
+}
+
+.upper-heading-cell {
+  position: sticky;
+  z-index: 5;
+  top: 0;
+  left: 0;
+  border-top: 1px solid #a9a9a9;
+  border-bottom: 1px solid #a9a9a9;
+  background-color: white;
 }
 
 .heading-cell {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  position: sticky;
+  z-index: 2;
+  left: 0;
+  border-top: 1px solid #a9a9a9;
+  border-bottom: 1px solid #a9a9a9;
+  background-color: white;
 }
 
 .heading {
   font-size: 0.875rem;
   font-weight: bold;
+  z-index: 2;
+  margin-right: auto;
+  margin-left: auto;
+  border-right: 1px solid #a9a9a9;
+  border-left: 1px solid #a9a9a9;
 }
 
 .subheading {
   font-size: 0.75rem;
   font-weight: normal;
+  width: max-content;
+  margin-right: auto;
+  margin-left: auto;
+  text-align: center;
 }
 
 .coordinate-cell {
   font-size: 0.75rem;
+  width: 0.875rem;
+  height: 0.875rem;
+  border: 1px solid #a9a9a9;
 }
 
-.coordinate-cell-wrapper {
+.coordinate-cell-wrapper,
+.coordinate-cell-wrapper-zeroes {
   display: flex;
   align-items: center;
   justify-content: center;
   min-width: 16px;
   min-height: 16px;
+  text-align: center;
+}
+.coordinate-cell-wrapper-zeroes {
+  opacity: 0.5;
 }
 </style>

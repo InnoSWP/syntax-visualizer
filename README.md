@@ -6,9 +6,9 @@
 
 <p align="center">
 Programming languages syntax visualizer with
-<strong>Abstract Syntax Tree</strong>
+<b>Abstract Syntax Tree</b>
 &
-<strong>Node Coordinates Matrix</strong> 
+<b>Node Coordinates Matrix</b> 
 representations
 </p>
 
@@ -26,6 +26,7 @@ representations
 - [Demo](#demo)
 - [Run locally](#run-locally)
 - [Stack](#stack)
+- [License](#license)
 
 ## Motivation
 
@@ -75,3 +76,7 @@ git, nodejs (tested on version 16) and npm are required.
 - [Prettier](https://prettier.io/) as the formatter
 - [CodeMirror](https://codemirror.net/) as the code editor
 - "A" grade as the motivation
+
+## License
+
+The project is licensed under a [MIT license](LICENSE).

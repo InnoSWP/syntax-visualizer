@@ -1,11 +1,8 @@
-import javascript from "@/core/languages/javascript"
+export { default } from "./all"
 
-const languages = {
-  [javascript.id]: javascript,
-} as const
+export * from "./types"
 
-export type Languages = typeof languages
-export type LanguageID = keyof Languages
-export type ParserName<L extends LanguageID> = keyof Languages[L]["parsers"]
-
-export default languages
+export {
+  loadLanguageSampleCode,
+  loadCodemirrorLanguageSupport,
+} from "./loaders"

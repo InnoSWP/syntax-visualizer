@@ -1,8 +1,88 @@
-<script lang="ts">
-import { defineComponent } from "vue"
-export default defineComponent({
-  name: "CodeEditorCodemirror",
+<script setup lang="ts">
+import type { PropType } from "vue"
+import { onMounted, ref, watch } from "vue"
+import { Compartment, EditorState } from "@codemirror/state"
+import { EditorView } from "@codemirror/view"
+import type { LanguageId } from "@/core/languages"
+import { loadCodemirrorLanguageSupport } from "@/core/languages"
+import { defaultExtensions, updateListeners } from "./extensions"
+
+const props = defineProps({
+  modelValue: {
+    type: String,
+    required: false,
+    default: "",
+  },
+  languageId: {
+    type: String as PropType<LanguageId>,
+    required: true,
+  },
+  autofocus: Boolean,
+})
+
+const emit = defineEmits(["update:modelValue", "blur"])
+
+const container = ref<HTMLDivElement | null>(null)
+
+const handleDocChange = (newDoc: string) => {
+  emit("update:modelValue", newDoc)
+}
+
+const editor = {
+  state: null as EditorState | null,
+  view: null as EditorView | null,
+}
+
+const language = new Compartment()
+
+onMounted(() => {
+  if (container.value == null) {
+    throw new Error(
+      "Failed to mount codemirror editor, container element is null"
+    )
+  }
+
+  editor.state = EditorState.create({
+    doc: props.modelValue,
+    extensions: [
+      defaultExtensions,
+      language.of([]),
+      updateListeners({
+        onChange: handleDocChange,
+        onBlur: () => {
+          emit("blur")
+        },
+      }),
+    ],
+  })
+
+  editor.view = new EditorView({
+    state: editor.state,
+    parent: container.value,
+  })
+
+  // Handle language change
+  watch(
+    () => props.languageId,
+    async (newLanguage) => {
+      const languageSupport = await loadCodemirrorLanguageSupport(newLanguage)
+      if (languageSupport) {
+        editor.view?.dispatch({
+          effects: language.reconfigure(languageSupport),
+        })
+      } else {
+        // TODO: handle case when there is no codemirror language support
+      }
+    },
+    { immediate: true }
+  )
+
+  if (props.autofocus) {
+    editor.view.focus()
+  }
 })
 </script>
 
-<template>codemirror editor will be here :)</template>
+<template>
+  <div ref="container" class="editor-container" />
+</template>

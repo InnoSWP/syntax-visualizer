@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineComponent } from "vue"
 import type { PropType } from "vue"
-import type { ASTNode } from "@/core/types"
+import type { ASTNodes } from "@/core/types"
 import TreeGraph from "./TreeGraph.vue"
 import { generateTreeGraphNodeProxyFromASTNode } from "./tmpProxy"
 
@@ -9,14 +9,14 @@ export default defineComponent({
   name: "AbstractSyntaxTreeGraph",
   components: { TreeGraph },
   props: {
-    root: {
-      type: Object as PropType<ASTNode>,
+    nodes: {
+      type: Array as PropType<ASTNodes>,
       required: true,
     },
   },
   computed: {
     rootProxy() {
-      return generateTreeGraphNodeProxyFromASTNode(this.root)
+      return generateTreeGraphNodeProxyFromASTNode(this.nodes[0], this.nodes)
     },
   },
 })

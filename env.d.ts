@@ -1,5 +1,4 @@
-/// <reference types="vite/client.d.ts" />
-/// <reference types="vue/macros-global" />
+/// <reference types="vite/client" />
 
 interface ImportMetaEnv {
   readonly VITE_BASE_URL: string
@@ -9,3 +8,11 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv
 }
+
+declare type Split<S extends string, D extends string> = string extends S
+  ? string[]
+  : S extends ""
+  ? []
+  : S extends `${infer T}${D}${infer U}`
+  ? [T, ...Split<U, D>]
+  : [S]
