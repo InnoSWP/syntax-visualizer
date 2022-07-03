@@ -6,6 +6,15 @@ import { EditorView } from "@codemirror/view"
 import type { LanguageId } from "@/core/languages"
 import { loadCodemirrorLanguageSupport } from "@/core/languages"
 import { defaultExtensions, updateListeners } from "./extensions"
+import { storeToRefs } from "pinia";
+import { useSettingsStore } from "@/stores/settings";
+import { ThemeManager } from "@/components/editor/codemirror/extensions/themes/manager";
+import { basicDark } from "@/components/editor/codemirror/extensions/themes/dark";
+import { basicLight } from "@/components/editor/codemirror/extensions/themes/light";
+import {usePreferredDark} from "@vueuse/core";
+
+const settings = storeToRefs(useSettingsStore())
+const isSystemDark = usePreferredDark()
 
 const props = defineProps({
   modelValue: {
@@ -60,6 +69,33 @@ onMounted(() => {
     parent: container.value,
   })
 
+  watch(isSystemDark, () => {
+    if (settings.theme.value === "system") {
+      editor.view?.dispatch({
+        effects: ThemeManager.reconfigure(
+          isSystemDark.value ? basicDark : basicLight
+        ),
+      })
+    }
+  })
+
+  watch(settings.theme, () => {
+    switch (settings.theme.value) {
+      case "dark":
+        editor.view?.dispatch({
+          effects: ThemeManager.reconfigure(basicDark),
+        })
+        break
+      case "light":
+        editor.view?.dispatch({
+          effects: ThemeManager.reconfigure(basicLight),
+        })
+        break
+      default:
+        break
+    }
+  })
+
   // Handle language change
   watch(
     () => props.languageId,
@@ -96,7 +132,8 @@ onMounted(() => {
   background: var(--color-primary) !important;
 }
 
-.ͼo {
+.ͼo,
+.ͼ1o {
   background: none;
 }
 </style>
