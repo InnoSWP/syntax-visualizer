@@ -11,6 +11,14 @@ export default defineComponent({
       required: false,
     },
   },
+  updated() {
+    const subheadings: HTMLElement[] | unknown = this.$refs.subheadings
+    const widthFirst: number = this.$refs.headings[0].clientWidth
+    for (const subheading of subheadings) {
+      subheading.style.left = widthFirst + "px"
+    }
+    this.$refs.upp_heading.style.left = widthFirst + "px"
+  },
 })
 </script>
 
