@@ -126,6 +126,7 @@ export default defineComponent({
   padding: 6px;
   border-right: 1px solid #a9a9a9;
   border-bottom: 1px solid #a9a9a9;
+  background-color: var(--color-primary);
 }
 
 .upper-heading-cell,
@@ -134,7 +135,7 @@ export default defineComponent({
   z-index: 5;
   top: 0;
   left: 0;
-  background-color: white;
+  background-color: var(--color-primary);
 }
 
 .upper-subheading-cell {
@@ -148,7 +149,7 @@ export default defineComponent({
   position: sticky;
   z-index: 2;
   left: 0;
-  background-color: white;
+  background-color: var(--color-primary);
 }
 
 
