@@ -137,7 +137,8 @@ onMounted(() => {
 }
 
 .ͼo,
-.ͼ1o {
+.ͼ1o,
+.ͼ1n {
   background: none;
 }
 </style>

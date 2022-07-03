@@ -3,43 +3,50 @@ import type { Extension } from "@codemirror/state"
 import { HighlightStyle, syntaxHighlighting } from "@codemirror/language"
 import { tags as t } from "@lezer/highlight"
 
-// Colors from https://www.nordtheme.com/docs/colors-and-palettes
-// Polar Night
-const base00 = "#2e3440", // black
-  base01 = "#3b4252", // dark grey
-  base02 = "#434c5e",
-  base03 = "#4c566a" // grey
+const dark1 = "#3c3836",
+  dark2 = "#504945",
+  dark3 = "#665c54",
+  dark4 = "#7c6f64",
+  gray_244 = "#928374",
+  light0 = "#fbf1c7",
+  light1 = "#ebdbb2",
+  light3 = "#bdae93",
+  faded_red = "#9d0006",
+  faded_green = "#79740e",
+  faded_yellow = "#b57614",
+  faded_blue = "#076678",
+  faded_purple = "#8f3f71",
+  faded_aqua = "#427b58",
+  faded_orange = "#af3a03"
 
-// Snow Storm
-const base05 = "#e5e9f0", // off white
-  base06 = "#eceff4" // white
+const bg0 = light0,
+  bg1 = light1,
+  bg3 = light3,
+  gray = gray_244,
+  fg1 = dark1,
+  fg2 = dark2,
+  fg3 = dark3,
+  fg4 = dark4,
+  red = faded_red,
+  green = faded_green,
+  yellow = faded_yellow,
+  blue = faded_blue,
+  purple = faded_purple,
+  aqua = faded_aqua,
+  orange = faded_orange
 
-// Frost
-const base07 = "#8fbcbb", // moss green
-  base08 = "#88c0d0", // ice blue
-  base09 = "#81a1c1", // water blue
-  base0A = "#5e81ac" // deep blue
-
-// Aurora
-const base0b = "#bf616a", // red
-  base0C = "#d08770", // orange
-  base0D = "#ebcb8b", // yellow
-  base0E = "#a3be8c", // green
-  base0F = "#b48ead" // purple
-
-const invalid = "#d30102",
-  darkBackground = base06,
+const invalid = red,
+  darkBackground = bg1,
   highlightBackground = darkBackground,
-  background = "#ffffff",
-  tooltipBackground = base01,
-  cursor = base01
+  tooltipBackground = bg1,
+  cursor = orange
 
-/// The editor theme styles for Basic Light.
+/// The editor theme styles for Gruvbox Light.
 export const basicLightTheme = EditorView.theme(
   {
     "&": {
-      color: base00,
-      backgroundColor: background,
+      color: fg1,
+      backgroundColor: bg0,
     },
 
     ".cm-content": {
@@ -50,32 +57,34 @@ export const basicLightTheme = EditorView.theme(
     "&.cm-focused .cm-selectionBackground, .cm-selectionBackground, .cm-content ::selection":
       { backgroundColor: darkBackground },
 
-    ".cm-panels": { backgroundColor: darkBackground, color: base03 },
+    ".cm-panels": { backgroundColor: darkBackground, color: fg1 },
     ".cm-panels.cm-panels-top": { borderBottom: "2px solid black" },
     ".cm-panels.cm-panels-bottom": { borderTop: "2px solid black" },
 
     ".cm-searchMatch": {
-      backgroundColor: "#72a1ff59",
-      outline: `1px solid ${base03}`,
+      backgroundColor: bg0,
+      color: yellow,
+      outline: `1px solid ${bg3}`,
     },
     ".cm-searchMatch.cm-searchMatch-selected": {
-      backgroundColor: base05,
+      backgroundColor: bg3,
     },
 
     ".cm-activeLine": { backgroundColor: highlightBackground },
-    ".cm-selectionMatch": { backgroundColor: base05 },
+    ".cm-selectionMatch": { backgroundColor: bg3 },
 
     "&.cm-focused .cm-matchingBracket, &.cm-focused .cm-nonmatchingBracket": {
-      outline: `1px solid ${base03}`,
+      outline: `1px solid ${bg3}`,
+      fontStyle: "bold",
     },
 
     "&.cm-focused .cm-matchingBracket": {
-      backgroundColor: base06,
+      backgroundColor: bg3,
     },
 
     ".cm-gutters": {
-      backgroundColor: base06,
-      color: base00,
+      backgroundColor: bg1,
+      color: fg3,
       border: "none",
     },
 
@@ -104,111 +113,109 @@ export const basicLightTheme = EditorView.theme(
     ".cm-tooltip-autocomplete": {
       "& > ul > li[aria-selected]": {
         backgroundColor: highlightBackground,
-        color: base03,
+        color: fg2,
       },
     },
   },
   { dark: false }
 )
 
-/// The highlighting style for code in the Basic Light theme.
+/// The highlighting style for code in the Gruvbox Light theme.
 export const basicLightHighlightStyle = HighlightStyle.define([
-  { tag: t.keyword, color: base0A },
+  { tag: t.keyword, color: red },
   {
     tag: [t.name, t.deleted, t.character, t.propertyName, t.macroName],
-    color: base0C,
+    color: aqua,
   },
-  { tag: [t.variableName], color: base0C },
-  { tag: [t.function(t.variableName)], color: base0A },
-  { tag: [t.labelName], color: base09 },
+  { tag: [t.variableName], color: blue },
+  { tag: [t.function(t.variableName)], color: green, fontStyle: "bold" },
+  { tag: [t.labelName], color: fg1 },
   {
     tag: [t.color, t.constant(t.name), t.standard(t.name)],
-    color: base0A,
+    color: purple,
   },
-  { tag: [t.definition(t.name), t.separator], color: base0E },
-  { tag: [t.brace], color: base07 },
+  { tag: [t.definition(t.name), t.separator], color: fg1 },
+  { tag: [t.brace], color: fg1 },
   {
     tag: [t.annotation],
     color: invalid,
   },
   {
     tag: [t.number, t.changed, t.annotation, t.modifier, t.self, t.namespace],
-    color: base08,
+    color: purple,
   },
   {
     tag: [t.typeName, t.className],
-    color: base0D,
+    color: yellow,
   },
   {
     tag: [t.operator, t.operatorKeyword],
-    color: base0E,
+    color: red,
   },
   {
     tag: [t.tagName],
-    color: base0F,
+    color: aqua,
+    fontStyle: "bold",
   },
   {
     tag: [t.squareBracket],
-    color: base0b,
+    color: orange,
   },
   {
     tag: [t.angleBracket],
-    color: base0C,
+    color: blue,
   },
   {
     tag: [t.attributeName],
-    color: base0D,
+    color: aqua,
   },
   {
     tag: [t.regexp],
-    color: base0A,
+    color: aqua,
   },
   {
     tag: [t.quote],
-    color: base01,
+    color: gray,
   },
-  { tag: [t.string], color: base0C },
+  { tag: [t.string], color: fg1 },
   {
     tag: t.link,
-    color: base07,
+    color: fg4,
     textDecoration: "underline",
     textUnderlinePosition: "under",
   },
   {
     tag: [t.url, t.escape, t.special(t.string)],
-    color: base0C,
+    color: purple,
   },
-  { tag: [t.meta], color: base08 },
-  { tag: [t.comment], color: base02, fontStyle: "italic" },
-  { tag: t.strong, fontWeight: "bold", color: base0A },
-  { tag: t.emphasis, fontStyle: "italic", color: base0A },
+  { tag: [t.meta], color: yellow },
+  { tag: [t.comment], color: gray, fontStyle: "italic" },
+  { tag: t.strong, fontWeight: "bold", color: orange },
+  { tag: t.emphasis, fontStyle: "italic", color: green },
   { tag: t.strikethrough, textDecoration: "line-through" },
-  { tag: t.heading, fontWeight: "bold", color: base0A },
-  { tag: t.special(t.heading1), fontWeight: "bold", color: base0A },
-  { tag: t.heading1, fontWeight: "bold", color: base0A },
+  { tag: t.heading, fontWeight: "bold", color: green },
+  { tag: [t.heading1, t.heading2], fontWeight: "bold", color: green },
   {
-    tag: [t.heading2, t.heading3, t.heading4],
+    tag: [t.heading3, t.heading4],
     fontWeight: "bold",
-    color: base0A,
+    color: yellow,
   },
   {
     tag: [t.heading5, t.heading6],
-    color: base0A,
+    color: yellow,
   },
-  { tag: [t.atom, t.bool, t.special(t.variableName)], color: base0C },
+  { tag: [t.atom, t.bool, t.special(t.variableName)], color: purple },
   {
     tag: [t.processingInstruction, t.inserted],
-    color: base07,
+    color: blue,
   },
   {
     tag: [t.contentSeparator],
-    color: base0D,
+    color: red,
   },
-  { tag: t.invalid, color: base02, borderBottom: `1px dotted ${invalid}` },
+  { tag: t.invalid, color: orange, borderBottom: `1px dotted ${invalid}` },
 ])
 
-/// Extension to enable the Basic Light theme (both the editor theme and
-/// the highlight style).
 export const basicLight: Extension = [
   basicLightTheme,
   syntaxHighlighting(basicLightHighlightStyle),
