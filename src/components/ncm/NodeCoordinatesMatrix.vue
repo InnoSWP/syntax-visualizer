@@ -7,7 +7,7 @@ export default defineComponent({
   name: "NodeCoordinatesMatrix",
   props: {
     nodes: {
-      type: Array as PropType<ASTNodes>,
+      type: Array as PropType<ASTNodes | null>,
       required: false,
     },
   },

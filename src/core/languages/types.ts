@@ -1,7 +1,7 @@
 import type languages from "./all"
 
 export type Languages = typeof languages
-export type LanguageId = keyof Languages
+export type LanguageId = Extract<keyof Languages, string>
 export type ParserId = keyof Languages[LanguageId]["parsers"]
 export type ParserIdOfLanguage<L extends LanguageId> = Extract<
   keyof Languages[L]["parsers"],
