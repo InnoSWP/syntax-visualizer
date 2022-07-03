@@ -3,6 +3,7 @@ import { defineComponent } from "vue"
 import type { PropType } from "vue"
 import type { ASTNodes } from "@/core/types"
 
+
 export default defineComponent({
   name: "NodeCoordinatesMatrix",
   props: {
@@ -42,7 +43,7 @@ export default defineComponent({
           v-bind:key="nodeIndex"
           class="row"
         >
-          <div class="heading-cell">
+          <div class="heading-cell" v-bind:title=node.type>
             <div class="heading">{{ node.type }}</div>
           </div>
           <div class="subheading-cell" v-bind:title=node.label>
@@ -53,7 +54,10 @@ export default defineComponent({
             v-bind:key="`${nodeIndex}-${coordinateIndex}`"
             class="coordinate-cell"
           >
-            <span v-if="node.depth === coordinateIndex + 1" class="coordinate-cell-wrapper-depth">{{ coordinate }}</span>
+            <span v-if="node.depth === coordinateIndex + 1"
+                  class="coordinate-cell-wrapper-depth">
+              {{ coordinate }}
+            </span>
             <span v-else-if="coordinate !== 0" class="coordinate-cell-wrapper">
               {{ coordinate }}
             </span>
@@ -73,6 +77,7 @@ export default defineComponent({
   overflow: auto;
   width: 100%;
   height: 100%;
+  margin-left: 5px;
 }
 
 .table {
@@ -95,8 +100,7 @@ export default defineComponent({
 .coordinate-cell,
 .coordinate-heading-cell,
 .subheading-cell,
-.upper-subheading-cell
-{
+.upper-subheading-cell {
   display: table-cell;
   text-align: center;
 }
@@ -108,9 +112,10 @@ export default defineComponent({
   left: 0;
   background-color: white;
 }
+
 .coordinate-heading {
   height: 34px;
-  width:  34px;
+  width: 34px;
   font-size: 0.875rem;
   text-align: center;
   font-weight: bold;
@@ -131,26 +136,27 @@ export default defineComponent({
   left: 0;
   background-color: white;
 }
-.upper-subheading-cell{
+
+.upper-subheading-cell {
   left: 150px;
   max-width: 100px;
 }
 
 .heading-cell,
-.subheading-cell{
+.subheading-cell {
   width: 150px;
   position: sticky;
   z-index: 2;
   left: 0;
-
   background-color: white;
-
 }
-.heading-cell{
+
+
+.heading-cell {
   left: 0;
-
 }
-.subheading-cell{
+
+.subheading-cell {
   left: 150px;
   max-width: 100px;
   border-bottom: 1px solid #a9a9a9;
@@ -169,10 +175,9 @@ export default defineComponent({
   width: 150px;
   border-right: 1px solid #a9a9a9;
   border-bottom: 1px solid #a9a9a9;
-
 }
 
-.subheading{
+.subheading {
   height: content-box;
   max-width: 100px;
   font-size: 0.75rem;
@@ -189,7 +194,6 @@ export default defineComponent({
   width: 0.875rem;
   height: 0.875rem;
   border: 1px solid #a9a9a9;
-
 }
 
 .coordinate-cell-wrapper,
@@ -202,10 +206,12 @@ export default defineComponent({
   min-height: 16px;
   text-align: center;
 }
+
 .coordinate-cell-wrapper-zeroes {
   opacity: 0.5;
 }
-.coordinate-cell-wrapper-depth{
+
+.coordinate-cell-wrapper-depth {
   font-weight: bold;
 }
 </style>
