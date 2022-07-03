@@ -3,7 +3,9 @@ import { ref, watch } from "vue"
 import type { FullParserId } from "@/core/languages"
 import { ParsingManager } from "@/core/parsing"
 import type { ASTNodes, ParseError } from "@/core/types"
-import { watchDebounced, watchThrottled } from "@vueuse/core"
+import { watchDebounced } from "@vueuse/core"
+import type { TextDebounceTimeThresholds } from "./useDebounceTimeBasedOnTextSize"
+import { useDebounceTimeBasedOnTextSize } from "./useDebounceTimeBasedOnTextSize"
 
 export function useParsingManager(
   code: Ref<string>,
@@ -15,7 +17,6 @@ export function useParsingManager(
   const isLoading = ref(false)
   const lastNodes = ref<ASTNodes>()
   const error = ref<ParseError>()
-  const debounceTime = useDebounceTimeBasedOnCode(code)
 
   watch(
     fullParserId,
@@ -55,7 +56,13 @@ export function useParsingManager(
         }
       })
     },
-    { debounce: debounceTime, immediate: true }
+    {
+      debounce: useDebounceTimeBasedOnTextSize(
+        code,
+        CODE_SIZE_DEBOUNCE_TIME_THRESHOLDS
+      ),
+      immediate: true,
+    }
   )
 
   return {
@@ -66,32 +73,9 @@ export function useParsingManager(
   }
 }
 
-function useDebounceTimeBasedOnCode(code: Ref<string>) {
-  const debounceTime = ref(0)
-
-  watchThrottled(
-    code,
-    () => {
-      debounceTime.value = getDebounceTimeForCode(code.value)
-    },
-    { throttle: 2000 }
-  )
-
-  return debounceTime
-}
-
-function getDebounceTimeForCode(code: string) {
-  const codeSize = code.length
-  for (const [maxCodeSize, debounceTime] of DEBOUNCE_TIME_THRESHOLDS) {
-    if (codeSize <= maxCodeSize) return debounceTime
-  }
-  return DEBOUNCE_TIME_THRESHOLDS[DEBOUNCE_TIME_THRESHOLDS.length - 1][0]
-}
-
-const DEBOUNCE_TIME_THRESHOLDS = [
+const CODE_SIZE_DEBOUNCE_TIME_THRESHOLDS: TextDebounceTimeThresholds = [
   [100, 150],
   [300, 200],
   [500, 250],
   [1000, 300],
-  [0, 350],
 ]
