@@ -92,7 +92,11 @@ onMounted(() => {
         })
         break
       default:
-        break
+        editor.view?.dispatch({
+          effects: ThemeManager.reconfigure(
+            isSystemDark.value ? basicDark : basicLight
+          ),
+        })
     }
   })
 
