@@ -75,6 +75,7 @@ export default defineComponent({
 
 .tab-wrapper {
   padding: 6px;
+  z-index: 1000;
 }
 
 .tab {
@@ -88,8 +89,9 @@ export default defineComponent({
   height: var(--tab-height);
   padding: 0 10px;
   border-radius: 6px;
-  background-color: #ffffff;
+  background-color: var(--color-primary);
   box-shadow: 2px 4px 10px 2px rgba(0, 0, 0, 0.25);
+  border-bottom: 2px solid var(--color-accent);
 }
 
 .tab-title-wrapper,

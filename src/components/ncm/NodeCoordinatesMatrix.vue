@@ -106,7 +106,7 @@ export default defineComponent({
   left: 0;
   border-top: 1px solid #a9a9a9;
   border-bottom: 1px solid #a9a9a9;
-  background-color: white;
+  background-color: var(--color-primary);
 }
 
 .upper-heading-cell {
@@ -116,7 +116,7 @@ export default defineComponent({
   left: 0;
   border-top: 1px solid #a9a9a9;
   border-bottom: 1px solid #a9a9a9;
-  background-color: white;
+  background-color: var(--color-primary);
 }
 
 .heading-cell {
@@ -125,7 +125,7 @@ export default defineComponent({
   left: 0;
   border-top: 1px solid #a9a9a9;
   border-bottom: 1px solid #a9a9a9;
-  background-color: white;
+  background-color: var(--color-primary);
 }
 
 .heading {

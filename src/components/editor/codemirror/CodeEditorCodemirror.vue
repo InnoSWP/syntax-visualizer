@@ -41,7 +41,6 @@ onMounted(() => {
       "Failed to mount codemirror editor, container element is null"
     )
   }
-
   editor.state = EditorState.create({
     doc: props.modelValue,
     extensions: [
@@ -86,3 +85,18 @@ onMounted(() => {
 <template>
   <div ref="container" class="editor-container" />
 </template>
+
+<style>
+.cm-gutters {
+  background: var(--color-secondary) !important;
+  border-right: 1px solid var(--color-primary) !important;
+}
+
+.cm-activeLineGutter {
+  background: var(--color-primary) !important;
+}
+
+.ͼo {
+  background: none;
+}
+</style>

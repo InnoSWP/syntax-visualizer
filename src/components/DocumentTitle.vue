@@ -93,7 +93,7 @@ $side-padding: 12px;
   }
 
   &.focused {
-    box-shadow: 0 0 6px 4px rgba(#0066ff, 0.25);
+    box-shadow: 0 0 6px 4px rgba(#0075FF, 0.25);
   }
 
   &.active {
@@ -131,6 +131,7 @@ $side-padding: 12px;
   border: none;
   outline: none;
   background: none;
+  color: var(--color-secondary-text);
 }
 
 .title-text {
@@ -162,8 +163,8 @@ $side-padding: 12px;
   left: 0;
   background: linear-gradient(
     90deg,
-    rgba(255, 255, 255, 1) 0%,
-    rgba(255, 255, 255, 0) 100%
+    rgba(var(--color-primary), 1) 0%,
+    rgba(var(--color-primary), 0) 100%
   );
 }
 
@@ -171,8 +172,8 @@ $side-padding: 12px;
   right: 0;
   background: linear-gradient(
     -90deg,
-    rgba(255, 255, 255, 1) 0%,
-    rgba(255, 255, 255, 0) 100%
+    rgba(var(--color-primary), 1) 0%,
+    rgba(var(--color-primary), 0) 100%
   );
 }
 </style>

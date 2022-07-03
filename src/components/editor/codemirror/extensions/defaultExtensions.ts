@@ -24,6 +24,7 @@ import {
   closeBracketsKeymap,
   completionKeymap,
 } from "@codemirror/autocomplete"
+import {basicDark, basicDarkTheme} from "@/components/editor/codemirror/extensions/theme";
 
 // Customized basic extensions for CodeMirror
 // Default setup: https://github.com/codemirror/basic-setup/blob/main/src/codemirror.ts
@@ -41,7 +42,8 @@ export const defaultExtensions: Extension[] = [
   closeBrackets(),
   autocompletion(),
   rectangularSelection(),
-  highlightActiveLine(),
+  basicDark,
+  // highlightActiveLine(),
   keymap.of([
     ...closeBracketsKeymap,
     ...defaultKeymap,
