@@ -1,22 +1,24 @@
-import type { Ref } from "vue"
-import { ref, watch } from "vue"
-import type { LanguageId } from "@/core/languages"
+import { watch } from "vue"
+import { useParsingStore } from "@/stores/parsing"
 import { loadLanguageSampleCode } from "@/core/languages"
 
-export function useLanguageSampleCode(languageId: Ref<LanguageId>) {
-  const sampleCode = ref<string>()
+export function useLanguageSampleCode() {
+  const parsingStore = useParsingStore()
 
   watch(
-    languageId,
+    () => parsingStore.languageId,
     (newLanguageId) => {
-      loadLanguageSampleCode(languageId.value).then((loaded) => {
-        if (newLanguageId === languageId.value && loaded) {
-          sampleCode.value = loaded
+      loadLanguageSampleCode(newLanguageId).then((sampleCode) => {
+        if (
+          !parsingStore.userHasEnteredCode &&
+          !parsingStore.code.trim() &&
+          newLanguageId === parsingStore.languageId &&
+          sampleCode
+        ) {
+          parsingStore.updateCodeExternally(sampleCode)
         }
       })
     },
     { immediate: true }
   )
-
-  return sampleCode
 }
