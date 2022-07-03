@@ -6,12 +6,12 @@ import { EditorView } from "@codemirror/view"
 import type { LanguageId } from "@/core/languages"
 import { loadCodemirrorLanguageSupport } from "@/core/languages"
 import { defaultExtensions, updateListeners } from "./extensions"
-import { storeToRefs } from "pinia";
-import { useSettingsStore } from "@/stores/settings";
-import { ThemeManager } from "@/components/editor/codemirror/extensions/themes/manager";
-import { basicDark } from "@/components/editor/codemirror/extensions/themes/dark";
-import { basicLight } from "@/components/editor/codemirror/extensions/themes/light";
-import {usePreferredDark} from "@vueuse/core";
+import { storeToRefs } from "pinia"
+import { useSettingsStore } from "@/stores/settings"
+import { ThemeManager } from "@/components/editor/codemirror/extensions/themes/manager"
+import { basicDark } from "@/components/editor/codemirror/extensions/themes/dark"
+import { basicLight } from "@/components/editor/codemirror/extensions/themes/light"
+import { usePreferredDark } from "@vueuse/core"
 
 const settings = storeToRefs(useSettingsStore())
 const isSystemDark = usePreferredDark()

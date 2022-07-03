@@ -41,10 +41,8 @@ $toggle-size: $height - $padding * 2;
 $width: $toggle-size * 2 + 10px;
 $icon-size-diff: 1px;
 $icon-size: $toggle-size - $icon-size-diff * 2;
-$bg: #cfcfcf;
 $shadow-color: rgba(0, 0, 0, 0.1);
 $shadow-color-hover: rgba(0, 0, 0, 0.25);
-$fg: #fff;
 
 .theme-toggle {
   position: relative;
@@ -52,11 +50,11 @@ $fg: #fff;
   height: $height;
   cursor: pointer;
   transition: box-shadow 0.2s ease-in-out;
-  color: $fg;
+  color: var(--color-secondary-text);
   border: none;
   border-radius: $height;
   outline: none;
-  background: $bg;
+  background: var(--color-secondary);
   box-shadow: inset 0 0 6px 0 $shadow-color;
 
   &:hover {
@@ -76,9 +74,9 @@ $fg: #fff;
   transition: left 0.2s ease-in-out;
   animation-duration: 1s;
   animation-timing-function: ease-in-out;
-  color: $bg;
+  color: var(--color-secondary-text);
   border-radius: $toggle-size;
-  background: $fg;
+  background: var(--color-primary-text);
   box-shadow: 0 0 6px 0 $shadow-color;
   animation-fill-mode: forwards;
 
