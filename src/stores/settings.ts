@@ -1,6 +1,6 @@
 import { defineStore } from "pinia"
 import type { LanguageId, ParserIdOfLanguage } from "@/core/languages"
-import { setTheme } from "@/core/themes/themer";
+import { setTheme } from "@/core/themes/themer"
 
 export type ThemeColor = "light" | "dark" | "system"
 export type ASTVariant = "graph" | "json"
