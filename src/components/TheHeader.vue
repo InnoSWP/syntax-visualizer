@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import DocumentTitle from "@/components/DocumentTitle.vue"
+import ThemeToggle from "@/components/ThemeToggle.vue"
 </script>
 
 <template>
@@ -8,7 +9,9 @@ import DocumentTitle from "@/components/DocumentTitle.vue"
       <DocumentTitle />
     </div>
     <h1 class="heading">Syntax Visualizer</h1>
-    <div class="right-menu"></div>
+    <div class="right-menu">
+      <ThemeToggle />
+    </div>
   </header>
 </template>
 
@@ -20,7 +23,7 @@ import DocumentTitle from "@/components/DocumentTitle.vue"
   max-width: 100%;
   height: var(--header-height);
   padding: 0 18px;
-  background-color: #ffffff;
+  background-color: var(--color-primary);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
