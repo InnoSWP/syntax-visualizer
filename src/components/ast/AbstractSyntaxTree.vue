@@ -2,7 +2,7 @@
 import type { PropType } from "vue"
 import { defineComponent } from "vue"
 import AbstractSyntaxTreeGraph from "./graph/AbstractSyntaxTreeGraph.vue"
-import type { ASTVariant } from "@/stores/settings"
+import type { ASTVariant } from "@/stores/parsing"
 import type { ASTNodes } from "@/core/types"
 
 export default defineComponent({
@@ -10,7 +10,7 @@ export default defineComponent({
   components: { AbstractSyntaxTreeGraph },
   props: {
     nodes: {
-      type: Array as PropType<ASTNodes>,
+      type: Array as PropType<ASTNodes | null>,
       required: false,
     },
     variant: {
