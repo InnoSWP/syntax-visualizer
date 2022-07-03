@@ -15,6 +15,7 @@ export function useCode(languageId: Ref<LanguageId>) {
     savedCode.value = codeToSave
   }
 
+  // If code was updated, assume that it was synced with language
   watch(code, () => {
     isCodeSyncedWithLanguage.value = true
   })
@@ -28,7 +29,6 @@ export function useCode(languageId: Ref<LanguageId>) {
     () => {
       if (!isCodeSyncedWithLanguage.value && sampleCode.value) {
         code.value = sampleCode.value
-        isCodeSyncedWithLanguage.value = true
       }
     },
     { immediate: true }
@@ -39,7 +39,6 @@ export function useCode(languageId: Ref<LanguageId>) {
     () => {
       if (!isCodeSyncedWithLanguage.value && savedCode.value) {
         code.value = savedCode.value
-        isCodeSyncedWithLanguage.value = true
       }
     },
     { immediate: true }
