@@ -5,6 +5,8 @@
   --font-family-mono: "JetBrains Mono", "Roboto Mono", monospace;
 
   --color-danger: #ff5252;
+  --color-success: #1eb952;
+  --color-highlight: rgba(236, 219, 31, 0.45);
 
   --color-primary: var(--color-primary--light);
   --color-secondary: var(--color-secondary--light);

@@ -6,10 +6,26 @@ import AbstractSyntaxTree from "@/components/ast/AbstractSyntaxTree.vue"
 import NodeCoordinatesMatrix from "@/components/ncm/NodeCoordinatesMatrix.vue"
 import { useParsingStore } from "@/stores/parsing"
 import { useEditorCode } from "@/composables/useEditorCode"
+import { ref, watch } from "vue"
 
 const parsingStore = useParsingStore()
 const { astVariant, languageId, lastNodes, error } = storeToRefs(parsingStore)
 const editorCode = useEditorCode()
+const highlightedNode = ref<number>()
+
+const handleNodeMouseIn = (nodeIndex: number) => {
+  highlightedNode.value = nodeIndex
+}
+
+const handleNodeMouseOut = (nodeIndex: number) => {
+  if (highlightedNode.value === nodeIndex) {
+    highlightedNode.value = undefined
+  }
+}
+
+watch(highlightedNode, (nodeIndex) => {
+  console.log("highlightedNode", nodeIndex)
+})
 </script>
 
 <template>
@@ -23,10 +39,21 @@ const editorCode = useEditorCode()
       />
     </AppTab>
     <AppTab title="Abstract Syntax Tree" icon="tree" :row="1" :col="2">
-      <AbstractSyntaxTree :variant="astVariant" :nodes="lastNodes" />
+      <AbstractSyntaxTree
+        :variant="astVariant"
+        :nodes="lastNodes"
+        :highlight-node-index="highlightedNode"
+        @node-mouse-enter="handleNodeMouseIn"
+        @node-mouse-leave="handleNodeMouseOut"
+      />
     </AppTab>
     <AppTab title="Node Coordinates Matrix" icon="matrix" :row="1" :col="3">
-      <NodeCoordinatesMatrix :nodes="lastNodes" />
+      <NodeCoordinatesMatrix
+        :nodes="lastNodes"
+        :highlight-node-index="highlightedNode"
+        @node-mouse-enter="handleNodeMouseIn"
+        @node-mouse-leave="handleNodeMouseOut"
+      />
     </AppTab>
   </main>
 </template>

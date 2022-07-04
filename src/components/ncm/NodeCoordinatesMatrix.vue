@@ -10,6 +10,14 @@ export default defineComponent({
       type: Array as PropType<ASTNodes | null>,
       required: false,
     },
+    highlightNodeIndex: {
+      type: Number as PropType<number>,
+      required: false,
+    },
+  },
+  emits: {
+    "node-mouse-enter": null,
+    "node-mouse-leave": null,
   },
 })
 </script>
@@ -40,7 +48,9 @@ export default defineComponent({
         <div
           v-for="(node, nodeIndex) in nodes"
           v-bind:key="nodeIndex"
-          class="row"
+          :class="{ row: true, highlight: nodeIndex === highlightNodeIndex }"
+          @mouseenter="$emit('node-mouse-enter', nodeIndex)"
+          @mouseleave="$emit('node-mouse-leave', nodeIndex)"
         >
           <div class="heading-cell" v-bind:title="node.type">
             <div class="heading">{{ node.type }}</div>
@@ -94,6 +104,11 @@ export default defineComponent({
 
 .row {
   display: table-row;
+  cursor: pointer;
+}
+
+.row.highlight {
+  background-color: var(--color-highlight);
 }
 
 .upper-heading-cell,
@@ -155,6 +170,11 @@ export default defineComponent({
   left: 0;
   width: 150px;
   background-color: var(--color-primary);
+}
+
+.row.highlight .heading-cell,
+.row.highlight .subheading-cell {
+  background-color: var(--color-highlight);
 }
 
 .heading-cell {

@@ -1,20 +1,39 @@
 <script lang="ts">
-import { defineComponent } from "vue"
 import type { PropType } from "vue"
-import type { TreeNode } from "./types"
+import { defineComponent } from "vue"
+import type { ASTNodes } from "@/core/types"
 
 export default defineComponent({
   name: "TreeGraphNode",
   props: {
-    data: {
-      type: Object as PropType<TreeNode>,
+    nodes: {
+      type: Object as PropType<ASTNodes>,
       required: true,
     },
+    index: {
+      type: Number as PropType<number>,
+      required: true,
+    },
+    getIsHighlighted: {
+      type: Function as PropType<(index: number) => boolean>,
+      required: false,
+    },
     isRoot: Boolean,
+    onMouseEnter: {
+      type: Function as PropType<(index: number) => void>,
+      required: false,
+    },
+    onMouseLeave: {
+      type: Function as PropType<(index: number) => void>,
+      required: false,
+    },
   },
   computed: {
+    data() {
+      return this.nodes[this.index]
+    },
     isLeaf() {
-      return this.data.children?.length === 0 ?? true
+      return this.data.childrenIndexes?.length === 0 ?? true
     },
   },
 })
@@ -28,19 +47,30 @@ export default defineComponent({
       'node-root_root': isRoot,
     }"
   >
-    <div class="node-rect">
-      <span class="node-rect__heading">{{ data.heading }}</span>
-      <span v-if="data.subheading" class="node-rect__subheading">
-        {{ data.subheading }}
+    <div
+      :class="{
+        'node-rect': true,
+        highlighted: getIsHighlighted?.(index),
+      }"
+      @mouseenter="() => onMouseEnter?.(index)"
+      @mouseleave="() => onMouseLeave?.(index)"
+    >
+      <span class="node-rect__heading">{{ data.type }}</span>
+      <span v-if="data.label" class="node-rect__subheading">
+        {{ data.label }}
       </span>
       <div class="node-rect__circle-in"></div>
       <div class="node-rect__circle-out"></div>
     </div>
     <div v-if="!isLeaf" class="node-children-container">
       <TreeGraphNode
-        v-for="child in data.children"
-        v-bind:key="child.id"
-        :data="child"
+        v-for="childIndex in data.childrenIndexes"
+        v-bind:key="`${index}-${childIndex}`"
+        :get-is-highlighted="getIsHighlighted"
+        :nodes="nodes"
+        :index="childIndex"
+        :on-mouse-enter="onMouseEnter"
+        :on-mouse-leave="onMouseLeave"
       />
     </div>
   </div>
@@ -68,10 +98,15 @@ $circle-in-margin-top: 10px;
   align-items: center;
   flex-direction: column;
   padding: 8px 12px;
+  cursor: pointer;
   border: $border-width solid var(--color-border-default);
   border-radius: 4px;
   background-color: var(--color-primary);
   box-shadow: 1px 2px 5px 1px rgba(0, 0, 0, 0.25);
+
+  &.highlighted {
+    background: var(--color-highlight);
+  }
 }
 
 .node-rect__heading {

@@ -17,14 +17,25 @@ export default defineComponent({
       type: String as PropType<ASTVariant>,
       required: true,
     },
+    highlightNodeIndex: {
+      type: Number as PropType<number>,
+      required: false,
+    },
   },
+  emits: ["node-mouse-enter", "node-mouse-leave"],
 })
 </script>
 
 <template>
   <div class="ast-root">
     <h3 v-if="!nodes">Write some (correct) code!</h3>
-    <AbstractSyntaxTreeGraph v-else-if="variant === 'graph'" :nodes="nodes" />
+    <AbstractSyntaxTreeGraph
+      v-else-if="variant === 'graph'"
+      :nodes="nodes"
+      :highlight-node-index="highlightNodeIndex"
+      @node-mouse-enter="(index) => $emit('node-mouse-enter', index)"
+      @node-mouse-leave="(index) => $emit('node-mouse-leave', index)"
+    />
     <!--  TODO: add JSON representation  -->
   </div>
 </template>
