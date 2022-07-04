@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from "vue"
 import { storeToRefs } from "pinia"
 import AppTab from "@/components/AppTab.vue"
 import CodeEditor from "@/components/editor/CodeEditor.vue"
@@ -6,7 +7,6 @@ import AbstractSyntaxTree from "@/components/ast/AbstractSyntaxTree.vue"
 import NodeCoordinatesMatrix from "@/components/ncm/NodeCoordinatesMatrix.vue"
 import { useParsingStore } from "@/stores/parsing"
 import { useEditorCode } from "@/composables/useEditorCode"
-import { ref, watch } from "vue"
 
 const parsingStore = useParsingStore()
 const { astVariant, languageId, lastNodes, error } = storeToRefs(parsingStore)
@@ -22,10 +22,6 @@ const handleNodeMouseOut = (nodeIndex: number) => {
     highlightedNode.value = undefined
   }
 }
-
-watch(highlightedNode, (nodeIndex) => {
-  console.log("highlightedNode", nodeIndex)
-})
 </script>
 
 <template>

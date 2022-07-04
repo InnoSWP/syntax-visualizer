@@ -33,7 +33,9 @@ export default defineComponent({
       return this.nodes[this.index]
     },
     isLeaf() {
-      return this.data.childrenIndexes?.length === 0 ?? true
+      return (
+        !this.data.childrenIndexes || this.data.childrenIndexes.length === 0
+      )
     },
   },
 })
