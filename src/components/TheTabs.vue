@@ -1,23 +1,25 @@
 <script setup lang="ts">
+import { storeToRefs } from "pinia"
 import AppTab from "@/components/AppTab.vue"
 import CodeEditor from "@/components/editor/CodeEditor.vue"
 import AbstractSyntaxTree from "@/components/ast/AbstractSyntaxTree.vue"
 import NodeCoordinatesMatrix from "@/components/ncm/NodeCoordinatesMatrix.vue"
-import { useSettingsStore } from "@/stores/settings"
-import { useController } from "@/composables"
+import { useParsingStore } from "@/stores/parsing"
+import { useEditorCode } from "@/composables/useEditorCode"
 
-const { astVariant } = useSettingsStore()
-const { languageId, code, save, lastNodes } = useController()
+const parsingStore = useParsingStore()
+const { astVariant, languageId, lastNodes, error } = storeToRefs(parsingStore)
+const editorCode = useEditorCode()
 </script>
 
 <template>
   <main class="tabs-root">
     <AppTab title="Code" icon="fileCode" :row="1" :col="1">
       <CodeEditor
-        v-model="code"
+        v-model="editorCode"
         :languageId="languageId"
+        :parse-error="error ?? undefined"
         autofocus
-        @blur="save"
       />
     </AppTab>
     <AppTab title="Abstract Syntax Tree" icon="tree" :row="1" :col="2">

@@ -93,7 +93,7 @@ $side-padding: 12px;
   }
 
   &.focused {
-    box-shadow: 0 0 6px 4px rgba(#0075FF, 0.25);
+    box-shadow: 0 0 6px 4px rgba(#0075ff, 0.25);
   }
 
   &.active {
@@ -128,10 +128,10 @@ $side-padding: 12px;
   height: 100%;
   margin: 0;
   padding: 0;
+  color: var(--color-secondary-text);
   border: none;
   outline: none;
   background: none;
-  color: var(--color-secondary-text);
 }
 
 .title-text {

@@ -23,8 +23,8 @@ import {
   closeBracketsKeymap,
   completionKeymap,
 } from "@codemirror/autocomplete"
-import { ThemeManager } from "@/components/editor/codemirror/extensions/themes/manager";
-import { basicLight } from "@/components/editor/codemirror/extensions/themes/light";
+import { ThemeManager } from "@/components/editor/codemirror/extensions/themes/manager"
+import { basicLight } from "@/components/editor/codemirror/extensions/themes/light"
 
 // Customized basic extensions for CodeMirror
 // Default setup: https://github.com/codemirror/basic-setup/blob/main/src/codemirror.ts

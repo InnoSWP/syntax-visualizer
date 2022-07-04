@@ -17,11 +17,11 @@ export default defineComponent({
       required: false,
     },
     row: {
-      type: Number,
+      type: Number as PropType<1 | 2 | 3>,
       required: true,
     },
     col: {
-      type: Number,
+      type: Number as PropType<1 | 2 | 3>,
       required: true,
     },
   },
@@ -29,7 +29,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div :class="['tab-root', 'row-' + row, 'col-' + col]">
+  <div :class="['tab-root', `row-${row}`, `col-${col}`]">
     <div class="tab-wrapper">
       <div class="tab" role="tab">
         <div class="tab-title-wrapper">

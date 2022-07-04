@@ -4,6 +4,8 @@
   --font-family: Poppins, -apple-system, Roboto, sans-serif;
   --font-family-mono: "JetBrains Mono", "Roboto Mono", monospace;
 
+  --color-danger: #ff5252;
+
   --color-primary: var(--color-primary--light);
   --color-secondary: var(--color-secondary--light);
   --color-accent: var(--color-accent--light);
