@@ -18,7 +18,7 @@ const editorCode = useEditorCode()
       <CodeEditor
         v-model="editorCode"
         :languageId="languageId"
-        :parse-error="error"
+        :parse-error="error ?? undefined"
         autofocus
       />
     </AppTab>
