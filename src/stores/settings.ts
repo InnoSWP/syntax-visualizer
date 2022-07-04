@@ -1,5 +1,4 @@
 import { defineStore } from "pinia"
-import { setTheme } from "@/core/themes/themer"
 
 export const useSettingsStore = defineStore("settings", {
   state: () => ({
@@ -8,7 +7,6 @@ export const useSettingsStore = defineStore("settings", {
   actions: {
     toggleTheme() {
       this.theme = getNextTheme(this.theme)
-      setTheme(this.theme)
     },
   },
   persist: true,

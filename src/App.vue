@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { RouterView } from "vue-router"
+import { useAppTheme } from "@/composables/useAppTheme"
+
+useAppTheme()
 </script>
 
 <template>
