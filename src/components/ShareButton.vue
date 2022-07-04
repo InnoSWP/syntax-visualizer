@@ -11,8 +11,9 @@ const isHovered = useElementHover(container)
 
 const handleClick = () => {
   const origin = window.location.origin
+  const pathname = window.location.pathname
   const searchParams = parsingStore.toURLSearchParams
-  const url = new URL(`/share?${searchParams}`, origin)
+  const url = new URL(`${pathname}?${searchParams}`, origin)
   copy(url.toString())
 }
 </script>
