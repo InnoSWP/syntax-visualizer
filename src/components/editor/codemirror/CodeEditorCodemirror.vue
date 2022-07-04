@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import type { PropType } from "vue"
-import { onMounted, ref, watch } from "vue"
+import { onMounted, ref, watch, watchEffect } from "vue"
 import { Compartment, EditorState } from "@codemirror/state"
 import { EditorView } from "@codemirror/view"
 import type { LanguageId } from "@/core/languages"
 import { loadCodemirrorLanguageSupport } from "@/core/languages"
 import type { ParseError } from "@/core/types"
+import { useIsDark } from "@/composables/useIsDark"
 import {
   defaultExtensions,
   rangesHighlighting,
@@ -13,6 +14,9 @@ import {
 } from "./extensions"
 import { HighlightEffect } from "./extensions/rangesHighlighting"
 import { errorPanelState, ShowErrorEffect } from "./extensions/errorPanel"
+import { ThemeManager } from "./extensions/themes/manager"
+import { basicDark } from "./extensions/themes/dark"
+import { basicLight } from "./extensions/themes/light"
 
 const props = defineProps({
   modelValue: {
@@ -38,6 +42,7 @@ const editor = {
   view: null as EditorView | null,
 }
 const language = new Compartment()
+const isDark = useIsDark()
 
 const handleDocChange = (newDoc: string) => {
   emit("update:modelValue", newDoc)
@@ -69,6 +74,12 @@ onMounted(() => {
   editor.view = new EditorView({
     state: editor.state,
     parent: container.value,
+  })
+
+  watchEffect(() => {
+    editor.view?.dispatch({
+      effects: ThemeManager.reconfigure(isDark.value ? basicDark : basicLight),
+    })
   })
 
   // Handle language change
@@ -132,5 +143,20 @@ onMounted(() => {
   &__with-location {
     cursor: pointer;
   }
+}
+
+.cm-gutters {
+  border-right: 1px solid var(--color-primary) !important;
+  background: var(--color-secondary) !important;
+}
+
+.cm-activeLineGutter {
+  background: var(--color-primary) !important;
+}
+
+.ͼo,
+.ͼ1o,
+.ͼ1n {
+  background: none;
 }
 </style>

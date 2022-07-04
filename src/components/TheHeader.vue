@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import DocumentTitle from "@/components/DocumentTitle.vue"
 import ShareButton from "@/components/ShareButton.vue"
+import ThemeToggle from "@/components/ThemeToggle.vue"
 </script>
 
 <template>
@@ -11,7 +12,9 @@ import ShareButton from "@/components/ShareButton.vue"
       <ShareButton />
     </div>
     <h1 class="heading">Syntax Visualizer</h1>
-    <div class="right-menu"></div>
+    <div class="right-menu">
+      <ThemeToggle />
+    </div>
   </header>
 </template>
 
@@ -23,7 +26,7 @@ import ShareButton from "@/components/ShareButton.vue"
   max-width: 100%;
   height: var(--header-height);
   padding: 0 18px;
-  background-color: #ffffff;
+  background-color: var(--color-primary);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 

@@ -5,4 +5,32 @@
   --font-family-mono: "JetBrains Mono", "Roboto Mono", monospace;
 
   --color-danger: #ff5252;
+
+  --color-primary: var(--color-primary--light);
+  --color-secondary: var(--color-secondary--light);
+  --color-accent: var(--color-accent--light);
+  --color-primary-text: var(--color-primary-text--light);
+  --color-secondary-text: var(--color-secondary-text--light);
+
+  /* Light palette */
+  --color-primary--light: #FFF;
+  --color-secondary--light: #F5F5F5;
+  --color-accent--light: #0075FF;
+  --color-primary-text--light: #000;
+  --color-secondary-text--light: rgba(0, 0, 0, 0.60);
+
+  /* Dark palette */
+  --color-primary--dark: #000;
+  --color-secondary--dark: #1D1C1C;
+  --color-accent--dark: #0075FF;
+  --color-primary-text--dark: #FFF;
+  --color-secondary-text--dark: rgba(255, 255, 255, 0.60);
+}
+
+:root.dark {
+  --color-primary: var(--color-primary--dark);
+  --color-secondary: var(--color-secondary--dark);
+  --color-accent: var(--color-accent--dark);
+  --color-primary-text: var(--color-primary-text--dark);
+  --color-secondary-text: var(--color-secondary-text--dark);
 }

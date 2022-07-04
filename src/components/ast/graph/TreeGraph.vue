@@ -54,7 +54,7 @@ export default defineComponent({
 .container {
   position: relative;
   --color-border-default: #a9a9a9;
-  --color-border-active: #466ecc;
+  --color-border-active: var(--color-accent);
   --stroke-width: 2px;
 }
 
