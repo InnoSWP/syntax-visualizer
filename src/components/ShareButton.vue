@@ -2,14 +2,18 @@
 import { ref } from "vue"
 import { useClipboard, useElementHover } from "@vueuse/core"
 import AppIcon from "@/components/AppIcon.vue"
+import { useParsingStore } from "@/stores/parsing"
 
-const source = ref("Work in progress 🚧")
-const { copy, copied } = useClipboard({ source, copiedDuring: 3000 })
+const parsingStore = useParsingStore()
+const { copy, copied } = useClipboard({ copiedDuring: 3000 })
 const container = ref()
 const isHovered = useElementHover(container)
 
 const handleClick = () => {
-  copy()
+  const origin = window.location.origin
+  const searchParams = parsingStore.toURLSearchParams
+  const url = new URL(`/share?${searchParams}`, origin)
+  copy(url.toString())
 }
 </script>
 
