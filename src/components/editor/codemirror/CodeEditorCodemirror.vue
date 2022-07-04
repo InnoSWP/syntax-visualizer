@@ -5,7 +5,14 @@ import { Compartment, EditorState } from "@codemirror/state"
 import { EditorView } from "@codemirror/view"
 import type { LanguageId } from "@/core/languages"
 import { loadCodemirrorLanguageSupport } from "@/core/languages"
-import { defaultExtensions, updateListeners } from "./extensions"
+import type { ParseError } from "@/core/types"
+import {
+  defaultExtensions,
+  rangesHighlighting,
+  updateListeners,
+} from "./extensions"
+import { HighlightEffect } from "./extensions/rangesHighlighting"
+import { errorPanelState, ShowErrorEffect } from "./extensions/errorPanel"
 
 const props = defineProps({
   modelValue: {
@@ -18,22 +25,23 @@ const props = defineProps({
     required: true,
   },
   autofocus: Boolean,
+  parseError: {
+    type: Object as PropType<ParseError>,
+    required: false,
+  },
 })
 
 const emit = defineEmits(["update:modelValue", "blur"])
-
 const container = ref<HTMLDivElement | null>(null)
-
-const handleDocChange = (newDoc: string) => {
-  emit("update:modelValue", newDoc)
-}
-
 const editor = {
   state: null as EditorState | null,
   view: null as EditorView | null,
 }
-
 const language = new Compartment()
+
+const handleDocChange = (newDoc: string) => {
+  emit("update:modelValue", newDoc)
+}
 
 onMounted(() => {
   if (container.value == null) {
@@ -47,6 +55,8 @@ onMounted(() => {
     extensions: [
       defaultExtensions,
       language.of([]),
+      rangesHighlighting,
+      errorPanelState,
       updateListeners({
         onChange: handleDocChange,
         onBlur: () => {
@@ -77,6 +87,25 @@ onMounted(() => {
     { immediate: true }
   )
 
+  watch(
+    () => props.parseError,
+    (newParseError) => {
+      editor.view?.dispatch({
+        effects: [
+          HighlightEffect.of({
+            type: "error",
+            loc: newParseError?.location && {
+              from: newParseError.location.start.index,
+              to: newParseError.location.end.index,
+            },
+          }),
+          ShowErrorEffect.of(newParseError ?? null),
+        ],
+      })
+    },
+    { immediate: true }
+  )
+
   if (props.autofocus) {
     editor.view.focus()
   }
@@ -86,3 +115,22 @@ onMounted(() => {
 <template>
   <div ref="container" class="editor-container" />
 </template>
+
+<style lang="scss">
+.codemirror-highlighted_error {
+  text-decoration: underline;
+  text-decoration-style: wavy;
+  text-decoration-color: var(--color-danger);
+  text-decoration-thickness: 0.1rem;
+}
+
+.codemirror-error-panel {
+  font-size: 0.85rem;
+  padding: 2px 16px;
+  color: var(--color-danger);
+
+  &__with-location {
+    cursor: pointer;
+  }
+}
+</style>

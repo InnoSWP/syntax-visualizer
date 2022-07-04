@@ -3,4 +3,6 @@
   --tab-height: 36px;
   --font-family: Poppins, -apple-system, Roboto, sans-serif;
   --font-family-mono: "JetBrains Mono", "Roboto Mono", monospace;
+
+  --color-danger: #ff5252;
 }
