@@ -3,7 +3,6 @@ import { defineComponent } from "vue"
 import type { PropType } from "vue"
 import type { ASTNodes } from "@/core/types"
 
-
 export default defineComponent({
   name: "NodeCoordinatesMatrix",
   props: {
@@ -28,7 +27,7 @@ export default defineComponent({
             <div class="heading">Type</div>
           </div>
           <div class="upper-subheading-cell">
-            <div style="max-width: 100px;" class="heading">Label</div>
+            <div class="heading">Label</div>
           </div>
           <div
             v-for="nodeIndex in nodes[0].coordinates.length"
@@ -43,10 +42,10 @@ export default defineComponent({
           v-bind:key="nodeIndex"
           class="row"
         >
-          <div class="heading-cell" v-bind:title=node.type>
+          <div class="heading-cell" v-bind:title="node.type">
             <div class="heading">{{ node.type }}</div>
           </div>
-          <div class="subheading-cell" v-bind:title=node.label>
+          <div class="subheading-cell" v-bind:title="node.label">
             <div class="subheading">{{ node.label }}</div>
           </div>
           <div
@@ -54,8 +53,10 @@ export default defineComponent({
             v-bind:key="`${nodeIndex}-${coordinateIndex}`"
             class="coordinate-cell"
           >
-            <span v-if="node.depth === coordinateIndex + 1"
-                  class="coordinate-cell-wrapper-depth">
+            <span
+              v-if="node.depth === coordinateIndex + 1"
+              class="coordinate-cell-wrapper-depth"
+            >
               {{ coordinate }}
             </span>
             <span v-else-if="coordinate !== 0" class="coordinate-cell-wrapper">
@@ -114,16 +115,16 @@ export default defineComponent({
 }
 
 .coordinate-heading {
-  height: 34px;
-  width: 34px;
   font-size: 0.875rem;
-  text-align: center;
   font-weight: bold;
   z-index: 2;
-  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
+  width: 34px;
+  height: 34px;
   padding: 6px;
+  text-align: center;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   border-right: 1px solid #a9a9a9;
   border-bottom: 1px solid #a9a9a9;
   background-color: var(--color-primary);
@@ -143,15 +144,18 @@ export default defineComponent({
   max-width: 100px;
 }
 
+.upper-subheading-cell > .heading {
+  max-width: 100%;
+}
+
 .heading-cell,
 .subheading-cell {
-  width: 150px;
   position: sticky;
   z-index: 2;
   left: 0;
+  width: 150px;
   background-color: var(--color-primary);
 }
-
 
 .heading-cell {
   left: 0;
@@ -164,30 +168,30 @@ export default defineComponent({
 }
 
 .heading {
-  height: auto;
   font-size: 0.875rem;
-  text-align: center;
   font-weight: bold;
   z-index: 2;
-  white-space: nowrap;
   overflow: hidden;
-  text-overflow: ellipsis;
-  padding: 6px;
   width: 150px;
+  height: auto;
+  padding: 6px;
+  text-align: center;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   border-right: 1px solid #a9a9a9;
   border-bottom: 1px solid #a9a9a9;
 }
 
 .subheading {
-  height: content-box;
-  max-width: 100px;
   font-size: 0.75rem;
   font-weight: normal;
+  overflow: hidden;
+  max-width: 100px;
+  height: content-box;
+  padding: 6px;
   text-align: center;
   white-space: nowrap;
-  overflow: hidden;
   text-overflow: ellipsis;
-  padding: 6px;
 }
 
 .coordinate-cell {
