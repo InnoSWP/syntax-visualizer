@@ -3,7 +3,6 @@ import { defineComponent } from "vue"
 import type { PropType } from "vue"
 import type { ASTNodes } from "@/core/types"
 import TreeGraph from "./TreeGraph.vue"
-import { generateTreeGraphNodeProxyFromASTNode } from "./tmpProxy"
 
 export default defineComponent({
   name: "AbstractSyntaxTreeGraph",
@@ -13,18 +12,24 @@ export default defineComponent({
       type: Array as PropType<ASTNodes>,
       required: true,
     },
-  },
-  computed: {
-    rootProxy() {
-      return generateTreeGraphNodeProxyFromASTNode(this.nodes[0], this.nodes)
+    highlightNodeIndex: {
+      type: Number as PropType<number>,
+      required: false,
     },
   },
+  emits: ["node-mouse-enter", "node-mouse-leave"],
 })
 </script>
 
 <template>
   <div class="wrapper">
-    <TreeGraph class="tree-graph" :root="rootProxy" />
+    <TreeGraph
+      class="tree-graph"
+      :nodes="nodes"
+      :highlighted-node-index="highlightNodeIndex"
+      @node-mouse-enter="(index) => $emit('node-mouse-enter', index)"
+      @node-mouse-leave="(index) => $emit('node-mouse-leave', index)"
+    />
   </div>
 </template>
 

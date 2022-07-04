@@ -1,17 +1,21 @@
 <script lang="ts">
-import { defineComponent } from "vue"
 import type { PropType } from "vue"
+import { defineComponent } from "vue"
 import TreeGraphNode from "./TreeGraphNode.vue"
 import { drawLinesFromNodeToChildrenOnSvgRecursively } from "./domGraphicUtils"
-import type { TreeNode } from "./types"
+import type { ASTNodes } from "@/core/types"
 
 export default defineComponent({
   name: "TreeGraph",
   components: { TreeGraphNode },
   props: {
-    root: {
-      type: Object as PropType<TreeNode>,
+    nodes: {
+      type: Object as PropType<ASTNodes>,
       required: true,
+    },
+    highlightedNodeIndex: {
+      type: Number as PropType<number>,
+      required: false,
     },
   },
   watch: {
@@ -37,14 +41,28 @@ export default defineComponent({
 
       drawLinesFromNodeToChildrenOnSvgRecursively(root, svg)
     },
+    onNodeMouseEnter(index: number) {
+      this.$emit("node-mouse-enter", index)
+    },
+    onNodeMouseLeave(index: number) {
+      this.$emit("node-mouse-leave", index)
+    },
   },
+  emits: ["node-mouse-enter", "node-mouse-leave"],
 })
 </script>
 
 <template>
   <div class="container">
     <div ref="nodes" class="nodes">
-      <TreeGraphNode :data="root" is-root />
+      <TreeGraphNode
+        :nodes="nodes"
+        :index="0"
+        :get-is-highlighted="(index) => highlightedNodeIndex === index"
+        is-root
+        :on-mouse-enter="onNodeMouseEnter"
+        :on-mouse-leave="onNodeMouseLeave"
+      />
     </div>
     <svg ref="curves" class="curves"></svg>
   </div>
