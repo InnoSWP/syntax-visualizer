@@ -37,6 +37,8 @@ representations
 > tool for generating AST and NCM from code in real time to make the process
 > of exploring these concepts more convenient.
 
+You can read more about NCM concept [here](https://dl.acm.org/doi/10.1145/2935323.2935331)
+
 ## Features
 
 - Node Coordinates Matrix representation
