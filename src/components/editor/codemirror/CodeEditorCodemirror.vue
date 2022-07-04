@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import type { PropType } from "vue"
-import { onMounted, ref, watch } from "vue"
+import { onMounted, ref, watch, watchEffect } from "vue"
 import { Compartment, EditorState } from "@codemirror/state"
 import { EditorView } from "@codemirror/view"
 import type { LanguageId } from "@/core/languages"
 import { loadCodemirrorLanguageSupport } from "@/core/languages"
 import type { ParseError } from "@/core/types"
+import { useIsDark } from "@/composables/useIsDark"
 import {
   defaultExtensions,
   rangesHighlighting,
@@ -13,15 +14,9 @@ import {
 } from "./extensions"
 import { HighlightEffect } from "./extensions/rangesHighlighting"
 import { errorPanelState, ShowErrorEffect } from "./extensions/errorPanel"
-import { storeToRefs } from "pinia"
-import { useSettingsStore } from "@/stores/settings"
-import { ThemeManager } from "@/components/editor/codemirror/extensions/themes/manager"
-import { basicDark } from "@/components/editor/codemirror/extensions/themes/dark"
-import { basicLight } from "@/components/editor/codemirror/extensions/themes/light"
-import { usePreferredDark } from "@vueuse/core"
-
-const settings = storeToRefs(useSettingsStore())
-const isSystemDark = usePreferredDark()
+import { ThemeManager } from "./extensions/themes/manager"
+import { basicDark } from "./extensions/themes/dark"
+import { basicLight } from "./extensions/themes/light"
 
 const props = defineProps({
   modelValue: {
@@ -47,6 +42,7 @@ const editor = {
   view: null as EditorView | null,
 }
 const language = new Compartment()
+const isDark = useIsDark()
 
 const handleDocChange = (newDoc: string) => {
   emit("update:modelValue", newDoc)
@@ -80,35 +76,10 @@ onMounted(() => {
     parent: container.value,
   })
 
-  watch(isSystemDark, () => {
-    if (settings.theme.value === "system") {
-      editor.view?.dispatch({
-        effects: ThemeManager.reconfigure(
-          isSystemDark.value ? basicDark : basicLight
-        ),
-      })
-    }
-  })
-
-  watch(settings.theme, () => {
-    switch (settings.theme.value) {
-      case "dark":
-        editor.view?.dispatch({
-          effects: ThemeManager.reconfigure(basicDark),
-        })
-        break
-      case "light":
-        editor.view?.dispatch({
-          effects: ThemeManager.reconfigure(basicLight),
-        })
-        break
-      default:
-        editor.view?.dispatch({
-          effects: ThemeManager.reconfigure(
-            isSystemDark.value ? basicDark : basicLight
-          ),
-        })
-    }
+  watchEffect(() => {
+    editor.view?.dispatch({
+      effects: ThemeManager.reconfigure(isDark.value ? basicDark : basicLight),
+    })
   })
 
   // Handle language change
@@ -175,8 +146,8 @@ onMounted(() => {
 }
 
 .cm-gutters {
-  background: var(--color-secondary) !important;
   border-right: 1px solid var(--color-primary) !important;
+  background: var(--color-secondary) !important;
 }
 
 .cm-activeLineGutter {
