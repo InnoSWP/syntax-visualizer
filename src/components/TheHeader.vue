@@ -62,6 +62,6 @@ import ThemeToggle from "@/components/ThemeToggle.vue"
   height: 28px;
   margin-right: 12px;
   margin-left: 12px;
-  background: #000;
+  background: var(--color-primary-text);
 }
 </style>

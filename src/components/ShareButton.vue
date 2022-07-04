@@ -52,12 +52,13 @@ const handleClick = () => {
   margin: 0;
   padding: 0;
   cursor: pointer;
+  color: var(--color-primary-text);
   border: none;
   outline: none;
   background: none;
 
   &.copied {
-    color: #1ebd55;
+    color: var(--color-success);
   }
 }
 
