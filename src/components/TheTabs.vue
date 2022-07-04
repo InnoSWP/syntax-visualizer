@@ -8,14 +8,19 @@ import { useParsingStore } from "@/stores/parsing"
 import { useEditorCode } from "@/composables/useEditorCode"
 
 const parsingStore = useParsingStore()
-const { languageId, lastNodes, astVariant } = storeToRefs(parsingStore)
+const { astVariant, languageId, lastNodes, error } = storeToRefs(parsingStore)
 const editorCode = useEditorCode()
 </script>
 
 <template>
   <main class="tabs-root">
     <AppTab title="Code" icon="fileCode" :row="1" :col="1">
-      <CodeEditor v-model="editorCode" :languageId="languageId" autofocus />
+      <CodeEditor
+        v-model="editorCode"
+        :languageId="languageId"
+        :parse-error="error ?? undefined"
+        autofocus
+      />
     </AppTab>
     <AppTab title="Abstract Syntax Tree" icon="tree" :row="1" :col="2">
       <AbstractSyntaxTree :variant="astVariant" :nodes="lastNodes" />

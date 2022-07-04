@@ -3,6 +3,8 @@ import type { ParserOptions } from "@babel/parser"
 import { parse as babelParse } from "@babel/parser"
 import type {
   LanguageParserImplementation,
+  ParseError,
+  Position,
   RawParseResult,
   SourceLocation,
 } from "@/core/types"
@@ -16,11 +18,14 @@ export default {
   getNodeLabel,
 } as LanguageParserImplementation<ParserOptions, Node>
 
-function parse(code: string, options?: ParserOptions): RawParseResult<Node> {
+function parse(
+  code: string,
+  options: ParserOptions = {}
+): RawParseResult<Node> {
   try {
     return {
       success: true,
-      astRoot: babelParse(code, options).program,
+      astRoot: babelParse(code, { ...defaultOptions, ...options }).program,
     }
   } catch (error) {
     return {
@@ -30,12 +35,13 @@ function parse(code: string, options?: ParserOptions): RawParseResult<Node> {
   }
 }
 
-const parseBabelError = (
-  error: any
-): {
-  message: string
-  location?: SourceLocation
-} => {
+const defaultOptions: ParserOptions = {
+  ranges: true,
+  startLine: 0,
+  startColumn: 0,
+}
+
+const parseBabelError = (error: any): ParseError => {
   const message = error?.message ?? "Invalid syntax"
 
   // TODO: check whether the location of babel matches SourceLocation type
@@ -43,10 +49,23 @@ const parseBabelError = (
   if (
     location &&
     typeof location.index === "number" &&
-    typeof location.start === "number" &&
-    typeof location.end === "number"
-  )
-    return { message, location }
+    typeof location.line === "number" &&
+    typeof location.column === "number"
+  ) {
+    const position: Position = {
+      index: location.index,
+      line: location.line,
+      column: location.column,
+    }
+
+    return {
+      message,
+      location: {
+        start: position,
+        end: position,
+      },
+    }
+  }
   return { message }
 }
 
@@ -61,15 +80,29 @@ function getNodeJsonSerializableMetadata(node: Node) {
 
 function getNodeLocation(node: Node): SourceLocation | null {
   if (!node.loc) return null
+
+  let from, to
+  if (node.range) {
+    from = node.range[0]
+    to = node.range[1]
+  } else if (node.start != null && node.end != null) {
+    from = node.start
+    to = node.end
+  } else {
+    return null
+  }
+
   const { start, end } = node.loc
   return {
     start: {
-      line: start.line - 1, // Babel line index starts from 1
+      line: start.line,
       column: start.column,
+      index: from,
     },
     end: {
-      line: end.line - 1, // Babel line index starts from 1
+      line: end.line,
       column: end.column,
+      index: to,
     },
   }
 }

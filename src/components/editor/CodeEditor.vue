@@ -2,6 +2,7 @@
 import type { PropType } from "vue"
 import { defineAsyncComponent, defineComponent } from "vue"
 import type { LanguageId } from "@/core/languages"
+import type { ParseError } from "@/core/types"
 
 export default defineComponent({
   name: "CodeEditor",
@@ -22,6 +23,10 @@ export default defineComponent({
       required: true,
     },
     autofocus: Boolean,
+    parseError: {
+      type: Object as PropType<ParseError>,
+      required: false,
+    },
   },
   computed: {
     code: {
@@ -40,7 +45,7 @@ export default defineComponent({
 <template>
   <CodeEditorCodemirror
     v-model="code"
-    v-bind="{ languageId, autofocus }"
+    v-bind="{ languageId, autofocus, parseError }"
     class="editor"
     @blur="$emit('blur')"
   />
