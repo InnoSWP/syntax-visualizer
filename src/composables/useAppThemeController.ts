@@ -3,7 +3,7 @@ import { storeToRefs } from "pinia"
 import { usePreferredDark } from "@vueuse/core"
 import { useSettingsStore } from "@/stores/settings"
 
-export function useAppTheme() {
+export function useAppThemeController() {
   const settings = useSettingsStore()
   const { theme } = storeToRefs(settings)
   const isDarkPreferred = usePreferredDark()
