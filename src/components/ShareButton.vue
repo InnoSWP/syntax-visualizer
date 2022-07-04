@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref } from "vue"
+import { useRouter } from "vue-router"
 import { useClipboard, useElementHover } from "@vueuse/core"
 import AppIcon from "@/components/AppIcon.vue"
 import { useParsingStore } from "@/stores/parsing"
@@ -8,13 +9,17 @@ const parsingStore = useParsingStore()
 const { copy, copied } = useClipboard({ copiedDuring: 3000 })
 const container = ref()
 const isHovered = useElementHover(container)
+const router = useRouter()
 
 const handleClick = () => {
-  const origin = window.location.origin
-  const pathname = window.location.pathname
-  const searchParams = parsingStore.toURLSearchParams
-  const url = new URL(`${pathname}?${searchParams}`, origin)
-  copy(url.toString())
+  const sharePageLocation = router.resolve({
+    name: "share",
+    query: parsingStore.toObjectForShare,
+  })
+  const currentLocation = window.location
+  const baseUrl = new URL(currentLocation.pathname, window.location.origin)
+
+  copy(`${baseUrl}#${sharePageLocation.fullPath}`)
 }
 </script>
 

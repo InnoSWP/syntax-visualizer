@@ -55,12 +55,12 @@ export const useParsingStore = defineStore("parsing", {
       return compressToEncodedURIComponent(this.code)
     },
     isError: (state) => state.error != null,
-    toURLSearchParams(): URLSearchParams {
-      const params = new URLSearchParams()
-      params.set("lang", this.languageId)
-      params.set("parser", this.parserId)
-      params.set("code", this.compressedCode)
-      return params
+    toObjectForShare(): Record<string, string> {
+      return {
+        lang: this.languageId,
+        parser: this.parserId,
+        code: this.compressedCode,
+      }
     },
   },
   actions: {
@@ -81,10 +81,14 @@ export const useParsingStore = defineStore("parsing", {
     updateCodeExternally(code: string) {
       this.currentLanguageState.code = code
     },
-    loadFromURLSearchParams(params: URLSearchParams) {
-      const languageId = params.get("lang")
-      const parserId = params.get("parser")
-      const code = params.get("code")
+    loadFromObjectForShare(obj: {
+      lang?: string
+      parser?: string
+      code?: string
+    }) {
+      const languageId = obj.lang
+      const parserId = obj.parser
+      const code = obj.code
 
       if (languageId != null) {
         if (isLanguageId(languageId)) {
