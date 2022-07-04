@@ -1,14 +1,20 @@
 <script setup lang="ts">
 import DocumentTitle from "@/components/DocumentTitle.vue"
+import ShareButton from "@/components/ShareButton.vue"
+import ThemeToggle from "@/components/ThemeToggle.vue"
 </script>
 
 <template>
   <header class="header">
     <div class="left-menu">
       <DocumentTitle />
+      <span class="vertical-separator" />
+      <ShareButton />
     </div>
     <h1 class="heading">Syntax Visualizer</h1>
-    <div class="right-menu"></div>
+    <div class="right-menu">
+      <ThemeToggle />
+    </div>
   </header>
 </template>
 
@@ -20,7 +26,7 @@ import DocumentTitle from "@/components/DocumentTitle.vue"
   max-width: 100%;
   height: var(--header-height);
   padding: 0 18px;
-  background-color: #ffffff;
+  background-color: var(--color-primary);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
@@ -49,5 +55,13 @@ import DocumentTitle from "@/components/DocumentTitle.vue"
 
 .right-menu {
   flex-direction: row-reverse;
+}
+
+.vertical-separator {
+  width: 1px;
+  height: 28px;
+  margin-right: 12px;
+  margin-left: 12px;
+  background: #000;
 }
 </style>

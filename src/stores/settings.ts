@@ -1,31 +1,20 @@
 import { defineStore } from "pinia"
-import type { LanguageId, ParserIdOfLanguage } from "@/core/languages"
-
-export type ThemeColor = "light" | "dark" | "system"
-export type ASTVariant = "graph" | "json"
-
-export interface SettingsState<L extends LanguageId = "javascript"> {
-  theme: ThemeColor
-  astVariant: ASTVariant
-  languageId: L
-  parserId: ParserIdOfLanguage<L>
-}
 
 export const useSettingsStore = defineStore("settings", {
-  state: (): SettingsState => ({
-    theme: "system",
-    astVariant: "graph",
-    languageId: "javascript",
-    parserId: "babel",
+  state: () => ({
+    theme: "system" as Theme,
   }),
   actions: {
     toggleTheme() {
       this.theme = getNextTheme(this.theme)
     },
   },
+  persist: true,
 })
 
-export const getNextTheme = (currentTheme: ThemeColor): ThemeColor => {
+export type Theme = "light" | "dark" | "system"
+
+export const getNextTheme = (currentTheme: Theme): Theme => {
   switch (currentTheme) {
     case "light":
       return "dark"

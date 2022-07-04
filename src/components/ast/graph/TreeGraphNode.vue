@@ -60,8 +60,6 @@ $circle-in-margin-top: 10px;
   align-items: flex-start;
   flex-direction: column;
   justify-content: flex-start;
-
-  --color-bg-node: #fff;
 }
 
 .node-rect {
@@ -72,7 +70,7 @@ $circle-in-margin-top: 10px;
   padding: 8px 12px;
   border: $border-width solid var(--color-border-default);
   border-radius: 4px;
-  background-color: var(--color-bg-node);
+  background-color: var(--color-primary);
   box-shadow: 1px 2px 5px 1px rgba(0, 0, 0, 0.25);
 }
 
