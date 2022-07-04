@@ -41,8 +41,8 @@ representations
 
 - Node Coordinates Matrix representation
 - Restoring written code on page reopen
+- Sharing
 - Nodes highlighting (soon...)
-- Sharing (soon...)
 - Different programming languages support (soon...)
 
 ## Usage
