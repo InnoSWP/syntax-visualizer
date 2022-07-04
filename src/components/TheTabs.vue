@@ -2,6 +2,7 @@
 import { ref } from "vue"
 import { storeToRefs } from "pinia"
 import AppTab from "@/components/AppTab.vue"
+import AppIcon from "@/components/AppIcon.vue"
 import CodeEditor from "@/components/editor/CodeEditor.vue"
 import AbstractSyntaxTree from "@/components/ast/AbstractSyntaxTree.vue"
 import NodeCoordinatesMatrix from "@/components/ncm/NodeCoordinatesMatrix.vue"
@@ -50,6 +51,14 @@ const handleNodeMouseOut = (nodeIndex: number) => {
         @node-mouse-enter="handleNodeMouseIn"
         @node-mouse-leave="handleNodeMouseOut"
       />
+      <template v-slot:menu>
+        <a
+          href="https://github.com/InnoSWP/syntax-visualizer/#1"
+          class="tab-menu-button"
+        >
+          <AppIcon name="info" />
+        </a>
+      </template>
     </AppTab>
   </main>
 </template>
@@ -61,5 +70,19 @@ const handleNodeMouseOut = (nodeIndex: number) => {
   height: calc(100% - var(--header-height));
   grid-template-columns: [start] 33.333% [line2] 33.333% [line3] 33.333% [end];
   grid-template-rows: [start] 100% [end];
+}
+
+.tab-menu-button {
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  cursor: pointer;
+  color: var(--color-primary-text);
+  border: none;
+  outline: none;
+  background-color: transparent;
 }
 </style>

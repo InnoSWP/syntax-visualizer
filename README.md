@@ -39,10 +39,10 @@ representations
 
 ## Features
 
-- Node Coordinates Matrix representation
+- [Node Coordinates Matrix](#nodes-coordinates-matrix)
 - Restoring written code on page reopen
+- Sharing
 - Nodes highlighting (soon...)
-- Sharing (soon...)
 - Different programming languages support (soon...)
 
 ## Usage
@@ -66,6 +66,12 @@ npm run dev
 
 git, nodejs (tested on version 16) and npm are required.
 
+## Nodes Coordinates Matrix
+Node Coordinates Matrix is a representation of "an encoding of the inter-node relationships between nodes in an AST" [[1]](#1).
+In conjunction with the Key operator this concept is necessary for performing parallel computations over an AST: "...permits arbitrary computation over sub-trees of an AST using purely data-parallel array programming techniques" [[1]](#1).
+
+Please, read [this article](#1) for more information.
+
 ## Stack
 
 - [Vue.js](https://vuejs.org/) as the frontend framework
@@ -76,6 +82,9 @@ git, nodejs (tested on version 16) and npm are required.
 - [Prettier](https://prettier.io/) as the formatter
 - [CodeMirror](https://codemirror.net/) as the code editor
 - "A" grade as the motivation
+
+## References
+<a id="1">[1]</a> A. W. H. I. University, A. W. Hsu, I. University, and O. M. V. A. Metrics, “The key to a data parallel compiler: Proceedings of the 3rd ACM SIGPLAN International Workshop on libraries, languages, and compilers for Array Programming,” _ACM Conferences_, 01-Jun-2016. [Online]. Available: https://dl.acm.org/doi/10.1145/2935323.2935331. [Accessed: 03-Jun-2022].
 
 ## License
 
